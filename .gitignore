@@ -1,0 +1,4 @@
+internal
+.vs
+*.vcxproj.user
+*.dll
