@@ -71,6 +71,8 @@
   <ItemGroup>
     <ClCompile Include=".\MaterialXSIPlugin.cpp" />
     <ClCompile Include="export\export.cpp" />
+    <ClCompile Include="export\export_material.cpp" />
+    <ClCompile Include="export\export_shader.cpp" />
     <ClCompile Include="utilities\logging.cpp" />
   </ItemGroup>
   <ItemGroup>

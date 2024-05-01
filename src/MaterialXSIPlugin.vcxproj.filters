@@ -8,6 +8,12 @@
     <ClCompile Include="export\export.cpp">
       <Filter>export</Filter>
     </ClCompile>
+    <ClCompile Include="export\export_material.cpp">
+      <Filter>export</Filter>
+    </ClCompile>
+    <ClCompile Include="export\export_shader.cpp">
+      <Filter>export</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="utilities">
