@@ -70,6 +70,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include=".\MaterialXSIPlugin.cpp" />
+    <ClCompile Include="export\export.cpp" />
+    <ClCompile Include="utilities\logging.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="export\export.h" />
+    <ClInclude Include="export\export_options.h" />
+    <ClInclude Include="utilities\logging.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

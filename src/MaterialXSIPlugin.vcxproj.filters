@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include=".\MaterialXSIPlugin.cpp" />
+    <ClCompile Include="utilities\logging.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="export\export.cpp">
+      <Filter>export</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="utilities">
+      <UniqueIdentifier>{4400b2a6-ae2e-46cc-9db1-1a22f116e644}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="export">
+      <UniqueIdentifier>{ac966285-c725-4feb-b6d4-3f0bbd1b0bf5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="utilities\logging.h">
+      <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="export\export.h">
+      <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="export\export_options.h">
+      <Filter>export</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
