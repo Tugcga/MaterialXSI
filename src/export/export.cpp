@@ -9,13 +9,7 @@
 #include "export.h"
 #include "../utilities/logging.h"
 
-void export_mtlx(const std::vector<int>& object_ids, const XSI::CString& output_path, const ExportOptions& export_options) {
-	log_message("items to export: " + to_string(object_ids));
-	log_message("path: " + output_path);
-	log_message("textures relative: " + XSI::CString(export_options.textures.use_relative_path));
-	log_message("textures should copy: " + XSI::CString(export_options.textures.copy_files));
-	log_message("textures folder: " + XSI::CString(export_options.textures.copy_folder));
-
+void export_mtlx(const std::vector<int>& object_ids, const ExportOptions& export_options) {
 	// create MaterialX document
 	MaterialX::DocumentPtr mx_doc = MaterialX::createDocument();
 
@@ -28,9 +22,13 @@ void export_mtlx(const std::vector<int>& object_ids, const XSI::CString& output_
 			// get type of the object
 			XSI::CString xsi_type = xsi_item.GetType();
 			if (xsi_type == "material") {
-				export_material((XSI::Material)xsi_item, mx_doc);
+				export_material((XSI::Material)xsi_item, mx_doc, export_options);
 			}
 			else if (xsi_type == "Shader") {
+				// TODO: we should export not only selected nodes, but also all nodes connected with it
+				// it may happens that already exported node (and the corresponding chain) connected to the current one
+				// in this case we should connect in MX these nodes
+				// so, store the map from xsi id to mx node and use it when we find already known node
 				export_shader((XSI::Shader)xsi_item, mx_doc);
 			}
 			// all other types are not supported
@@ -38,5 +36,5 @@ void export_mtlx(const std::vector<int>& object_ids, const XSI::CString& output_
 	}
 
 	// output document
-	MaterialX::writeToXmlFile(mx_doc, output_path.GetAsciiString());
+	MaterialX::writeToXmlFile(mx_doc, export_options.output_path);
 }

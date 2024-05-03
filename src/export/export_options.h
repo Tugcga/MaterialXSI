@@ -5,10 +5,11 @@ struct ExportTextureOptions
 {
 	bool use_relative_path;
 	bool copy_files;
-	XSI::CString copy_folder;
+	std::string copy_folder;
 };
 
 struct ExportOptions
 {
+	std::string output_path;
 	ExportTextureOptions textures;
 };

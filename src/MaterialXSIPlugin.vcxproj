@@ -56,13 +56,13 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>..\internal\MaterialX\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\internal\MaterialX\include;..\internal\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <OutputFile>..\Application\Plugins\MaterialXSIPlugin.dll</OutputFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <ImportLibrary>..\internal\build\lib\$(TargetName).lib</ImportLibrary>
-      <AdditionalDependencies>"..\internal\MaterialX\lib\MaterialXGenMdl.lib";"..\internal\MaterialX\lib\MaterialXGenMsl.lib";"..\internal\MaterialX\lib\MaterialXGenOsl.lib";"..\internal\MaterialX\lib\MaterialXGenShader.lib";"..\internal\MaterialX\lib\MaterialXRender.lib";"..\internal\MaterialX\lib\MaterialXRenderGlsl.lib";"..\internal\MaterialX\lib\MaterialXRenderHw.lib";"..\internal\MaterialX\lib\MaterialXRenderOsl.lib";"..\internal\MaterialX\lib\MaterialXCore.lib";"..\internal\MaterialX\lib\MaterialXFormat.lib";"..\internal\MaterialX\lib\MaterialXGenGlsl.lib";%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>"..\internal\MaterialX\lib\MaterialXGenMdl.lib";"..\internal\MaterialX\lib\MaterialXGenMsl.lib";"..\internal\MaterialX\lib\MaterialXGenOsl.lib";"..\internal\MaterialX\lib\MaterialXGenShader.lib";"..\internal\MaterialX\lib\MaterialXRender.lib";"..\internal\MaterialX\lib\MaterialXRenderGlsl.lib";"..\internal\MaterialX\lib\MaterialXRenderHw.lib";"..\internal\MaterialX\lib\MaterialXRenderOsl.lib";"..\internal\MaterialX\lib\MaterialXCore.lib";"..\internal\MaterialX\lib\MaterialXFormat.lib";"..\internal\MaterialX\lib\MaterialXGenGlsl.lib";"..\internal\boost\lib\libboost_filesystem-vc140-mt-x64-1_82.lib";%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -72,12 +72,16 @@
     <ClCompile Include=".\MaterialXSIPlugin.cpp" />
     <ClCompile Include="export\export.cpp" />
     <ClCompile Include="export\export_material.cpp" />
-    <ClCompile Include="export\export_shader.cpp" />
+    <ClCompile Include="export\export_names.cpp" />
+    <ClCompile Include="export\export_node.cpp" />
+    <ClCompile Include="export\export_utilities.cpp" />
     <ClCompile Include="utilities\logging.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="export\export.h" />
+    <ClInclude Include="export\export_names.h" />
     <ClInclude Include="export\export_options.h" />
+    <ClInclude Include="export\export_utilities.h" />
     <ClInclude Include="utilities\logging.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -62,10 +62,11 @@ SICALLBACK MaterialXSIExport_Execute(XSI::CRef& in_ctxt) {
 	XSI::CString textures_folder = args[4];
 
 	ExportOptions export_options;
+	export_options.output_path = file_path.GetAsciiString();
 	ExportTextureOptions export_textures;
 	export_textures.use_relative_path = textures_use_relative_path;
 	export_textures.copy_files = textures_copy;
-	export_textures.copy_folder = textures_folder;
+	export_textures.copy_folder = textures_folder.GetAsciiString();
 
 	export_options.textures = export_textures;
 
@@ -83,7 +84,7 @@ SICALLBACK MaterialXSIExport_Execute(XSI::CRef& in_ctxt) {
 				}
 			}
 
-			export_mtlx(object_ids, file_path, export_options);
+			export_mtlx(object_ids, export_options);
 		}
 		else {
 			log_message("Invalid output file path", XSI::siWarningMsg);

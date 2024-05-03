@@ -11,7 +11,13 @@
     <ClCompile Include="export\export_material.cpp">
       <Filter>export</Filter>
     </ClCompile>
-    <ClCompile Include="export\export_shader.cpp">
+    <ClCompile Include="export\export_utilities.cpp">
+      <Filter>export</Filter>
+    </ClCompile>
+    <ClCompile Include="export\export_node.cpp">
+      <Filter>export</Filter>
+    </ClCompile>
+    <ClCompile Include="export\export_names.cpp">
       <Filter>export</Filter>
     </ClCompile>
   </ItemGroup>
@@ -31,6 +37,12 @@
       <Filter>export</Filter>
     </ClInclude>
     <ClInclude Include="export\export_options.h">
+      <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="export\export_utilities.h">
+      <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="export\export_names.h">
       <Filter>export</Filter>
     </ClInclude>
   </ItemGroup>
