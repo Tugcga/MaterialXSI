@@ -46,7 +46,7 @@ def MaterialXCompounds_Init(in_ctxt):
     return true
 
 
-def export_window(export_array):
+def export_window(export_array, export_mode):
     scene_root = app.ActiveProject2.ActiveScene.Root
     prop = scene_root.AddProperty("CustomProperty", False, "MaterialX Export")
 
@@ -61,9 +61,12 @@ def export_window(export_array):
     param = prop.AddParameter3("textures_folder", constants.siString, "textures", False, False)
     param.Animatable = False
 
+    param = prop.AddParameter3("materials_all_nodes", constants.siBool, False, False, False)
+    param.Animatable = False
+
     layout = prop.PPGLayout
     layout.Clear()
-    layout.AddGroup("Export")
+    layout.AddGroup("Output")
     item = layout.AddItem("file_path", "File", constants.siControlFilePath)
     filterstring = "MaterialX files (*.mtlx)|*.mtlx|"
     item.SetAttribute(constants.siUIFileFilter, filterstring)
@@ -74,6 +77,11 @@ def export_window(export_array):
     layout.AddEnumControl("textures_path", export_textures_path_enum, "Textures Path")
     layout.AddItem("textures_folder", "Folder")
     layout.EndGroup()
+
+    if export_mode == "materials":
+        layout.AddGroup("Materials")
+        layout.AddItem("materials_all_nodes", "Export All Nodes")
+        layout.EndGroup()
 
     layout.Language = "Python"
     layout.Logic = '''
@@ -96,7 +104,8 @@ def textures_copy_OnChanged():
     property_keys = [
         "textures_path",
         "textures_copy",
-        "textures_folder"]
+        "textures_folder",
+        "materials_all_nodes"]
 
     global prev_export_params
     if prev_export_params is not None:
@@ -111,7 +120,8 @@ def textures_copy_OnChanged():
             app.MaterialXSIExport(export_array, file_path_reduce + ".mtlx",
                                   prop.Parameters("textures_path").Value == "relative",
                                   prop.Parameters("textures_copy").Value,
-                                  prop.Parameters("textures_folder").Value)
+                                  prop.Parameters("textures_folder").Value,
+                                  prop.Parameters("materials_all_nodes").Value if export_mode == "materials" else False)
         else:
             app.LogMessage("Define non-empty export path")
 
@@ -133,7 +143,7 @@ def export_materials(in_ctxt):
             material = app.Dictionary.GetObject(part)
             material_id = material.ObjectID
             material_ids.append(material_id)
-    export_window(material_ids)
+    export_window(material_ids, "materials")
 
 
 def export_compounds(in_ctxt):
@@ -142,4 +152,4 @@ def export_compounds(in_ctxt):
     for node in nodes_collection:
         node_id = node.ObjectID
         node_ids.append(node_id)
-    export_window(node_ids)
+    export_window(node_ids, "shaders")

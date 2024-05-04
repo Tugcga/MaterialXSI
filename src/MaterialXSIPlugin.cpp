@@ -61,6 +61,7 @@ SICALLBACK MaterialXSIExport_Execute(XSI::CRef& in_ctxt) {
 	bool textures_use_relative_path = args[2];
 	bool textures_copy = args[3];
 	XSI::CString textures_folder = args[4];
+	bool material_all_nodes = args[5];
 
 	ExportOptions export_options;
 	export_options.output_path = file_path.GetAsciiString();
@@ -68,8 +69,11 @@ SICALLBACK MaterialXSIExport_Execute(XSI::CRef& in_ctxt) {
 	export_textures.use_relative_path = textures_use_relative_path;
 	export_textures.copy_files = textures_copy;
 	export_textures.copy_folder = textures_folder.GetAsciiString();
+	ExportMaterialOptions export_materials;
+	export_materials.all_shaders = material_all_nodes;
 
 	export_options.textures = export_textures;
+	export_options.materials = export_materials;
 
 	if (in_objects.GetCount() > 0) {
 		if (file_path.Length() > 0) {

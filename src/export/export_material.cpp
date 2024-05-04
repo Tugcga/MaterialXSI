@@ -56,17 +56,19 @@ void export_material(const XSI::Material &xsi_material, MaterialX::DocumentPtr &
 	std::vector<XSI::CString> stop_names;
 	MaterialX::NodeGraphPtr temp_graph;
 
-	// export all nodes at the root level of the material
-	XSI::CRefArray material_shaders = xsi_material.GetAllShaders();
-	for (size_t i = 0; i < material_shaders.GetCount(); i++) {
-		XSI::CRef material_shader = material_shaders[i];
-		XSI::Shader xsi_shader(material_shader);
-		if (xsi_shader.IsValid()) {
-			if (is_compound(xsi_shader)) {
-				MaterialX::NodeGraphPtr graph = compound_to_graph(xsi_shader, mx_doc, id_to_node, id_to_graph, stop_names, export_options);
-			}
-			else {
-				MaterialX::NodePtr node = shader_to_node(xsi_shader, mx_doc, temp_graph, true, id_to_node, id_to_graph, stop_names, export_options);
+	if (export_options.materials.all_shaders) {
+		// export all nodes at the root level of the material
+		XSI::CRefArray material_shaders = xsi_material.GetAllShaders();
+		for (size_t i = 0; i < material_shaders.GetCount(); i++) {
+			XSI::CRef material_shader = material_shaders[i];
+			XSI::Shader xsi_shader(material_shader);
+			if (xsi_shader.IsValid()) {
+				if (is_compound(xsi_shader)) {
+					MaterialX::NodeGraphPtr graph = compound_to_graph(xsi_shader, mx_doc, id_to_node, id_to_graph, stop_names, export_options);
+				}
+				else {
+					MaterialX::NodePtr node = shader_to_node(xsi_shader, mx_doc, temp_graph, true, id_to_node, id_to_graph, stop_names, export_options);
+				}
 			}
 		}
 	}

@@ -1,15 +1,18 @@
 #pragma once
 #include <xsi_string.h>
 
-struct ExportTextureOptions
-{
+struct ExportTextureOptions {
 	bool use_relative_path;
 	bool copy_files;
 	std::string copy_folder;
 };
 
-struct ExportOptions
-{
+struct ExportMaterialOptions {
+	bool all_shaders;
+};
+
+struct ExportOptions {
 	std::string output_path;
 	ExportTextureOptions textures;
+	ExportMaterialOptions materials;
 };
