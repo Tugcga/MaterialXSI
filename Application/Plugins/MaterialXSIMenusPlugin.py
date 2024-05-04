@@ -9,6 +9,11 @@ app = Application
 
 prev_export_params = None
 
+export_textures_path_enum = [
+    "Absolute", "absolute",
+    "Relative", "relative"
+]
+
 
 def XSILoadPlugin(in_reg):
     in_reg.Author = "blairs"
@@ -47,7 +52,7 @@ def export_window(export_array):
 
     prop.AddParameter3("file_path", constants.siString, "", "", "", False, False)
 
-    param = prop.AddParameter3("textures_use_relative_path", constants.siBool, True, False, False)
+    param = prop.AddParameter3("textures_path", constants.siString, "relative", False, False)
     param.Animatable = False
 
     param = prop.AddParameter3("textures_copy", constants.siBool, True, False, False)
@@ -65,8 +70,8 @@ def export_window(export_array):
     layout.EndGroup()
 
     layout.AddGroup("Textures")
-    layout.AddItem("textures_use_relative_path", "Use Relative Path")
     layout.AddItem("textures_copy", "Copy Sources")
+    layout.AddEnumControl("textures_path", export_textures_path_enum, "Textures Path")
     layout.AddItem("textures_folder", "Folder")
     layout.EndGroup()
 
@@ -89,7 +94,7 @@ def textures_copy_OnChanged():
 '''
 
     property_keys = [
-        "textures_use_relative_path",
+        "textures_path",
         "textures_copy",
         "textures_folder"]
 
@@ -104,7 +109,7 @@ def textures_copy_OnChanged():
         if len(file_path) > 0:
             file_path_reduce, extension = os.path.splitext(file_path)
             app.MaterialXSIExport(export_array, file_path_reduce + ".mtlx",
-                                  prop.Parameters("textures_use_relative_path").Value,
+                                  prop.Parameters("textures_path").Value == "relative",
                                   prop.Parameters("textures_copy").Value,
                                   prop.Parameters("textures_folder").Value)
         else:
