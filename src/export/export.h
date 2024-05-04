@@ -13,7 +13,7 @@ void export_mtlx(const std::vector<int> &object_ids, const ExportOptions &export
 
 // export_material.cpp
 void export_material(const XSI::Material& xsi_material, MaterialX::DocumentPtr &mx_doc, const ExportOptions& export_options);
-void export_shader(const XSI::Shader& xsi_shader, MaterialX::DocumentPtr &mx_doc);
+void export_shaders(const std::vector<XSI::Shader>& xsi_shaders, MaterialX::DocumentPtr& mx_doc, const ExportOptions& export_options);
 
 // export_node.cpp
 MaterialX::NodePtr shader_to_node(const XSI::Shader& xsi_shader, MaterialX::DocumentPtr& mx_doc, std::unordered_map<ULONG, MaterialX::NodePtr>& id_to_node, const ExportOptions& export_options);

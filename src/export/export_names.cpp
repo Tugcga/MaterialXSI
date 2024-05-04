@@ -50,3 +50,22 @@ std::string colorspace_to_string(const XSI::CString& xsi_value) {
 std::string multioutput_name() { 
 	return "multioutput"; 
 }
+
+std::string prog_id_to_render(const XSI::CString& prog_id) {
+	XSI::CStringArray parts = prog_id.Split(".");
+	if (parts.GetCount() > 0) {
+		XSI::CString plugin = parts[0];
+
+		if (plugin == "MaterialXSIPlugin") {
+			return "MaterialX";
+		}
+		else if (plugin == "CyclesShadersPlugin") {
+			return "Cycles";
+		}
+		else {
+			return plugin.GetAsciiString();
+		}
+	}
+
+	return "";
+}

@@ -73,6 +73,18 @@ void export_material(const XSI::Material &xsi_material, MaterialX::DocumentPtr &
 	}
 }
 
-void export_shader(const XSI::Shader& xsi_shader, MaterialX::DocumentPtr& mx_doc) {
-	log_message("export shader node " + xsi_shader.GetFullName());
+void export_shaders(const std::vector<XSI::Shader> &xsi_shaders, MaterialX::DocumentPtr& mx_doc, const ExportOptions &export_options) {
+	std::unordered_map<ULONG, MaterialX::NodePtr> id_to_node;
+	std::unordered_map<ULONG, MaterialX::NodeGraphPtr> id_to_graph;
+
+	for (size_t i = 0; i < xsi_shaders.size(); i++) {
+		XSI::Shader xsi_shader = xsi_shaders[i];
+
+		if (is_compound(xsi_shader)) {
+			//MaterialX::NodeGraphPtr node_graph = compound_to_graph();
+		}
+		else {
+			MaterialX::NodePtr node = shader_to_node(xsi_shader, mx_doc, id_to_node, export_options);
+		}
+	}
 }
