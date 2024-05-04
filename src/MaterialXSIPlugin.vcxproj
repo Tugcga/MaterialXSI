@@ -75,6 +75,7 @@
     <ClCompile Include="export\export_names.cpp" />
     <ClCompile Include="export\export_node.cpp" />
     <ClCompile Include="export\export_utilities.cpp" />
+    <ClCompile Include="utilities\array.cpp" />
     <ClCompile Include="utilities\logging.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +83,7 @@
     <ClInclude Include="export\export_names.h" />
     <ClInclude Include="export\export_options.h" />
     <ClInclude Include="export\export_utilities.h" />
+    <ClInclude Include="utilities\array.h" />
     <ClInclude Include="utilities\logging.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

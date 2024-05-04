@@ -20,6 +20,9 @@
     <ClCompile Include="export\export_names.cpp">
       <Filter>export</Filter>
     </ClCompile>
+    <ClCompile Include="utilities\array.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="utilities">
@@ -44,6 +47,9 @@
     </ClInclude>
     <ClInclude Include="export\export_names.h">
       <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="utilities\array.h">
+      <Filter>utilities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -46,6 +46,7 @@ SICALLBACK MaterialXSIExport_Init(XSI::CRef& in_ctxt) {
 	args.Add("textures_use_relative_path", true);
 	args.Add("textures_copy", true);
 	args.Add("textures_folder", "textures");
+	args.Add("material_all_nodes", false);  // if true then export all shaders, not only connected to the root node
 
 	return XSI::CStatus::OK;
 }
