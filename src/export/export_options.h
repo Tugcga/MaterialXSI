@@ -13,6 +13,7 @@ struct ExportMaterialOptions {
 
 struct ExportOptions {
 	std::string output_path;
+	bool insert_nodedefs;
 	ExportTextureOptions textures;
 	ExportMaterialOptions materials;
 };

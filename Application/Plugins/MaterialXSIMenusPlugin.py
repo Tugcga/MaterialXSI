@@ -52,6 +52,9 @@ def export_window(export_array, export_mode):
 
     prop.AddParameter3("file_path", constants.siString, "", "", "", False, False)
 
+    param = prop.AddParameter3("add_nodedefs", constants.siBool, False, False, False)
+    param.Animatable = False
+
     param = prop.AddParameter3("textures_path", constants.siString, "relative", False, False)
     param.Animatable = False
 
@@ -70,6 +73,7 @@ def export_window(export_array, export_mode):
     item = layout.AddItem("file_path", "File", constants.siControlFilePath)
     filterstring = "MaterialX files (*.mtlx)|*.mtlx|"
     item.SetAttribute(constants.siUIFileFilter, filterstring)
+    layout.AddItem("add_nodedefs", "Insert Node Definitions")
     layout.EndGroup()
 
     layout.AddGroup("Textures")
@@ -102,6 +106,7 @@ def textures_copy_OnChanged():
 '''
 
     property_keys = [
+        "add_nodedefs",
         "textures_path",
         "textures_copy",
         "textures_folder",
@@ -118,6 +123,7 @@ def textures_copy_OnChanged():
         if len(file_path) > 0:
             file_path_reduce, extension = os.path.splitext(file_path)
             app.MaterialXSIExport(export_array, file_path_reduce + ".mtlx",
+                                  prop.Parameters("add_nodedefs").Value,
                                   prop.Parameters("textures_path").Value == "relative",
                                   prop.Parameters("textures_copy").Value,
                                   prop.Parameters("textures_folder").Value,

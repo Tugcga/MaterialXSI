@@ -71,3 +71,21 @@ size_t get_shader_outputs_count(const XSI::Shader& xsi_shader, std::string& out_
 
 	return to_return;
 }
+
+std::string value_to_string(const XSI::CValue& value) {
+	XSI::CValue::DataType type = value.m_t;
+	if (type == XSI::CValue::DataType::siInt1 || type == XSI::CValue::DataType::siInt2 || type == XSI::CValue::DataType::siInt8) {
+		return std::to_string((int)value);
+	}
+	else if (type == XSI::CValue::DataType::siFloat) {
+		return std::to_string((float)value);
+	}
+	else if (type == XSI::CValue::DataType::siDouble) {
+		return std::to_string((double)value);
+	}
+	else if (type == XSI::CValue::DataType::siUInt1 || type == XSI::CValue::DataType::siUInt2 || type == XSI::CValue::DataType::siUInt4 || type == XSI::CValue::DataType::siUInt8) {
+		return std::to_string((int)value);
+	}
+
+	return "";
+}

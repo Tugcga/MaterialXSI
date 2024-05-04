@@ -69,3 +69,7 @@ std::string prog_id_to_render(const XSI::CString& prog_id) {
 
 	return "";
 }
+
+std::string materialx_render() {
+	return "MaterialX";
+}
