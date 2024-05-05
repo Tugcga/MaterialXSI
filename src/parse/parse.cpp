@@ -249,6 +249,9 @@ XSI::CStatus on_parse(XSI::Context& context) {
 		if (input_ui_name.size() > 0) {
 			xsi_ui_name = input_ui_name.c_str();
 		}
+		else {
+			xsi_ui_name = snake_to_space_cammel(xsi_ui_name.GetAsciiString()).c_str();
+		}
 		options.SetLongName(xsi_ui_name);
 
 		// define input parameter
@@ -293,6 +296,7 @@ XSI::CStatus on_parse(XSI::Context& context) {
 	shader_ppg.EndGroup();
 
 	// outputs
+	XSI::ShaderParamDefOptions output_options = xsi_factory.CreateShaderParamDefOptions();
 	XSI::ShaderParamDefContainer shader_outputs = shader_def.GetOutputParamDefs();
 	for (size_t i = 0; i < mx_outputs.size(); i++) {
 		MaterialX::OutputPtr mx_output = mx_outputs[i];
@@ -300,7 +304,8 @@ XSI::CStatus on_parse(XSI::Context& context) {
 		std::string output_name = mx_output->getName();
 		std::string output_type = mx_output->getType();
 
-		shader_outputs.AddParamDef(output_name.c_str(), mx_type_to_xsi(output_type));
+		output_options.SetLongName(snake_to_space_cammel(output_name).c_str());
+		shader_outputs.AddParamDef(output_name.c_str(), mx_type_to_xsi(output_type), output_options);
 	}
 
 	// render target
