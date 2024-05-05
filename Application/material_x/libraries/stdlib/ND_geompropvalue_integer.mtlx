@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_geompropvalue_integer" node="geompropvalue" nodegroup="geometric">
+    <input name="geomprop" type="string" value="" uniform="true" />
+    <input name="default" type="integer" value="0" />
+    <output name="out" type="integer" />
+  </nodedef>
+</materialx>

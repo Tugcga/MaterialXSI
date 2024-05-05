@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_contrast_vector3" node="contrast" nodegroup="adjustment">
+    <input name="in" type="vector3" value="0.0, 0.0, 0.0" />
+    <input name="amount" type="vector3" value="1.0, 1.0, 1.0" />
+    <input name="pivot" type="vector3" value="0.5, 0.5, 0.5" />
+    <output name="out" type="vector3" />
+  </nodedef>
+</materialx>

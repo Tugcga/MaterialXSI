@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_facingratio_float" node="facingratio" nodegroup="npr">
+    <input name="viewdirection" type="vector3" defaultgeomprop="Vworld" />
+    <input name="normal" type="vector3" defaultgeomprop="Nworld" />
+    <input name="faceforward" type="boolean" value="true" />
+    <input name="invert" type="boolean" value="false" />
+    <output name="out" type="float" />
+  </nodedef>
+</materialx>

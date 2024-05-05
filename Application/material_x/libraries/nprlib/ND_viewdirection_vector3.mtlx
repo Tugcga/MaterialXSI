@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_viewdirection_vector3" node="viewdirection" nodegroup="npr">
+    <input name="space" type="string" value="world" enum="model,object,world" uniform="true" />
+    <output name="out" type="vector3" />
+  </nodedef>
+</materialx>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_fractal3d_color3FA" node="fractal3d" nodegroup="procedural3d">
+    <input name="amplitude" type="float" value="1.0" />
+    <input name="octaves" type="integer" value="3" />
+    <input name="lacunarity" type="float" value="2.0" />
+    <input name="diminish" type="float" value="0.5" />
+    <input name="position" type="vector3" defaultgeomprop="Pobject" />
+    <output name="out" type="color3" />
+  </nodedef>
+</materialx>

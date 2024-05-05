@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_lin_adobergb_to_lin_rec709_color3" node="lin_adobergb_to_lin_rec709" nodegroup="colortransform">
+    <input name="in" type="color3" value="0.0, 0.0, 0.0" />
+    <output name="out" type="color3" />
+  </nodedef>
+</materialx>

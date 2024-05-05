@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_convert_color3_surfaceshader" node="convert" version="1.0" isdefaultversion="true" nodegroup="shader" doc="Convert color3 to shader">
+    <input name="in" type="color3" value="0, 0, 0" />
+    <output name="out" type="surfaceshader" />
+  </nodedef>
+</materialx>

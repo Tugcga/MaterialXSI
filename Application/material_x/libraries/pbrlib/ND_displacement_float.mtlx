@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_displacement_float" node="displacement" nodegroup="pbr" doc="A constructor node for the displacementshader type.">
+    <input name="displacement" type="float" value="0.0" doc="Scalar displacement amount along the surface normal direction." />
+    <input name="scale" type="float" value="1.0" doc="Scale factor for the displacement vector" />
+    <output name="out" type="displacementshader" />
+  </nodedef>
+</materialx>

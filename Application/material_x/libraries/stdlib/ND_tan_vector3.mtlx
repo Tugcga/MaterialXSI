@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_tan_vector3" node="tan" nodegroup="math">
+    <input name="in" type="vector3" value="0.0, 0.0, 0.0" />
+    <output name="out" type="vector3" />
+  </nodedef>
+</materialx>

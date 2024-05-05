@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_bitangent_vector3" node="bitangent" nodegroup="geometric">
+    <input name="space" type="string" value="object" enum="model,object,world" uniform="true" />
+    <input name="index" type="integer" value="0" uniform="true" />
+    <output name="out" type="vector3" />
+  </nodedef>
+</materialx>

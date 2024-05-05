@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_convert_vector4_color4" node="convert" nodegroup="channel">
+    <input name="in" type="vector4" value="0.0, 0.0, 0.0, 0.0" />
+    <output name="out" type="color4" />
+  </nodedef>
+</materialx>

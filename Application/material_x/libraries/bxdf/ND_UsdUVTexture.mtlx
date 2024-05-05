@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_UsdUVTexture" node="UsdUVTexture" nodegroup="texture2d" version="2.2" inherit="ND_UsdUVTexture_23">
+    <output name="r" type="float" />
+    <output name="g" type="float" />
+    <output name="b" type="float" />
+    <output name="a" type="float" />
+    <output name="rgb" type="color3" />
+    <output name="rgba" type="color4" />
+  </nodedef>
+</materialx>

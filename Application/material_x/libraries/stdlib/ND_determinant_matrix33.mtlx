@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_determinant_matrix33" node="determinant" nodegroup="math">
+    <input name="in" type="matrix33" value="1.0,0.0,0.0, 0.0,1.0,0.0, 0.0,0.0,1.0" />
+    <output name="out" type="float" />
+  </nodedef>
+</materialx>

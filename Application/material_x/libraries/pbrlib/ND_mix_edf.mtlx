@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_mix_edf" node="mix" nodegroup="pbr" defaultinput="bg" doc="Mix two EDF's according to an input mix amount.">
+    <input name="fg" type="EDF" value="" />
+    <input name="bg" type="EDF" value="" />
+    <input name="mix" type="float" value="0.0" uimin="0.0" uimax="1.0" doc="Mixing weight, range [0, 1]." />
+    <output name="out" type="EDF" />
+  </nodedef>
+</materialx>

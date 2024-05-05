@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_mix_surfaceshader" node="mix" nodegroup="compositing">
+    <input name="fg" type="surfaceshader" value="" />
+    <input name="bg" type="surfaceshader" value="" />
+    <input name="mix" type="float" value="0.0" uisoftmin="0.0" uisoftmax="1.0" />
+    <output name="out" type="surfaceshader" />
+  </nodedef>
+</materialx>

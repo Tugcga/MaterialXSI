@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_creatematrix_vector3_matrix33" node="creatematrix" nodegroup="math">
+    <input name="in1" type="vector3" value="1.0, 0.0, 0.0" />
+    <input name="in2" type="vector3" value="0.0, 1.0, 0.0" />
+    <input name="in3" type="vector3" value="0.0, 0.0, 1.0" />
+    <output name="out" type="matrix33" />
+  </nodedef>
+</materialx>

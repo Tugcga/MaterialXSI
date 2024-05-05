@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_switch_vector4I" node="switch" nodegroup="conditional">
+    <input name="in1" type="vector4" value="0.0, 0.0, 0.0, 0.0" />
+    <input name="in2" type="vector4" value="0.0, 0.0, 0.0, 0.0" />
+    <input name="in3" type="vector4" value="0.0, 0.0, 0.0, 0.0" />
+    <input name="in4" type="vector4" value="0.0, 0.0, 0.0, 0.0" />
+    <input name="in5" type="vector4" value="0.0, 0.0, 0.0, 0.0" />
+    <input name="which" type="integer" value="0" />
+    <output name="out" type="vector4" />
+  </nodedef>
+</materialx>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_constant_color3" node="constant" nodegroup="procedural">
+    <input name="value" type="color3" value="0.0, 0.0, 0.0" />
+    <output name="out" type="color3" />
+  </nodedef>
+</materialx>

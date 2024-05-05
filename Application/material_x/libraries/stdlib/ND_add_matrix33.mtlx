@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_add_matrix33" node="add" nodegroup="math">
+    <input name="in1" type="matrix33" value="1.0,0.0,0.0, 0.0,1.0,0.0, 0.0,0.0,1.0" />
+    <input name="in2" type="matrix33" value="0.0,0.0,0.0, 0.0,0.0,0.0, 0.0,0.0,0.0" />
+    <output name="out" type="matrix33" />
+  </nodedef>
+</materialx>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_swizzle_float_vector2" node="swizzle" nodegroup="channel">
+    <input name="in" type="float" value="0.0" />
+    <input name="channels" type="string" value="xx" uniform="true" />
+    <output name="out" type="vector2" />
+  </nodedef>
+</materialx>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_randomfloat_float" node="randomfloat" nodegroup="procedural">
+    <input name="in" type="float" uiname="Input" value="0.0" doc="Initial randomization seed." />
+    <input name="min" type="float" uiname="Minimum" value="0.0" doc="The minimum output value." />
+    <input name="max" type="float" uiname="Maximum" value="1.0" doc="The maximum output value." />
+    <input name="seed" type="integer" uiname="Seed" value="0" doc="Additional seed." />
+    <output name="out" type="float" />
+  </nodedef>
+</materialx>

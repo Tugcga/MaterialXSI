@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_layer_vdf" node="layer" nodegroup="pbr" defaultinput="top" doc="Layer a BSDF over a VDF describing the interior media.">
+    <input name="top" type="BSDF" value="" />
+    <input name="base" type="VDF" value="" />
+    <output name="out" type="BSDF" />
+  </nodedef>
+</materialx>

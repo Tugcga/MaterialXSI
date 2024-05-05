@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_clamp_vector4" node="clamp" nodegroup="math">
+    <input name="in" type="vector4" value="0.0, 0.0, 0.0, 0.0" />
+    <input name="low" type="vector4" value="0.0, 0.0, 0.0, 0.0" />
+    <input name="high" type="vector4" value="1.0, 1.0, 1.0, 1.0" />
+    <output name="out" type="vector4" />
+  </nodedef>
+</materialx>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_ramplr_color3" node="ramplr" nodegroup="procedural2d">
+    <input name="valuel" type="color3" value="0.0, 0.0, 0.0" />
+    <input name="valuer" type="color3" value="0.0, 0.0, 0.0" />
+    <input name="texcoord" type="vector2" defaultgeomprop="UV0" />
+    <output name="out" type="color3" />
+  </nodedef>
+</materialx>

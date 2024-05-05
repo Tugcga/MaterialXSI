@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_magnitude_vector3" node="magnitude" nodegroup="math">
+    <input name="in" type="vector3" value="0.0, 0.0, 0.0" />
+    <output name="out" type="float" />
+  </nodedef>
+</materialx>

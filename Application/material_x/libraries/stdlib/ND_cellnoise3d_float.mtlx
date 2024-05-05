@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_cellnoise3d_float" node="cellnoise3d" nodegroup="procedural3d">
+    <input name="position" type="vector3" defaultgeomprop="Pobject" />
+    <output name="out" type="float" />
+  </nodedef>
+</materialx>

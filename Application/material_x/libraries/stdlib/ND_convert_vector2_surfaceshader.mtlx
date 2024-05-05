@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_convert_vector2_surfaceshader" node="convert" version="1.0" isdefaultversion="true" nodegroup="shader" doc="Convert vector2 to shader">
+    <input name="in" type="vector2" value="0, 0" />
+    <output name="out" type="surfaceshader" />
+  </nodedef>
+</materialx>

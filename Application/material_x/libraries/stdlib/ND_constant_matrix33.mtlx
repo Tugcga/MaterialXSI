@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_constant_matrix33" node="constant" nodegroup="procedural">
+    <input name="value" type="matrix33" value="1.0,0.0,0.0, 0.0,1.0,0.0, 0.0,0.0,1.0" />
+    <output name="out" type="matrix33" />
+  </nodedef>
+</materialx>

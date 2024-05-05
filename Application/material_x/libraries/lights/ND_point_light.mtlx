@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_point_light" node="point_light" nodegroup="light" doc="A light shader node of 'point' type.">
+    <input name="position" type="vector3" doc="Light source position." />
+    <input name="color" type="color3" doc="Light color." />
+    <input name="intensity" type="float" doc="Light intensity." />
+    <input name="decay_rate" type="float" value="2.0" doc="Light decay exponent. Defaults to 2 for quadratic decay." />
+    <output name="out" type="lightshader" />
+  </nodedef>
+</materialx>

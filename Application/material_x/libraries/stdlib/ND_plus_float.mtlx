@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_plus_float" node="plus" nodegroup="compositing">
+    <input name="fg" type="float" value="0.0" />
+    <input name="bg" type="float" value="0.0" />
+    <input name="mix" type="float" value="1.0" />
+    <output name="out" type="float" />
+  </nodedef>
+</materialx>

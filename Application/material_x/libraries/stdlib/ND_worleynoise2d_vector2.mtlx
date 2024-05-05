@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_worleynoise2d_vector2" node="worleynoise2d" nodegroup="procedural2d">
+    <input name="texcoord" type="vector2" defaultgeomprop="UV0" />
+    <input name="jitter" type="float" value="1.0" />
+    <output name="out" type="vector2" />
+  </nodedef>
+</materialx>

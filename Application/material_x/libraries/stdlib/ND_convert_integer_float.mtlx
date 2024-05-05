@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_convert_integer_float" node="convert" nodegroup="channel">
+    <input name="in" type="integer" value="0" />
+    <output name="out" type="float" />
+  </nodedef>
+</materialx>

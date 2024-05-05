@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_gltf_colorimage" node="gltf_colorimage" version="1.0" isdefaultversion="true" nodegroup="texture2d">
+    <input name="file" type="filename" uniform="true" value="" uifolder="Image" />
+    <input name="default" type="color4" value="0, 0, 0, 0" uifolder="Image" />
+    <input name="texcoord" type="vector2" defaultgeomprop="UV0" uifolder="Image" />
+    <input name="pivot" type="vector2" value="0, 1" uifolder="Image" />
+    <input name="scale" type="vector2" value="1, 1" uifolder="Image" />
+    <input name="rotate" type="float" value="0" unit="degree" unittype="angle" uimin="0" uimax="360" uifolder="Image" />
+    <input name="offset" type="vector2" value="0, 0" uifolder="Image" />
+    <input name="operationorder" type="integer" value="1" uifolder="Image" />
+    <input name="uaddressmode" type="string" uniform="true" value="periodic" enum="constant,clamp,periodic,mirror" uifolder="Image" />
+    <input name="vaddressmode" type="string" uniform="true" value="periodic" enum="constant,clamp,periodic,mirror" uifolder="Image" />
+    <input name="filtertype" type="string" uniform="true" value="linear" enum="closest,linear,cubic" uifolder="Image" />
+    <input name="color" type="color4" value="1, 1, 1, 1" uifolder="Color" />
+    <input name="geomcolor" type="color4" value="1, 1, 1, 1" uifolder="Color" uiname="Geometry Color" />
+    <output name="outcolor" type="color3" />
+    <output name="outa" type="float" />
+  </nodedef>
+</materialx>

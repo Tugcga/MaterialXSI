@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_smoothstep_color3" node="smoothstep" nodegroup="adjustment">
+    <input name="in" type="color3" value="0.0, 0.0, 0.0" />
+    <input name="low" type="color3" value="0.0, 0.0, 0.0" />
+    <input name="high" type="color3" value="1.0, 1.0, 1.0" />
+    <output name="out" type="color3" />
+  </nodedef>
+</materialx>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_rotate2d_vector2" node="rotate2d" nodegroup="math">
+    <input name="in" type="vector2" value="0.0, 0.0" />
+    <input name="amount" type="float" value="0.0" unittype="angle" unit="degree" />
+    <output name="out" type="vector2" />
+  </nodedef>
+</materialx>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_ifgreater_vector3I" node="ifgreater" nodegroup="conditional">
+    <input name="value1" type="integer" value="1" />
+    <input name="value2" type="integer" value="0" />
+    <input name="in1" type="vector3" value="0.0, 0.0, 0.0" />
+    <input name="in2" type="vector3" value="0.0, 0.0, 0.0" />
+    <output name="out" type="vector3" />
+  </nodedef>
+</materialx>

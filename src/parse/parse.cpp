@@ -25,7 +25,6 @@
 
 // store two maps: from full name to short name and from short name to array of full names
 std::unordered_map<std::string, std::tuple<std::string, std::vector<std::tuple<std::string, std::string>>, std::vector<std::tuple<std::string, std::string>>>> fullname_to_data;
-std::unordered_map<std::string, std::vector<std::string>> short_to_fullname;
 
 std::unordered_map<std::string, std::tuple<std::string, std::vector<std::tuple<std::string, std::string>>, std::vector<std::tuple<std::string, std::string>>>> get_fullname_to_data() {
 	return fullname_to_data;
@@ -54,11 +53,28 @@ XSI::CStatus on_parse_info(XSI::Context& context) {
 
 	std::string library = get_library_name(filepath.GetAsciiString());
 
+	// we should set the following attributes:
+	// ClassName - this is the name of the shader in prog id
+	// MajorVersion and MinorVersion - by default set 1 and 0
+	// Category - where the shader placed in the hierarhy
+	// DisplayName - readable name of the class name
+	
+	// here we use the for-loop, but it properly works only for one definition
+	// the last definition reqrite data about all others
 	for (size_t i = 0; i < definitions.size(); i++) {
 		MaterialX::NodeDefPtr node_def = definitions[i];
 
+		// we skip nodes with material output
+		// in standart there are only two such nodes: surfacematerial and volumematerial
+		// we use these nodes implicitly when export material
+
 		std::string node_full_name = node_def->getName();
 		std::string node_name = node_def->getNodeString();
+		std::string node_group = node_def->getNodeGroup();
+
+		if (node_full_name == "ND_surfacematerial" || node_full_name == "ND_volumematerial") {
+			continue;
+		}
 
 		std::vector<std::tuple<std::string, std::string>> inputs_data;
 		std::vector<MaterialX::InputPtr> node_inputs = node_def->getInputs();
@@ -78,38 +94,6 @@ XSI::CStatus on_parse_info(XSI::Context& context) {
 		}
 		fullname_to_data.insert({ node_full_name, {node_name, inputs_data, outputs_data } });
 
-		auto search = short_to_fullname.find(node_name);
-		if (search != short_to_fullname.end()) {
-			search->second.push_back(node_full_name);
-		}
-		else {
-			short_to_fullname.insert({ node_name, {node_full_name} });
-		}
-	}
-
-	// we should set the following attributes:
-	// ClassName - this is the name of the shader in prog id
-	// MajorVersion and MinorVersion - by default set 1 and 0
-	// Category - where the shader placed in the hierarhy
-	// DisplayName - readable name of the class name
-	
-	// here we use the for-loop, but it properly works only for one definition
-	// the last definition reqrite data about all others
-	for (size_t i = 0; i < definitions.size(); i++) {
-		MaterialX::NodeDefPtr node_def = definitions[i];
-
-		// we skip nodes with material output
-		// in standart there are only two such nodes: surfacematerial and volumematerial
-		// we use these nodes implicitly when export material
-
-		std::string node_full_name = node_def->getName();
-		if (node_full_name == "ND_surfacematerial" || node_full_name == "ND_volumematerial") {
-			continue;
-		}
-
-		std::string node_name = node_def->getNodeString();
-		std::string node_group = node_def->getNodeGroup();
-
 		context.PutAttribute("ClassName", node_full_name.c_str());
 		context.PutAttribute("MajorVersion", 1);
 		context.PutAttribute("MinorVersion", 0);
@@ -124,13 +108,9 @@ XSI::CStatus on_parse_info(XSI::Context& context) {
 			category_str += "/" + XSI::CString(snake_to_space_cammel(node_group).c_str());
 		}
 
-		auto short_to_full_search = short_to_fullname.find(node_name);
-		if (short_to_full_search != short_to_fullname.end()) {
-			std::vector<std::string> full_names = short_to_full_search->second;
-			if (full_names.size() > 1) {
-				category_str += "/" + XSI::CString(snake_to_space_cammel(node_name).c_str());
-			}
-		}
+		// place all nodes inside category with short name
+		category_str += "/" + XSI::CString(snake_to_space_cammel(node_name).c_str());
+
 		context.PutAttribute("Category", category_str);
 		// finally we should set display name
 		// erase ND_ if it presented in full name

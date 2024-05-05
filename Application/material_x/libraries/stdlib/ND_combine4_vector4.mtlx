@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_combine4_vector4" node="combine4" nodegroup="channel">
+    <input name="in1" type="float" value="0.0" />
+    <input name="in2" type="float" value="0.0" />
+    <input name="in3" type="float" value="0.0" />
+    <input name="in4" type="float" value="0.0" />
+    <output name="out" type="vector4" />
+  </nodedef>
+</materialx>

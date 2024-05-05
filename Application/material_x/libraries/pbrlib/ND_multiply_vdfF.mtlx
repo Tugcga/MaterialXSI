@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_multiply_vdfF" node="multiply" nodegroup="pbr" defaultinput="in1" doc="A node for adjusting the contribution of an VDF with a weight.">
+    <input name="in1" type="VDF" value="" doc="The VDF to scale." />
+    <input name="in2" type="float" value="1.0" doc="Scaling weight." />
+    <output name="out" type="VDF" />
+  </nodedef>
+</materialx>

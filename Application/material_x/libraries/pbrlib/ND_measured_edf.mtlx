@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_measured_edf" node="measured_edf" nodegroup="pbr" doc="Constructs an EDF emitting light according to a measured IES light profile.">
+    <input name="color" type="color3" value="1.0, 1.0, 1.0" />
+    <input name="normal" type="vector3" defaultgeomprop="Nworld" />
+    <input name="file" type="filename" value="" uniform="true" />
+    <output name="out" type="EDF" />
+  </nodedef>
+</materialx>

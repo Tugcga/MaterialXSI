@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_mix_color4" node="mix" nodegroup="compositing">
+    <input name="fg" type="color4" value="0.0, 0.0, 0.0, 0.0" />
+    <input name="bg" type="color4" value="0.0, 0.0, 0.0, 0.0" />
+    <input name="mix" type="float" value="0.0" uisoftmin="0.0" uisoftmax="1.0" />
+    <output name="out" type="color4" />
+  </nodedef>
+</materialx>

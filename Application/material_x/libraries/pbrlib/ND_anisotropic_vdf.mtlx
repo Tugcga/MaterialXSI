@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_anisotropic_vdf" node="anisotropic_vdf" nodegroup="pbr" doc="Constructs a VDF scattering light for a participating medium, based on the Henyey-Greenstein phase function.">
+    <input name="absorption" type="vector3" value="0.0, 0.0, 0.0" />
+    <input name="scattering" type="vector3" value="0.0, 0.0, 0.0" />
+    <input name="anisotropy" type="float" value="0.0" />
+    <output name="out" type="VDF" />
+  </nodedef>
+</materialx>

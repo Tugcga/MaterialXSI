@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_invert_color4FA" node="invert" nodegroup="math">
+    <input name="in" type="color4" value="0.0, 0.0, 0.0, 0.0" />
+    <input name="amount" type="float" value="1.0" />
+    <output name="out" type="color4" />
+  </nodedef>
+</materialx>

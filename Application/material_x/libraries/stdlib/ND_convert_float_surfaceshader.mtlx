@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_convert_float_surfaceshader" node="convert" version="1.0" isdefaultversion="true" nodegroup="shader" doc="Convert float to shader">
+    <input name="in" type="float" value="0" />
+    <output name="out" type="surfaceshader" />
+  </nodedef>
+</materialx>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_constant_integer" node="constant" nodegroup="procedural">
+    <input name="value" type="integer" value="0" />
+    <output name="out" type="integer" />
+  </nodedef>
+</materialx>

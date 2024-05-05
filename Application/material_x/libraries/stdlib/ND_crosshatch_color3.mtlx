@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_crosshatch_color3" node="crosshatch" nodegroup="procedural2d">
+    <input name="texcoord" type="vector2" defaultgeomprop="UV0" />
+    <input name="uvtiling" type="vector2" value="1.0, 1.0" />
+    <input name="uvoffset" type="vector2" value="0.0, 0.0" />
+    <input name="thickness" type="float" value="0.05" />
+    <input name="staggered" type="boolean" value="false" />
+    <output name="out" type="color3" />
+  </nodedef>
+</materialx>

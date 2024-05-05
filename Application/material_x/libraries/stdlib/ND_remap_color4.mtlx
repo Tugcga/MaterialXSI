@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_remap_color4" node="remap" nodegroup="adjustment">
+    <input name="in" type="color4" value="0.0, 0.0, 0.0, 0.0" />
+    <input name="inlow" type="color4" value="0.0, 0.0, 0.0, 0.0" />
+    <input name="inhigh" type="color4" value="1.0, 1.0, 1.0, 1.0" />
+    <input name="outlow" type="color4" value="0.0, 0.0, 0.0, 0.0" />
+    <input name="outhigh" type="color4" value="1.0, 1.0, 1.0, 1.0" />
+    <output name="out" type="color4" />
+  </nodedef>
+</materialx>

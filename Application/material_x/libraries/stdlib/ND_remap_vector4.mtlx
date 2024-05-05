@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_remap_vector4" node="remap" nodegroup="adjustment">
+    <input name="in" type="vector4" value="0.0, 0.0, 0.0, 0.0" />
+    <input name="inlow" type="vector4" value="0.0, 0.0, 0.0, 0.0" />
+    <input name="inhigh" type="vector4" value="1.0, 1.0, 1.0, 1.0" />
+    <input name="outlow" type="vector4" value="0.0, 0.0, 0.0, 0.0" />
+    <input name="outhigh" type="vector4" value="1.0, 1.0, 1.0, 1.0" />
+    <output name="out" type="vector4" />
+  </nodedef>
+</materialx>

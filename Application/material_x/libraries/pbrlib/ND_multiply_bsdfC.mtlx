@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_multiply_bsdfC" node="multiply" nodegroup="pbr" defaultinput="in1" doc="A node for adjusting the contribution of a BSDF with a weight.">
+    <input name="in1" type="BSDF" value="" doc="The BSDF to scale." />
+    <input name="in2" type="color3" value="1.0, 1.0, 1.0" doc="Scaling weight." />
+    <output name="out" type="BSDF" />
+  </nodedef>
+</materialx>

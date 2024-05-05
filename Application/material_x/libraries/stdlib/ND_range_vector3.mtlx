@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_range_vector3" node="range" nodegroup="adjustment">
+    <input name="in" type="vector3" value="0.0, 0.0, 0.0" />
+    <input name="inlow" type="vector3" value="0.0, 0.0, 0.0" />
+    <input name="inhigh" type="vector3" value="1.0, 1.0, 1.0" />
+    <input name="gamma" type="vector3" value="1.0, 1.0, 1.0" />
+    <input name="outlow" type="vector3" value="0.0, 0.0, 0.0" />
+    <input name="outhigh" type="vector3" value="1.0, 1.0, 1.0" />
+    <input name="doclamp" type="boolean" value="false" />
+    <output name="out" type="vector3" />
+  </nodedef>
+</materialx>

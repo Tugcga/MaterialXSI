@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_geompropvalue_boolean" node="geompropvalue" nodegroup="geometric">
+    <input name="geomprop" type="string" value="" uniform="true" />
+    <input name="default" type="boolean" value="false" />
+    <output name="out" type="boolean" />
+  </nodedef>
+</materialx>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_arrayappend_vector3array_vector3array" node="arrayappend" nodegroup="math">
+    <input name="in1" type="vector3array" value="" />
+    <input name="in2" type="vector3" value="0.0, 0.0, 0.0" />
+    <output name="out" type="vector3array" />
+  </nodedef>
+</materialx>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_curveadjust_float" node="curveadjust" nodegroup="adjustment">
+    <input name="in" type="float" value="0.0" />
+    <input name="knots" type="vector2array" value="" />
+    <output name="out" type="float" />
+  </nodedef>
+</materialx>

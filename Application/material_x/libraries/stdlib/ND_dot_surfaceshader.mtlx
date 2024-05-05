@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_dot_surfaceshader" node="dot" nodegroup="organization">
+    <input name="in" type="surfaceshader" value="" />
+    <input name="note" type="string" value="" uniform="true" />
+    <output name="out" type="surfaceshader" />
+  </nodedef>
+</materialx>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_range_color3" node="range" nodegroup="adjustment">
+    <input name="in" type="color3" value="0.0, 0.0, 0.0" />
+    <input name="inlow" type="color3" value="0.0, 0.0, 0.0" />
+    <input name="inhigh" type="color3" value="1.0, 1.0, 1.0" />
+    <input name="gamma" type="color3" value="1.0, 1.0, 1.0" />
+    <input name="outlow" type="color3" value="0.0, 0.0, 0.0" />
+    <input name="outhigh" type="color3" value="1.0, 1.0, 1.0" />
+    <input name="doclamp" type="boolean" value="false" />
+    <output name="out" type="color3" />
+  </nodedef>
+</materialx>

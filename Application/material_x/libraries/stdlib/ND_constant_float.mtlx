@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_constant_float" node="constant" nodegroup="procedural">
+    <input name="value" type="float" value="0.0" />
+    <output name="out" type="float" />
+  </nodedef>
+</materialx>

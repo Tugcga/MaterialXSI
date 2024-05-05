@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_frame_float" node="frame" nodegroup="application">
+    <output name="out" type="float" />
+  </nodedef>
+</materialx>

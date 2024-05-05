@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_mix_vector2_vector2" node="mix" nodegroup="compositing">
+    <input name="fg" type="vector2" value="0.0, 0.0" />
+    <input name="bg" type="vector2" value="0.0, 0.0" />
+    <input name="mix" type="vector2" value="0.0, 0.0" uisoftmin="0,0" uisoftmax="1,1" />
+    <output name="out" type="vector2" />
+  </nodedef>
+</materialx>

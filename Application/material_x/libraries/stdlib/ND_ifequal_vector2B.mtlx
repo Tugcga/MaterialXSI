@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_ifequal_vector2B" node="ifequal" nodegroup="conditional">
+    <input name="value1" type="boolean" value="false" />
+    <input name="value2" type="boolean" value="false" />
+    <input name="in1" type="vector2" value="0.0, 0.0" />
+    <input name="in2" type="vector2" value="0.0, 0.0" />
+    <output name="out" type="vector2" />
+  </nodedef>
+</materialx>

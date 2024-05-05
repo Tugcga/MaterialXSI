@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_surface" node="surface" nodegroup="pbr" doc="A constructor node for the surfaceshader type.">
+    <input name="bsdf" type="BSDF" value="" doc="Distribution function for surface scattering." />
+    <input name="edf" type="EDF" value="" doc="Distribution function for surface emission." />
+    <input name="opacity" type="float" value="1.0" doc="Surface cutout opacity" />
+    <output name="out" type="surfaceshader" />
+  </nodedef>
+</materialx>

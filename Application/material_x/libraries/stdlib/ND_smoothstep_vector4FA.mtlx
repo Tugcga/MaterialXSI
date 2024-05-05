@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_smoothstep_vector4FA" node="smoothstep" nodegroup="adjustment">
+    <input name="in" type="vector4" value="0.0, 0.0, 0.0, 0.0" />
+    <input name="low" type="float" value="0.0" />
+    <input name="high" type="float" value="1.0" />
+    <output name="out" type="vector4" />
+  </nodedef>
+</materialx>

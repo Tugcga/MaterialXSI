@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_dot_float" node="dot" nodegroup="organization">
+    <input name="in" type="float" value="0.0" />
+    <input name="note" type="string" value="" uniform="true" />
+    <output name="out" type="float" />
+  </nodedef>
+</materialx>

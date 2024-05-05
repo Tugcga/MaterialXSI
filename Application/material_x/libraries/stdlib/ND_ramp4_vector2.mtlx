@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_ramp4_vector2" node="ramp4" nodegroup="procedural2d">
+    <input name="valuetl" type="vector2" value="0.0, 0.0" />
+    <input name="valuetr" type="vector2" value="0.0, 0.0" />
+    <input name="valuebl" type="vector2" value="0.0, 0.0" />
+    <input name="valuebr" type="vector2" value="0.0, 0.0" />
+    <input name="texcoord" type="vector2" defaultgeomprop="UV0" />
+    <output name="out" type="vector2" />
+  </nodedef>
+</materialx>

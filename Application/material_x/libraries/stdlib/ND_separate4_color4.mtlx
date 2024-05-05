@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_separate4_color4" node="separate4" nodegroup="channel">
+    <input name="in" type="color4" value="0.0, 0.0, 0.0, 0.0" />
+    <output name="outr" type="float" />
+    <output name="outg" type="float" />
+    <output name="outb" type="float" />
+    <output name="outa" type="float" />
+  </nodedef>
+</materialx>

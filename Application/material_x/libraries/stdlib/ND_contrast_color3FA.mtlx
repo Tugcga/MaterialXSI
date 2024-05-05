@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_contrast_color3FA" node="contrast" nodegroup="adjustment">
+    <input name="in" type="color3" value="0.0, 0.0, 0.0" />
+    <input name="amount" type="float" value="1.0" />
+    <input name="pivot" type="float" value="0.5" />
+    <output name="out" type="color3" />
+  </nodedef>
+</materialx>

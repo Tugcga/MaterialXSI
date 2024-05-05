@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_transformpoint_vector3" node="transformpoint" nodegroup="math">
+    <input name="in" type="vector3" value="0.0, 0.0, 0.0" />
+    <input name="fromspace" type="string" value="" uniform="true" />
+    <input name="tospace" type="string" value="" uniform="true" />
+    <output name="out" type="vector3" />
+  </nodedef>
+</materialx>

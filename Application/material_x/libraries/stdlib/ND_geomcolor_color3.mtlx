@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_geomcolor_color3" node="geomcolor" nodegroup="geometric">
+    <input name="index" type="integer" value="0" uniform="true" />
+    <output name="out" type="color3" />
+  </nodedef>
+</materialx>

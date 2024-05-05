@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_light" node="light" nodegroup="pbr" doc="A constructor node for the lightshader type.">
+    <input name="edf" type="EDF" value="" doc="Distribution function for light emission." />
+    <input name="intensity" type="float" value="1.0" doc="Multiplier for the light intensity" />
+    <input name="exposure" type="float" value="0.0" doc="Exposure control for the light intensity" />
+    <output name="out" type="lightshader" />
+  </nodedef>
+</materialx>

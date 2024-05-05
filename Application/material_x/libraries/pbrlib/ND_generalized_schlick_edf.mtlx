@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_generalized_schlick_edf" node="generalized_schlick_edf" nodegroup="pbr" doc="Modifies an EDF with a directional factor.">
+    <input name="color0" type="color3" value="1.0, 1.0, 1.0" />
+    <input name="color90" type="color3" value="1.0, 1.0, 1.0" />
+    <input name="exponent" type="float" value="5.0" />
+    <input name="base" type="EDF" value="" />
+    <output name="out" type="EDF" />
+  </nodedef>
+</materialx>

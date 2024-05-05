@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_absorption_vdf" node="absorption_vdf" nodegroup="pbr" doc="Constructs a VDF for pure light absorption.">
+    <input name="absorption" type="vector3" value="0.0, 0.0, 0.0" />
+    <output name="out" type="VDF" />
+  </nodedef>
+</materialx>

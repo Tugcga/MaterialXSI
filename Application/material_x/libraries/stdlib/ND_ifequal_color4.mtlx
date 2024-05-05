@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_ifequal_color4" node="ifequal" nodegroup="conditional">
+    <input name="value1" type="float" value="0.0" />
+    <input name="value2" type="float" value="0.0" />
+    <input name="in1" type="color4" value="0.0, 0.0, 0.0, 0.0" />
+    <input name="in2" type="color4" value="0.0, 0.0, 0.0, 0.0" />
+    <output name="out" type="color4" />
+  </nodedef>
+</materialx>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_ramplr_float" node="ramplr" nodegroup="procedural2d">
+    <input name="valuel" type="float" value="0.0" />
+    <input name="valuer" type="float" value="0.0" />
+    <input name="texcoord" type="vector2" defaultgeomprop="UV0" />
+    <output name="out" type="float" />
+  </nodedef>
+</materialx>

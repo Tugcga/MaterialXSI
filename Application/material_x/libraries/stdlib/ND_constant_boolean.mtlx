@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_constant_boolean" node="constant" nodegroup="procedural">
+    <input name="value" type="boolean" value="false" />
+    <output name="out" type="boolean" />
+  </nodedef>
+</materialx>

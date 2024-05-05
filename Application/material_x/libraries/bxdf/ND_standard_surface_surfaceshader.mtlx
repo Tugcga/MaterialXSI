@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_standard_surface_surfaceshader" node="standard_surface" nodegroup="pbr" version="1.0.1" isdefaultversion="true" inherit="ND_standard_surface_surfaceshader_100" doc="Autodesk standard surface shader">
+    <input name="base" type="float" value="1.0" uimin="0.0" uimax="1.0" uiname="Base" uifolder="Base" doc="Multiplier on the intensity of the diffuse reflection." />
+    <input name="base_color" type="color3" value="0.8, 0.8, 0.8" uimin="0,0,0" uimax="1,1,1" uiname="Base Color" uifolder="Base" doc="Color of the diffuse reflection." />
+  </nodedef>
+</materialx>

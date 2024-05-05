@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_invert_vector2" node="invert" nodegroup="math">
+    <input name="in" type="vector2" value="0.0, 0.0" />
+    <input name="amount" type="vector2" value="1.0, 1.0" />
+    <output name="out" type="vector2" />
+  </nodedef>
+</materialx>

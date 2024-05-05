@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_blur_float" node="blur" nodegroup="convolution2d">
+    <input name="in" type="float" value="0.0" />
+    <input name="size" type="float" value="0.0" />
+    <input name="filtertype" type="string" value="box" enum="box,gaussian" uniform="true" />
+    <output name="out" type="float" />
+  </nodedef>
+</materialx>

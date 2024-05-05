@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_conical_edf" node="conical_edf" nodegroup="pbr" doc="Constructs an EDF emitting light inside a cone around the normal direction.">
+    <input name="color" type="color3" value="1.0, 1.0, 1.0" />
+    <input name="normal" type="vector3" defaultgeomprop="Nworld" />
+    <input name="inner_angle" type="float" value="60.0" />
+    <input name="outer_angle" type="float" value="0.0" />
+    <output name="out" type="EDF" />
+  </nodedef>
+</materialx>

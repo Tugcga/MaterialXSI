@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_constant_filename" node="constant" nodegroup="procedural">
+    <input name="value" type="filename" value="" uniform="true" />
+    <output name="out" type="filename" />
+  </nodedef>
+</materialx>

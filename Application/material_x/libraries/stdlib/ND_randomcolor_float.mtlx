@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_randomcolor_float" node="randomcolor" nodegroup="procedural3d">
+    <input name="in" type="float" uiname="Input" uisoftmin="0.0" uisoftmax="10.0" value="0.0" />
+    <input name="huelow" type="float" uiname="Hue Low" uisoftmin="0.0" uisoftmax="1.0" value="0" />
+    <input name="huehigh" type="float" uiname="Hue High" uisoftmin="0.0" uisoftmax="1.0" value="1" />
+    <input name="saturationlow" type="float" uiname="Saturation Low" uisoftmin="0.0" uisoftmax="1.0" value="0.825" />
+    <input name="saturationhigh" type="float" uiname="Saturation High" uisoftmin="0.0" uisoftmax="1.0" value="1" />
+    <input name="brightnesslow" type="float" uiname="Brightness Low" uisoftmin="0.0" uisoftmax="1.0" value="1" />
+    <input name="brightnesshigh" type="float" uiname="Brightness High" uisoftmin="0.0" uisoftmax="1.0" value="1" />
+    <input name="seed" type="integer" uiname="Seed" value="0" />
+    <output name="out" type="color3" />
+  </nodedef>
+</materialx>
