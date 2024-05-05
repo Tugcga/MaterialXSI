@@ -23,6 +23,7 @@
 #include "export_utilities.h"
 #include "../utilities/logging.h"
 #include "../utilities/array.h"
+#include "../utilities/string.h"
 
 MaterialX::NodePtr get_or_create_node(std::unordered_map<ULONG, MaterialX::NodePtr>& id_to_node,
 									  ULONG node_id,
@@ -458,6 +459,9 @@ MaterialX::NodePtr shader_to_node(const XSI::Shader& xsi_shader,
 						XSI::CValue xsi_sugg_max = param.GetSuggestedMax();
 						if (!xsi_sugg_min.IsEmpty()) { input->setAttribute("uimin", value_to_string(xsi_sugg_min)); }
 						if (!xsi_sugg_max.IsEmpty()) { input->setAttribute("uimax", value_to_string(xsi_sugg_max)); }
+					}
+					else {
+						node_def->addInput(parameter_name, parameter_type_to_string(xsi_type));
 					}
 				}
 				if (is_output) {

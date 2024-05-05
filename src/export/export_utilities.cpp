@@ -39,17 +39,6 @@ XSI::ShaderParameter get_finall_parameter(const XSI::ShaderParameter& parameter)
 	}
 }
 
-std::string prog_id_to_name(const XSI::CString& prog_id) {
-	// split by point and extract the second part
-	// prog id has the form: Plugin.Name.Version.MinVersion
-	XSI::CStringArray parts = prog_id.Split(".");
-	if (parts.GetCount() > 1) {
-		return parts[1].GetAsciiString();
-	}
-
-	return "";
-}
-
 size_t get_shader_outputs_count(const XSI::Shader& xsi_shader, std::string& out_last_output) {
 	size_t to_return = 0;
 	XSI::CParameterRefArray shader_parameters = xsi_shader.GetParameters();

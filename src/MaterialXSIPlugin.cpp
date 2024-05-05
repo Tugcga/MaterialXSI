@@ -10,9 +10,11 @@
 #include <xsi_status.h>
 #include <xsi_command.h>
 #include <xsi_argument.h>
+#include <xsi_context.h>
 
 #include "utilities/logging.h"
 #include "export/export.h"
+#include "parse/parse.h"
 
 SICALLBACK XSILoadPlugin(XSI::PluginRegistrar& in_reg) {
 	in_reg.PutAuthor("Shekn");
@@ -20,6 +22,7 @@ SICALLBACK XSILoadPlugin(XSI::PluginRegistrar& in_reg) {
 	in_reg.PutVersion(1, 0);
 	//RegistrationInsertionPoint - do not remove this line
 	in_reg.RegisterCommand("MaterialXSIExport", "MaterialXSIExport");
+	in_reg.RegisterShaderLanguageParser("MaterialXSIParser");
 
 	return XSI::CStatus::OK;
 }
@@ -105,3 +108,21 @@ SICALLBACK MaterialXSIExport_Execute(XSI::CRef& in_ctxt) {
 	return XSI::CStatus::OK;
 }
 
+
+SICALLBACK MaterialXSIParser_QueryParserSettings(XSI::CRef& in_ctxt) {
+	XSI::Context context(in_ctxt);
+
+	return on_query_parser_settings(context);
+}
+
+SICALLBACK MaterialXSIParser_ParseInfo(XSI::CRef& in_ctxt) {
+	XSI::Context context(in_ctxt);
+
+	return on_parse_info(context);
+}
+
+SICALLBACK MaterialXSIParser_Parse(XSI::CRef& in_ctxt) {
+	XSI::Context context(in_ctxt);
+
+	return on_parse(context);
+}

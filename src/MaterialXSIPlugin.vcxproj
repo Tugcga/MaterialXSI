@@ -75,16 +75,22 @@
     <ClCompile Include="export\export_names.cpp" />
     <ClCompile Include="export\export_node.cpp" />
     <ClCompile Include="export\export_utilities.cpp" />
+    <ClCompile Include="parse\convert_types.cpp" />
+    <ClCompile Include="parse\parse.cpp" />
     <ClCompile Include="utilities\array.cpp" />
     <ClCompile Include="utilities\logging.cpp" />
+    <ClCompile Include="utilities\string.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="export\export.h" />
     <ClInclude Include="export\export_names.h" />
     <ClInclude Include="export\export_options.h" />
     <ClInclude Include="export\export_utilities.h" />
+    <ClInclude Include="parse\convert_types.h" />
+    <ClInclude Include="parse\parse.h" />
     <ClInclude Include="utilities\array.h" />
     <ClInclude Include="utilities\logging.h" />
+    <ClInclude Include="utilities\string.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

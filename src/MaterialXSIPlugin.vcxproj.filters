@@ -23,6 +23,15 @@
     <ClCompile Include="utilities\array.cpp">
       <Filter>utilities</Filter>
     </ClCompile>
+    <ClCompile Include="parse\parse.cpp">
+      <Filter>parse</Filter>
+    </ClCompile>
+    <ClCompile Include="utilities\string.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="parse\convert_types.cpp">
+      <Filter>parse</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="utilities">
@@ -30,6 +39,9 @@
     </Filter>
     <Filter Include="export">
       <UniqueIdentifier>{ac966285-c725-4feb-b6d4-3f0bbd1b0bf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="parse">
+      <UniqueIdentifier>{1a806466-fc94-409c-b5c8-1df04e2fe654}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -50,6 +62,15 @@
     </ClInclude>
     <ClInclude Include="utilities\array.h">
       <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="parse\parse.h">
+      <Filter>parse</Filter>
+    </ClInclude>
+    <ClInclude Include="utilities\string.h">
+      <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="parse\convert_types.h">
+      <Filter>parse</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
