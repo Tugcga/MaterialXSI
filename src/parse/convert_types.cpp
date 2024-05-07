@@ -30,19 +30,7 @@ XSI::siShaderParameterDataType mx_type_to_xsi(const std::string& mx_type) {
 	else if (mx_type == "volumeshader") { return XSI::siShaderParameterDataType::siShaderDataTypeColor4; }
 	else if (mx_type == "lightshader") { return XSI::siShaderParameterDataType::siShaderDataTypeColor4; }
 	else if (mx_type == "material") { return XSI::siShaderParameterDataType::siShaderDataTypeColor4; }  // also does not used
-	else if (mx_type == "integerarray") { return XSI::siShaderParameterDataType::siShaderDataTypeInteger; }
-	else if (mx_type == "floatarray") { return XSI::siShaderParameterDataType::siShaderDataTypeScalar; }
-	else if (mx_type == "color3array") { return XSI::siShaderParameterDataType::siShaderDataTypeColor3; }
-	else if (mx_type == "color4array") { return XSI::siShaderParameterDataType::siShaderDataTypeColor4; }
-	else if (mx_type == "vector2array") { return XSI::siShaderParameterDataType::siShaderDataTypeVector2; }
-	else if (mx_type == "vector3array") { return XSI::siShaderParameterDataType::siShaderDataTypeVector3; }
-	else if (mx_type == "vector4array") { return XSI::siShaderParameterDataType::siShaderDataTypeVector4; }
-	else if (mx_type == "stringarray") { return XSI::siShaderParameterDataType::siShaderDataTypeString; }
-	else if (mx_type == "geomnamearray") { return XSI::siShaderParameterDataType::siShaderDataTypeString; }
-	else if (mx_type == "BSDF") { return XSI::siShaderParameterDataType::siShaderDataTypeColor4; }
-	else if (mx_type == "EDF") { return XSI::siShaderParameterDataType::siShaderDataTypeColor4; }
-	else if (mx_type == "VDF") { return XSI::siShaderParameterDataType::siShaderDataTypeColor4; }
-	else { return XSI::siShaderParameterDataType::siShaderDataTypeColor4; }
+	else { return XSI::siShaderParameterDataType::siShaderDataTypeUnknown; }  // all other types are custom
 }
 
 bool is_visible_in_ppg(const std::string& mx_type) {

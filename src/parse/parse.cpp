@@ -34,6 +34,24 @@ XSI::CStatus on_query_parser_settings(XSI::Context& context) {
 	context.PutAttribute("FileTypes", ".mtlx");
 	context.PutAttribute("Folders", "material_x");
 
+	XSI::CStringArray type_filter, family_filter;
+	// for surfaceshader, displacementshader, volumeshader and lightshader color4 and float (for displacement)
+	// register all other unsupported types
+
+	XSI::Application().RegisterShaderCustomParameterType("integerarray", "integerarray", "integerarray", 32, 128, 32, type_filter, family_filter);  // integer color 0, 128, 0
+	XSI::Application().RegisterShaderCustomParameterType("floatarray", "floatarray", "floatarray", 32, 230, 96, type_filter, family_filter);  // 0, 230, 64
+	XSI::Application().RegisterShaderCustomParameterType("color3array", "color3array", "color3array", 230, 32, 32, type_filter, family_filter);  // 230, 0, 0
+	XSI::Application().RegisterShaderCustomParameterType("color4array", "color4array", "color4array", 230, 32, 32, type_filter, family_filter);
+	XSI::Application().RegisterShaderCustomParameterType("vector2array", "vector2array", "vector2array", 179, 179, 59, type_filter, family_filter);  // 179, 179, 27
+	XSI::Application().RegisterShaderCustomParameterType("vector3array", "vector3array", "vector3array", 205, 205, 61, type_filter, family_filter);  // 205, 205, 29
+	XSI::Application().RegisterShaderCustomParameterType("vector4array", "vector4array", "vector4array", 230, 230, 64, type_filter, family_filter);  // 230, 230, 32
+	XSI::Application().RegisterShaderCustomParameterType("stringarray", "stringarray", "stringarray", 76, 156, 223, type_filter, family_filter);
+
+	// from pbrlib
+	XSI::Application().RegisterShaderCustomParameterType("BSDF", "BSDF", "BSDF", 242, 168, 10, type_filter, family_filter);
+	XSI::Application().RegisterShaderCustomParameterType("EDF", "EDF", "EDF", 93, 199, 47, type_filter, family_filter);
+	XSI::Application().RegisterShaderCustomParameterType("VDF", "VDF", "VDF", 140, 47, 199, type_filter, family_filter);
+
 	return XSI::CStatus::OK;
 }
 
@@ -255,7 +273,14 @@ XSI::CStatus on_parse(XSI::Context& context) {
 		options.SetLongName(xsi_ui_name);
 
 		// define input parameter
-		XSI::ShaderParamDef shader_param_def = shader_inputs.AddParamDef(input_name.c_str(), xsi_type, options);
+		if (xsi_type != XSI::siShaderParameterDataType::siShaderDataTypeUnknown) {
+			shader_inputs.AddParamDef(input_name.c_str(), xsi_type, options);
+		}
+		else {
+			// for non-recognizable type use castom string
+			// all of them are registered before
+			shader_inputs.AddParamDef(input_name.c_str(), input_type.c_str(), options);
+		}
 
 		// next add this input to ppg
 		if (is_visible_in_ppg(input_type)) {
@@ -305,7 +330,13 @@ XSI::CStatus on_parse(XSI::Context& context) {
 		std::string output_type = mx_output->getType();
 
 		output_options.SetLongName(snake_to_space_cammel(output_name).c_str());
-		shader_outputs.AddParamDef(output_name.c_str(), mx_type_to_xsi(output_type), output_options);
+		XSI::siShaderParameterDataType xsi_out_type = mx_type_to_xsi(output_type);
+		if (xsi_out_type != XSI::siShaderParameterDataType::siShaderDataTypeUnknown) {
+			shader_outputs.AddParamDef(output_name.c_str(), xsi_out_type, output_options);
+		}
+		else {
+			shader_outputs.AddParamDef(output_name.c_str(), output_type.c_str(), output_options);
+		}
 	}
 
 	// render target
