@@ -25,11 +25,6 @@ XSI::siShaderParameterDataType mx_type_to_xsi(const std::string& mx_type) {
 	else if (mx_type == "string") { return XSI::siShaderParameterDataType::siShaderDataTypeString; }
 	else if (mx_type == "filename") { return XSI::siShaderParameterDataType::siShaderDataTypeImage; }
 	else if (mx_type == "geomname") { return XSI::siShaderParameterDataType::siShaderDataTypeString; }  // <-- does not used in MaterialX library
-	else if (mx_type == "surfaceshader") { return XSI::siShaderParameterDataType::siShaderDataTypeColor4; }
-	else if (mx_type == "displacementshader") { return XSI::siShaderParameterDataType::siShaderDataTypeScalar; }
-	else if (mx_type == "volumeshader") { return XSI::siShaderParameterDataType::siShaderDataTypeColor4; }
-	else if (mx_type == "lightshader") { return XSI::siShaderParameterDataType::siShaderDataTypeColor4; }
-	else if (mx_type == "material") { return XSI::siShaderParameterDataType::siShaderDataTypeColor4; }  // also does not used
 	else { return XSI::siShaderParameterDataType::siShaderDataTypeUnknown; }  // all other types are custom
 }
 

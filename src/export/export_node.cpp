@@ -81,6 +81,7 @@ bool add_input_to_node(MaterialX::NodePtr& node,
 					   const XSI::siShaderParameterDataType xsi_type, 
 					   const ExportOptions& export_options) {
 	std::string type_string = parameter_type_to_string(xsi_type);
+	// TODO: properly consider custom input port types
 	if (xsi_type == XSI::siShaderDataTypeBoolean) {
 		if (mode == SubjectMode::NODE) { node->setInputValue(name, (bool)xsi_value); }
 		else if (mode == SubjectMode::GRAPH) { graph->setInputValue(name, (bool)xsi_value);  }
@@ -428,6 +429,7 @@ MaterialX::NodePtr shader_to_node(const XSI::Shader& xsi_shader,
 	if (outputs_count > 1) {
 		node_output_type = multioutput_name();
 	}
+
 	std::string render_name = prog_id_to_render(prog_id);
 	if (export_options.insert_nodedefs && render_name != materialx_render()) {
 		// for non-default shaders we can export also all node defs
@@ -493,6 +495,7 @@ MaterialX::NodePtr shader_to_node(const XSI::Shader& xsi_shader,
 
 			if (is_input) {
 				bool is_add = add_input_to_node(node, temp_graph, temp_def, SubjectMode::NODE, parameter_name, param.GetValue(), param, xsi_type, export_options);
+				// TODO: if fail to add input (if the type is non-build-in), then propagate in any case, may be it connected to something
 				if (is_add) {
 					propagate_connection(param, mx_doc, mx_graph, use_doc, node->getInput(parameter_name), temp_output, true, id_to_node, id_to_graph, stop_names, export_options);
 				}

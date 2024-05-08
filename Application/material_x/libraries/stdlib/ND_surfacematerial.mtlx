@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+  <nodedef name="ND_surfacematerial" node="surfacematerial" nodegroup="material">
+    <input name="surfaceshader" type="surfaceshader" value="" />
+    <input name="displacementshader" type="displacementshader" value="" />
+    <output name="out" type="material" />
+  </nodedef>
+</materialx>

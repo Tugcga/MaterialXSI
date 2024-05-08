@@ -56,7 +56,7 @@ std::string prog_id_to_render(const XSI::CString& prog_id) {
 	if (parts.GetCount() > 0) {
 		XSI::CString plugin = parts[0];
 
-		if (plugin == "MaterialXSIPlugin") {
+		if (plugin == "MaterialXSIParser") {
 			return "MaterialX";
 		}
 		else if (plugin == "CyclesShadersPlugin") {

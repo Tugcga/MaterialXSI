@@ -35,8 +35,10 @@ XSI::CStatus on_query_parser_settings(XSI::Context& context) {
 	context.PutAttribute("Folders", "material_x");
 
 	XSI::CStringArray type_filter, family_filter;
-	// for surfaceshader, displacementshader, volumeshader and lightshader color4 and float (for displacement)
-	// register all other unsupported types
+	XSI::Application().RegisterShaderCustomParameterType("surfaceshader", "surfaceshader", "surfaceshader", 237, 150, 92, type_filter, family_filter);
+	XSI::Application().RegisterShaderCustomParameterType("displacementshader", "displacementshader", "displacementshader", 126, 212, 146, type_filter, family_filter);
+	XSI::Application().RegisterShaderCustomParameterType("volumeshader", "volumeshader", "volumeshader", 155, 152, 225, type_filter, family_filter);
+	XSI::Application().RegisterShaderCustomParameterType("lightshader", "lightshader", "lightshader", 254, 226, 130, type_filter, family_filter);
 
 	XSI::Application().RegisterShaderCustomParameterType("integerarray", "integerarray", "integerarray", 32, 128, 32, type_filter, family_filter);  // integer color 0, 128, 0
 	XSI::Application().RegisterShaderCustomParameterType("floatarray", "floatarray", "floatarray", 32, 230, 96, type_filter, family_filter);  // 0, 230, 64
@@ -49,8 +51,8 @@ XSI::CStatus on_query_parser_settings(XSI::Context& context) {
 
 	// from pbrlib
 	XSI::Application().RegisterShaderCustomParameterType("BSDF", "BSDF", "BSDF", 242, 168, 10, type_filter, family_filter);
-	XSI::Application().RegisterShaderCustomParameterType("EDF", "EDF", "EDF", 93, 199, 47, type_filter, family_filter);
-	XSI::Application().RegisterShaderCustomParameterType("VDF", "VDF", "VDF", 140, 47, 199, type_filter, family_filter);
+	XSI::Application().RegisterShaderCustomParameterType("EDF", "EDF", "EDF", 97, 170, 53, type_filter, family_filter);
+	XSI::Application().RegisterShaderCustomParameterType("VDF", "VDF", "VDF", 200, 133, 231, type_filter, family_filter);
 
 	return XSI::CStatus::OK;
 }
@@ -89,28 +91,6 @@ XSI::CStatus on_parse_info(XSI::Context& context) {
 		std::string node_full_name = node_def->getName();
 		std::string node_name = node_def->getNodeString();
 		std::string node_group = node_def->getNodeGroup();
-
-		if (node_full_name == "ND_surfacematerial" || node_full_name == "ND_volumematerial") {
-			continue;
-		}
-
-		std::vector<std::tuple<std::string, std::string>> inputs_data;
-		std::vector<MaterialX::InputPtr> node_inputs = node_def->getInputs();
-		for (size_t j = 0; j < node_inputs.size(); j++) {
-			MaterialX::InputPtr input = node_inputs[j];
-			std::string input_name = input->getName();
-			std::string input_type = input->getType();
-			inputs_data.push_back({ input_name, input_type });
-		}
-		std::vector<std::tuple<std::string, std::string>> outputs_data;
-		std::vector<MaterialX::OutputPtr> node_outputs = node_def->getOutputs();
-		for (size_t j = 0; j < node_outputs.size(); j++) {
-			MaterialX::OutputPtr output = node_outputs[j];
-			std::string output_name = output->getName();
-			std::string output_type = output->getType();
-			outputs_data.push_back({ output_name, output_type });
-		}
-		fullname_to_data.insert({ node_full_name, {node_name, inputs_data, outputs_data } });
 
 		context.PutAttribute("ClassName", node_full_name.c_str());
 		context.PutAttribute("MajorVersion", 1);
@@ -161,6 +141,27 @@ XSI::CStatus on_parse(XSI::Context& context) {
 	std::string class_name = prog_id_to_name(shader_prog_id);
 	MaterialX::NodeDefPtr mx_def = doc->getNodeDef(class_name);
 
+	// at first we should store names and types of input and output ports
+	std::vector<std::tuple<std::string, std::string>> inputs_data;
+	std::vector<MaterialX::InputPtr> mx_inputs = mx_def->getInputs();
+	for (size_t j = 0; j < mx_inputs.size(); j++) {
+		MaterialX::InputPtr input = mx_inputs[j];
+		std::string input_name = input->getName();
+		std::string input_type = input->getType();
+		inputs_data.push_back({ input_name, input_type });
+	}
+	std::vector<std::tuple<std::string, std::string>> outputs_data;
+	std::vector<MaterialX::OutputPtr> mx_outputs = mx_def->getOutputs();
+	for (size_t j = 0; j < mx_outputs.size(); j++) {
+		MaterialX::OutputPtr output = mx_outputs[j];
+		std::string output_name = output->getName();
+		std::string output_type = output->getType();
+		outputs_data.push_back({ output_name, output_type });
+	}
+	std::string node_name = mx_def->getName();
+	// store in the dictionary
+	fullname_to_data.insert({ class_name, {node_name, inputs_data, outputs_data } });
+
 	// for the shader we should define:
 	// shader family
 	// inputs
@@ -173,18 +174,27 @@ XSI::CStatus on_parse(XSI::Context& context) {
 	// if the node has output with surfaceshader type, then it's main material node, set it siShaderFamilySurfaceMat
 	// with output volumeshader - siShaderFamilyVolume
 	// all other are siShaderFamilyTexture
-	std::vector<MaterialX::OutputPtr> mx_outputs = mx_def->getOutputs();
 	bool is_define_family = false;
 	for (size_t i = 0; i < mx_outputs.size(); i++) {
 		MaterialX::OutputPtr mx_output = mx_outputs[i];
 		std::string mx_output_type = mx_output->getType();
-		if (mx_output_type == "surfaceshader") {
+		if (mx_output_type == "surfaceshader" || mx_output_type == "displacementshader") {
 			shader_def.AddShaderFamily(XSI::siShaderFamilySurfaceMat);
+			is_define_family = true;
+			break;
+		}
+		else if (mx_output_type == "lightshader") {
+			shader_def.AddShaderFamily(XSI::siShaderFamilyLight);
 			is_define_family = true;
 			break;
 		}
 		else if (mx_output_type == "volumeshader") {
 			shader_def.AddShaderFamily(XSI::siShaderFamilyVolume);
+			is_define_family = true;
+			break;
+		}
+		else if (mx_output_type == "material") {
+			shader_def.AddShaderFamily(XSI::siShaderFamilyPhenomMat);
 			is_define_family = true;
 			break;
 		}
@@ -201,7 +211,6 @@ XSI::CStatus on_parse(XSI::Context& context) {
 
 	// input ports
 	XSI::ShaderParamDefContainer shader_inputs = shader_def.GetInputParamDefs();
-	std::vector<MaterialX::InputPtr> mx_inputs = mx_def->getInputs();
 	for (size_t i = 0; i < mx_inputs.size(); i++) {
 		MaterialX::InputPtr mx_input = mx_inputs[i];
 
@@ -330,12 +339,21 @@ XSI::CStatus on_parse(XSI::Context& context) {
 		std::string output_type = mx_output->getType();
 
 		output_options.SetLongName(snake_to_space_cammel(output_name).c_str());
-		XSI::siShaderParameterDataType xsi_out_type = mx_type_to_xsi(output_type);
-		if (xsi_out_type != XSI::siShaderParameterDataType::siShaderDataTypeUnknown) {
-			shader_outputs.AddParamDef(output_name.c_str(), xsi_out_type, output_options);
+
+		if (output_type == "material") {
+			XSI::ShaderParamDefOptions output_options_mat = xsi_factory.CreateShaderParamDefOptions();
+			output_options_mat.SetAttribute(XSI::siCustomTypeNameAttribute, "mrPhenMat");
+			shader_outputs.AddParamDef(output_name.c_str(), XSI::siShaderDataTypeCustom, output_options_mat);
 		}
 		else {
-			shader_outputs.AddParamDef(output_name.c_str(), output_type.c_str(), output_options);
+			XSI::siShaderParameterDataType xsi_out_type = mx_type_to_xsi(output_type);
+
+			if (xsi_out_type != XSI::siShaderParameterDataType::siShaderDataTypeUnknown) {
+				shader_outputs.AddParamDef(output_name.c_str(), xsi_out_type, output_options);
+			}
+			else {
+				shader_outputs.AddParamDef(output_name.c_str(), output_type.c_str(), output_options);
+			}
 		}
 	}
 
