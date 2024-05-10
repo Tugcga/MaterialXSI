@@ -9,6 +9,7 @@ struct ExportTextureOptions {
 
 struct ExportMaterialOptions {
 	bool all_shaders;
+	bool material_priority;
 };
 
 struct ExportOptions {

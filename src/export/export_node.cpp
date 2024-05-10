@@ -24,6 +24,7 @@
 #include "../utilities/logging.h"
 #include "../utilities/array.h"
 #include "../utilities/string.h"
+#include "../parse/parse.h"
 
 MaterialX::NodePtr get_or_create_node(std::unordered_map<ULONG, MaterialX::NodePtr>& id_to_node,
 									  ULONG node_id,
@@ -71,17 +72,16 @@ MaterialX::NodeGraphPtr get_or_create_graph(std::unordered_map<ULONG, MaterialX:
 	return new_graph;
 }
 
-bool add_input_to_node(MaterialX::NodePtr& node,
-					   MaterialX::NodeGraphPtr& graph,
-					   MaterialX::NodeDefPtr def,
-					   SubjectMode mode,
-					   const std::string& name, 
-					   const XSI::CValue &xsi_value,
-					   const XSI::ShaderParameter& xsi_parameter, // actual parameter used for getting gradient and image
-					   const XSI::siShaderParameterDataType xsi_type, 
-					   const ExportOptions& export_options) {
-	std::string type_string = parameter_type_to_string(xsi_type);
-	// TODO: properly consider custom input port types
+bool add_input_value_to_node(MaterialX::NodePtr& node,
+						     MaterialX::NodeGraphPtr& graph,
+						     MaterialX::NodeDefPtr def,
+						     SubjectMode mode,
+						     const std::string& name, 
+						     const XSI::CValue &xsi_value,
+						     const XSI::ShaderParameter& xsi_parameter,
+						     const XSI::siShaderParameterDataType xsi_type, 
+						     const ExportOptions& export_options) {
+	std::string type_string = parameter_type_to_string(xsi_parameter);
 	if (xsi_type == XSI::siShaderDataTypeBoolean) {
 		if (mode == SubjectMode::NODE) { node->setInputValue(name, (bool)xsi_value); }
 		else if (mode == SubjectMode::GRAPH) { graph->setInputValue(name, (bool)xsi_value);  }
@@ -311,7 +311,7 @@ bool add_input_to_node(MaterialX::NodePtr& node,
 						image_path = boost::filesystem::relative(image_path, folder_path);
 					}
 					std::string image_path_string = image_path.string();
-					input->setValue(image_path_string);
+					input->setValueString(image_path_string);
 					input->setColorSpace(colorspace_to_string(color_profile));
 				}
 			}
@@ -422,15 +422,16 @@ MaterialX::NodePtr shader_to_node(const XSI::Shader& xsi_shader,
 	XSI::CString prog_id = xsi_shader.GetProgID();
 	ULONG xsi_id = xsi_shader.GetObjectID();
 	XSI::CString xsi_name = xsi_shader.GetName();
+	std::string render_name = prog_id_to_render(prog_id);
 
-	std::string node_type = prog_id_to_name(prog_id);
+	std::string node_type = get_normal_type(prog_id);
+	
 	std::string node_output_type = "";
 	size_t outputs_count = get_shader_outputs_count(xsi_shader, node_output_type);
 	if (outputs_count > 1) {
 		node_output_type = multioutput_name();
 	}
 
-	std::string render_name = prog_id_to_render(prog_id);
 	if (export_options.insert_nodedefs && render_name != materialx_render()) {
 		// for non-default shaders we can export also all node defs
 		// alwasy add it to the root doc
@@ -454,7 +455,7 @@ MaterialX::NodePtr shader_to_node(const XSI::Shader& xsi_shader,
 				bool is_input = param_def.IsInput();
 				bool is_output = param_def.IsOutput();
 				if (is_input) {
-					bool is_add = add_input_to_node(temp_node, temp_graph, node_def, SubjectMode::DEFINITION, parameter_name, param_def.GetDefaultValue(), param, xsi_type, export_options);
+					bool is_add = add_input_value_to_node(temp_node, temp_graph, node_def, SubjectMode::DEFINITION, parameter_name, param_def.GetDefaultValue(), param, xsi_type, export_options);
 					if (is_add) {
 						MaterialX::InputPtr input = node_def->getInput(parameter_name);
 						XSI::CValue xsi_sugg_min = param.GetSuggestedMin();
@@ -463,11 +464,11 @@ MaterialX::NodePtr shader_to_node(const XSI::Shader& xsi_shader,
 						if (!xsi_sugg_max.IsEmpty()) { input->setAttribute("uimax", value_to_string(xsi_sugg_max)); }
 					}
 					else {
-						node_def->addInput(parameter_name, parameter_type_to_string(xsi_type));
+						node_def->addInput(parameter_name, parameter_type_to_string(param));
 					}
 				}
 				if (is_output) {
-					node_def->addOutput(parameter_name, parameter_type_to_string(xsi_type));
+					node_def->addOutput(parameter_name, parameter_type_to_string(param));
 				}
 			}
 		}
@@ -494,8 +495,16 @@ MaterialX::NodePtr shader_to_node(const XSI::Shader& xsi_shader,
 			bool is_output = param_def.IsOutput();
 
 			if (is_input) {
-				bool is_add = add_input_to_node(node, temp_graph, temp_def, SubjectMode::NODE, parameter_name, param.GetValue(), param, xsi_type, export_options);
-				// TODO: if fail to add input (if the type is non-build-in), then propagate in any case, may be it connected to something
+				bool is_add = add_input_value_to_node(node, temp_graph, temp_def, SubjectMode::NODE, parameter_name, param.GetValue(), param, xsi_type, export_options);
+				if (!is_add) {
+					std::string parameter_type = parameter_type_to_string(param);
+					if (parameter_type.size() > 0) {
+						// add simple input by name and type, without setting value
+						node->addInput(parameter_name, parameter_type);
+						is_add = true;
+					}
+				}
+
 				if (is_add) {
 					propagate_connection(param, mx_doc, mx_graph, use_doc, node->getInput(parameter_name), temp_output, true, id_to_node, id_to_graph, stop_names, export_options);
 				}
@@ -540,7 +549,14 @@ MaterialX::NodeGraphPtr compound_to_graph(const XSI::Shader& xsi_compound,
 			bool is_output = param_def.IsOutput();
 
 			if (is_input) {
-				bool is_add = add_input_to_node(temp_node, graph, temp_def, SubjectMode::GRAPH, parameter_name, param.GetValue(), param, xsi_type, export_options);
+				bool is_add = add_input_value_to_node(temp_node, graph, temp_def, SubjectMode::GRAPH, parameter_name, param.GetValue(), param, xsi_type, export_options);
+				if (!is_add) {
+					std::string parameter_type = parameter_type_to_string(param);
+					if (parameter_type.size() > 0) {
+						graph->addInput(parameter_name, parameter_type);
+						is_add = true;
+					}
+				}
 				if (is_add) {
 					propagate_connection(param, mx_doc, temp_graph, true, graph->getInput(parameter_name), temp_output, true, id_to_node, id_to_graph, stop_names, export_options);
 				}
@@ -550,7 +566,14 @@ MaterialX::NodeGraphPtr compound_to_graph(const XSI::Shader& xsi_compound,
 			}
 
 			if (is_output) {
-				graph->addOutput(parameter_name, parameter_type_to_string(xsi_type));
+				// get source of the output parameter
+				XSI::CRef param_source_ref = param.GetSource();
+				if (param_source_ref.IsValid() && param_source_ref.GetClassID() == XSI::siShaderParameterID) {
+					XSI::ShaderParameter param_source = param_source_ref;
+					if (param_source.IsValid()) {
+						graph->addOutput(parameter_name, parameter_type_to_string(param_source));
+					}
+				}
 			}
 		}
 

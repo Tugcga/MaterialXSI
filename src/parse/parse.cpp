@@ -23,11 +23,41 @@
 #include "../utilities/string.h"
 #include "convert_types.h"
 
-// store two maps: from full name to short name and from short name to array of full names
+// store the map: from full name to short name and from short name to array of full names
 std::unordered_map<std::string, std::tuple<std::string, std::vector<std::tuple<std::string, std::string>>, std::vector<std::tuple<std::string, std::string>>>> fullname_to_data;
 
 std::unordered_map<std::string, std::tuple<std::string, std::vector<std::tuple<std::string, std::string>>, std::vector<std::tuple<std::string, std::string>>>> get_fullname_to_data() {
 	return fullname_to_data;
+}
+
+std::vector<std::tuple<std::string, std::string>> get_fullname_to_inputs(const std::string &fullname) {
+	auto search = fullname_to_data.find(fullname);
+	if (search != fullname_to_data.end()) {
+		return std::get<1>(search->second);
+	}
+	else {
+		return std::vector<std::tuple<std::string, std::string>>(0);
+	}
+}
+
+std::vector<std::tuple<std::string, std::string>> get_fullname_to_outputs(const std::string& fullname) {
+	auto search = fullname_to_data.find(fullname);
+	if (search != fullname_to_data.end()) {
+		return std::get<2>(search->second);
+	}
+	else {
+		return std::vector<std::tuple<std::string, std::string>>(0);
+	}
+}
+
+std::string get_fullname_to_type(const std::string& fullname) {
+	auto search = fullname_to_data.find(fullname);
+	if (search != fullname_to_data.end()) {
+		return std::get<0>(search->second);
+	}
+	else {
+		return "";
+	}
 }
 
 XSI::CStatus on_query_parser_settings(XSI::Context& context) {
@@ -50,7 +80,7 @@ XSI::CStatus on_query_parser_settings(XSI::Context& context) {
 	XSI::Application().RegisterShaderCustomParameterType("stringarray", "stringarray", "stringarray", 76, 156, 223, type_filter, family_filter);
 
 	// from pbrlib
-	XSI::Application().RegisterShaderCustomParameterType("BSDF", "BSDF", "BSDF", 242, 168, 10, type_filter, family_filter);
+	XSI::Application().RegisterShaderCustomParameterType("BSDF", "BSDF", "BSDF", 202, 128, 10, type_filter, family_filter);
 	XSI::Application().RegisterShaderCustomParameterType("EDF", "EDF", "EDF", 97, 170, 53, type_filter, family_filter);
 	XSI::Application().RegisterShaderCustomParameterType("VDF", "VDF", "VDF", 200, 133, 231, type_filter, family_filter);
 
@@ -158,7 +188,7 @@ XSI::CStatus on_parse(XSI::Context& context) {
 		std::string output_type = output->getType();
 		outputs_data.push_back({ output_name, output_type });
 	}
-	std::string node_name = mx_def->getName();
+	std::string node_name = mx_def->getNodeString();
 	// store in the dictionary
 	fullname_to_data.insert({ class_name, {node_name, inputs_data, outputs_data } });
 

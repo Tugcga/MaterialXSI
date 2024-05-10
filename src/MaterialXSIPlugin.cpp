@@ -51,6 +51,7 @@ SICALLBACK MaterialXSIExport_Init(XSI::CRef& in_ctxt) {
 	args.Add("textures_copy", true);
 	args.Add("textures_folder", "textures");
 	args.Add("material_all_nodes", false);  // if true then export all shaders, not only connected to the root node
+	args.Add("material_priority", true);  // if true, then export only material connection (if it contains MaterialX node), if false - export all connections
 
 	return XSI::CStatus::OK;
 }
@@ -67,6 +68,7 @@ SICALLBACK MaterialXSIExport_Execute(XSI::CRef& in_ctxt) {
 	bool textures_copy = args[4];
 	XSI::CString textures_folder = args[5];
 	bool material_all_nodes = args[6];
+	bool material_priority = args[7];
 
 	ExportOptions export_options;
 	export_options.output_path = file_path.GetAsciiString();
@@ -77,6 +79,7 @@ SICALLBACK MaterialXSIExport_Execute(XSI::CRef& in_ctxt) {
 	export_textures.copy_folder = textures_folder.GetAsciiString();
 	ExportMaterialOptions export_materials;
 	export_materials.all_shaders = material_all_nodes;
+	export_materials.material_priority = material_priority;
 
 	export_options.textures = export_textures;
 	export_options.materials = export_materials;

@@ -10,6 +10,7 @@
 #include "export_options.h"
 #include "export_utilities.h"
 #include "export.h"
+#include "export_names.h"
 
 void start_material_port(MaterialX::DocumentPtr& mx_doc, 
 						 const XSI::CRef &xsi_surface_source, 
@@ -46,9 +47,7 @@ void start_material_port(MaterialX::DocumentPtr& mx_doc,
 }
 
 void export_material(const XSI::Material &xsi_material, MaterialX::DocumentPtr &mx_doc, const ExportOptions& export_options) {
-	std::string material_name = xsi_material.GetName().GetAsciiString();
-	std::string material_volume_name = material_name + ".Volume";
-	material_name += ".Surface";
+	std::string material_name = xsi_material.GetName().GetAsciiString() + std::string(".Root");
 	ULONG xsi_material_id = xsi_material.GetObjectID();
 
 	std::unordered_map<ULONG, MaterialX::NodePtr> id_to_node;
@@ -75,32 +74,60 @@ void export_material(const XSI::Material &xsi_material, MaterialX::DocumentPtr &
 
 	// get all material input ports
 	XSI::CParameterRefArray xsi_material_parameters = xsi_material.GetParameters();
-	XSI::ShaderParameter xsi_surface = xsi_material_parameters.GetItem("surface");
-	XSI::ShaderParameter xsi_displacement = xsi_material_parameters.GetItem("displacement");
-	XSI::ShaderParameter xsi_volume = xsi_material_parameters.GetItem("volume");
 
-	XSI::CRef xsi_surface_source = xsi_surface.GetSource();
-	if (xsi_surface_source.IsValid()) {
-		bool is_new = false;
-		MaterialX::NodePtr surface_node = get_or_create_node(id_to_node, xsi_material_id, mx_doc, temp_graph, true, "surfacematerial", material_name, "material", is_new);
-
-		start_material_port(mx_doc, xsi_surface_source, surface_node, "surfaceshader", id_to_node, id_to_graph, stop_names, export_options);
+	bool material_priority = export_options.materials.material_priority;
+	XSI::ShaderParameter xsi_material_port = xsi_material_parameters.GetItem("material");
+	XSI::CRef xsi_material_port_source = xsi_material_port.GetSource();
+	bool export_materialx = false;
+	if (material_priority && xsi_material_port_source.IsValid()) {
+		XSI::ShaderParameter xsi_material_source_param = xsi_material_port_source;;
+		if (xsi_material_source_param.IsValid()) {
+			XSI::Shader xsi_material_root_shader = xsi_material_source_param.GetParent();
+			if (xsi_material_root_shader.IsValid()) {
+				XSI::CString xsi_material_root_progid = xsi_material_root_shader.GetProgID();
+				std::string render = prog_id_to_render(xsi_material_root_progid);
+				if (render == materialx_render()) {
+					// start export from this node
+					// we are not inside compound
+					// if the root is compound, or not MaterialX node, then export as in common case
+					MaterialX::NodeGraphPtr temp_graph;
+					MaterialX::NodePtr node = shader_to_node(xsi_material_root_shader, mx_doc, temp_graph, true, id_to_node, id_to_graph, stop_names, export_options);
+					export_materialx = true;
+				}
+			}
+		}
 	}
 
-	XSI::CRef xsi_displacement_source = xsi_displacement.GetSource();
-	if (xsi_displacement_source.IsValid()) {
-		bool is_new = false;
-		MaterialX::NodePtr surface_node = get_or_create_node(id_to_node, xsi_material_id, mx_doc, temp_graph, true, "surfacematerial", material_name, "material", is_new);
+	size_t parameters_count = xsi_material_parameters.GetCount();
+	for (size_t i = 0; i < parameters_count; i++) {
+		XSI::ShaderParameter xsi_parameter = xsi_material_parameters[i];
+		if (xsi_parameter.IsValid()) {
+			XSI::CString parameter_name = xsi_parameter.GetName();
+			if (export_materialx == false &&
+				(parameter_name == "surface" ||
+				parameter_name == "volume" || 
+				parameter_name == "environment" || 
+				parameter_name == "contour" || 
+				parameter_name == "displacement" || 
+				parameter_name == "shadow" || 
+				parameter_name == "photon" || 
+				parameter_name == "photonvolume" || 
+				parameter_name == "normal" || 
+				parameter_name == "lightmap" || 
+				parameter_name == "realtime" ||
+				parameter_name == "material")) {
+				XSI::CRef xsi_parameter_source = xsi_parameter.GetSource();
+				if (xsi_parameter_source.IsValid()) {
+					bool is_new = false;
+					MaterialX::NodePtr root_node = get_or_create_node(id_to_node, xsi_material_id, mx_doc, temp_graph, true, "root", material_name, "material", is_new);
 
-		start_material_port(mx_doc, xsi_displacement_source, surface_node, "displacementshader", id_to_node, id_to_graph, stop_names, export_options);
-	}
+					// TODO: if we should export node defs, create it here for the root node
+					// root node is virtual node, it corresponds to the material root node
 
-	XSI::CRef xsi_volume_source = xsi_volume.GetSource();
-	if (xsi_volume_source.IsValid()) {
-		// should not store this node, because we use it only here
-		MaterialX::NodePtr volume_node = mx_doc->addNode("volumematerial", material_volume_name, "material");
-
-		start_material_port(mx_doc, xsi_volume_source, volume_node, "volumeshader", id_to_node, id_to_graph, stop_names, export_options);
+					start_material_port(mx_doc, xsi_parameter_source, root_node, parameter_name.GetAsciiString(), id_to_node, id_to_graph, stop_names, export_options);
+				}
+			}
+		}
 	}
 }
 

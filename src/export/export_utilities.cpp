@@ -6,6 +6,7 @@
 #include "export_names.h"
 #include "../parse/parse.h"
 #include "../utilities/string.h"
+#include "../utilities/logging.h"
 
 bool is_compound(const XSI::Shader& xsi_shader) {
 	XSI::CString prog_id = xsi_shader.GetProgID();
@@ -43,45 +44,19 @@ XSI::ShaderParameter get_finall_parameter(const XSI::ShaderParameter& parameter)
 
 size_t get_shader_outputs_count(const XSI::Shader& xsi_shader, std::string& out_last_output) {
 	size_t to_return = 0;
-	// check is it MaterialX node or not
-	XSI::CString xsi_prog_id = xsi_shader.GetProgID();
-	std::string render = prog_id_to_render(xsi_prog_id);
-	if (render == materialx_render()) {
-		// this is MaterialX library node
-		// get outputs from pre-parsed values
-		std::unordered_map<std::string, std::tuple<std::string, std::vector<std::tuple<std::string, std::string>>, std::vector<std::tuple<std::string, std::string>>>> fullname_to_data = get_fullname_to_data();
-		// get node type
-		std::string node_type = prog_id_to_name(xsi_prog_id);
-		// find this type in the dictionary
-		auto search = fullname_to_data.find(node_type);
-		if (search != fullname_to_data.end()) {
-			// extract data for this node
-			std::tuple<std::string, std::vector<std::tuple<std::string, std::string>>, std::vector<std::tuple<std::string, std::string>>> node_data = search->second;
-			// signature of the data: short name, input ports, output ports
-			// we need outputs, so, select the thied component
-			std::vector<std::tuple<std::string, std::string>> outputs_data = std::get<2>(node_data);
-			// this vector contains name of the output and it type
-			out_last_output = std::get<1>(outputs_data[outputs_data.size() - 1]);
-			return outputs_data.size();
-		}
-	}
-	else {
-		// this is not MaterialX library node
-		// define outputs by using shader data
-		XSI::CParameterRefArray shader_parameters = xsi_shader.GetParameters();
-		ULONG params_count = shader_parameters.GetCount();
-		size_t outputs_count = 0;
-		for (ULONG i = 0; i < params_count; i++) {
-			XSI::ShaderParameter param = shader_parameters[i];
-			XSI::ShaderParamDef param_def = param.GetDefinition();
 
-			if (param_def.IsOutput()) {
-				XSI::siShaderParameterDataType data_type = param_def.GetDataType();
-				std::string data_type_string = parameter_type_to_string(data_type);
-				if (data_type_string != "") {
-					to_return++;
-					out_last_output = data_type_string;
-				}
+	XSI::CParameterRefArray shader_parameters = xsi_shader.GetParameters();
+	ULONG params_count = shader_parameters.GetCount();
+	size_t outputs_count = 0;
+	for (ULONG i = 0; i < params_count; i++) {
+		XSI::ShaderParameter param = shader_parameters[i];
+		XSI::ShaderParamDef param_def = param.GetDefinition();
+
+		if (param_def.IsOutput()) {
+			std::string data_type_string = parameter_type_to_string(param);
+			if (data_type_string != "") {
+				to_return++;
+				out_last_output = data_type_string;
 			}
 		}
 	}

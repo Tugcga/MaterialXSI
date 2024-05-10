@@ -10,6 +10,9 @@
 // the second - array of input names and corresponding types
 // the second - array for outputs
 std::unordered_map<std::string, std::tuple<std::string, std::vector<std::tuple<std::string, std::string>>, std::vector<std::tuple<std::string, std::string>>>> get_fullname_to_data();
+std::vector<std::tuple<std::string, std::string>> get_fullname_to_inputs(const std::string& fullname);
+std::vector<std::tuple<std::string, std::string>> get_fullname_to_outputs(const std::string& fullname);
+std::string get_fullname_to_type(const std::string& fullname);
 
 XSI::CStatus on_query_parser_settings(XSI::Context &context);
 XSI::CStatus on_parse_info(XSI::Context& context);

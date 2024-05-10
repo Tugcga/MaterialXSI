@@ -14,6 +14,11 @@ export_textures_path_enum = [
     "Relative", "relative"
 ]
 
+export_materials_priority = [
+    "Material input port", "material",
+    "All connections", "all"
+]
+
 
 def XSILoadPlugin(in_reg):
     in_reg.Author = "blairs"
@@ -67,6 +72,9 @@ def export_window(export_array, export_mode):
     param = prop.AddParameter3("materials_all_nodes", constants.siBool, False, False, False)
     param.Animatable = False
 
+    param = prop.AddParameter3("materials_priority", constants.siString, "material", False, False)
+    param.Animatable = False
+
     layout = prop.PPGLayout
     layout.Clear()
     layout.AddGroup("Output")
@@ -85,6 +93,7 @@ def export_window(export_array, export_mode):
     if export_mode == "materials":
         layout.AddGroup("Materials")
         layout.AddItem("materials_all_nodes", "Export All Nodes")
+        layout.AddEnumControl("materials_priority", export_materials_priority, "Priority")
         layout.EndGroup()
 
     layout.Language = "Python"
@@ -110,7 +119,8 @@ def textures_copy_OnChanged():
         "textures_path",
         "textures_copy",
         "textures_folder",
-        "materials_all_nodes"]
+        "materials_all_nodes",
+        "materials_priority"]
 
     global prev_export_params
     if prev_export_params is not None:
@@ -127,7 +137,8 @@ def textures_copy_OnChanged():
                                   prop.Parameters("textures_path").Value == "relative",
                                   prop.Parameters("textures_copy").Value,
                                   prop.Parameters("textures_folder").Value,
-                                  prop.Parameters("materials_all_nodes").Value if export_mode == "materials" else False)
+                                  prop.Parameters("materials_all_nodes").Value if export_mode == "materials" else False,
+                                  prop.Parameters("materials_priority").Value == "material")
         else:
             app.LogMessage("Define non-empty export path")
 
