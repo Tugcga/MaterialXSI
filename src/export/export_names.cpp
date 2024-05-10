@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <cctype>
 
 #include <xsi_shader.h>
 #include <xsi_shaderparameter.h>
@@ -133,6 +134,39 @@ std::string get_normal_type(const XSI::CString &xsi_prog_id) {
 		// if fail to use short name, use long from the node prog id
 		if (node_type.size() == 0) {
 			node_type = prog_id_to_name(xsi_prog_id);
+		}
+	}
+	else if (render_name == "Cycles") {
+		// for Cycles shaders we remove the first part Cycles...
+		// and then convert cammel case to snake case
+		if (node_type.size() > 6) {
+			std::string start_part = node_type.substr(0, 6);
+			if (start_part == "Cycles") {
+				std::string remain_part = node_type.substr(6);
+
+				if (remain_part == "UVMap") { return "uv_map"; }
+				else if (remain_part == "RGBCurves") { return "rgb_curves"; }
+				else if (remain_part == "RGBToBW") { return "rgb_to_bw"; }
+				else if (remain_part == "IESTexture") { return "ies_texture"; }
+
+				std::string new_name = "";
+				bool up_underscore = false;
+				for (size_t i = 0; i < remain_part.size(); i++) {
+					char c = remain_part[i];
+					if ((bool)std::isupper(static_cast<unsigned char>(c))) {
+						if (up_underscore) {
+							new_name += "_";
+						}
+						new_name += std::tolower(c);
+						up_underscore = false;
+					}
+					else {
+						up_underscore = true;
+						new_name += c;
+					}
+				}
+				return new_name;
+			}
 		}
 	}
 
