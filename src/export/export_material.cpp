@@ -120,9 +120,23 @@ void export_material(const XSI::Material &xsi_material, MaterialX::DocumentPtr &
 				if (xsi_parameter_source.IsValid()) {
 					bool is_new = false;
 					MaterialX::NodePtr root_node = get_or_create_node(id_to_node, xsi_material_id, mx_doc, temp_graph, true, "root", material_name, "material", is_new);
-
-					// TODO: if we should export node defs, create it here for the root node
-					// root node is virtual node, it corresponds to the material root node
+					if (is_new && export_options.insert_nodedefs) {
+						// create node def
+						MaterialX::NodeDefPtr node_def = mx_doc->addNodeDef("ND_Root", "", "root");
+						node_def->removeOutput("out");
+						node_def->addInput("surface", "color4");
+						node_def->addInput("volume", "color4");
+						node_def->addInput("environment", "color4");
+						node_def->addInput("contour", "color4");
+						node_def->addInput("displacement", "float");
+						node_def->addInput("shadow", "color4");
+						node_def->addInput("photon", "color4");
+						node_def->addInput("photonvolume", "color4");
+						node_def->addInput("normal", "vector3");
+						node_def->addInput("lightmap", "mrLmap");
+						node_def->addInput("realtime", "xgsRTCtx");
+						node_def->addInput("material", "mrPhenMat");
+					}
 
 					start_material_port(mx_doc, xsi_parameter_source, root_node, parameter_name.GetAsciiString(), id_to_node, id_to_graph, stop_names, export_options);
 				}
