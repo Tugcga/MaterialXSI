@@ -1,3 +1,5 @@
+![banner](./images/label_01.png)
+
 ### What is it
 
 The repository contains sources of the addon for [Softimage](https://en.wikipedia.org/wiki/Autodesk_Softimage), which implements initial support of the [MaterialX](https://materialx.org/).
