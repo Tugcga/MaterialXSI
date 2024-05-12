@@ -2,3 +2,4 @@ internal
 .vs
 *.vcxproj.user
 *.dll
+netview_MaterialXSI.xml

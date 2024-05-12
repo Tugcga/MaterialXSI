@@ -11,6 +11,12 @@ The repository contains sources of the addon for [Softimage](https://en.wikipedi
 
 MaterialX format does not supports nested node graphs (compounds in the Softimage terminology). So, if compound is placed inside another compound, then the export process skip this inner compound (and all nodes, connected to them).
 
+### How to build
+
+Addon package can be downloaded from the [release](https://github.com/Tugcga/MaterialXSI/releases) page.
+
+Addon implemented by using C++ API. It required some external libraries. Download the archive ```external.zip``` from the [release](https://github.com/Tugcga/MaterialXSI/releases/tag/externals.0x) and extract the content of the archive into the folder ```internal``` at the root of the repository. Then you can open Visual Studio solution from ```src``` directory and build it. The project required Visual Studio 2015.
+
 ### How to export
 
 Install as usual addon for Softimage.
