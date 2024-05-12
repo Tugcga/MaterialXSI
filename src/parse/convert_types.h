@@ -8,6 +8,7 @@
 #include <xsi_vector2f.h>
 #include <xsi_vector3f.h>
 #include <xsi_vector4f.h>
+#include <xsi_shaderstructparamdef.h>
 
 #include "MaterialXCore/Document.h"
 
@@ -28,3 +29,4 @@ XSI::MATH::CVector4f mx_vector4_to_xsi_vector4(MaterialX::Vector4 mx_vector);
 XSI::MATH::CMatrix3f mx_matrix3_to_xsi_matrix3(MaterialX::Matrix33 mx_matrix);
 XSI::MATH::CMatrix4f mx_matrix4_to_xsi_matrix4(MaterialX::Matrix44 mx_matrix);
 XSI::CValue build_value(const std::string& mx_type, MaterialX::ValuePtr mx_value);
+void set_struct_default_value(const std::string& mx_type, const XSI::CValue& xsi_value, XSI::ShaderParamDefContainer& xsi_container);

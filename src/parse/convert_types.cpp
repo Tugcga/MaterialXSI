@@ -7,6 +7,7 @@
 #include <xsi_vector2f.h>
 #include <xsi_vector3f.h>
 #include <xsi_vector4f.h>
+#include <xsi_shaderstructparamdef.h>
 
 #include "MaterialXCore/Document.h"
 
@@ -86,20 +87,12 @@ bool is_type_image(XSI::siShaderParameterDataType xsi_type) {
 	return false;
 }
 
-// TODO: it's not clear how to properly set default color for input port
-// if set by using SetDefaultValue and pass CColor4 object, then in the shader the color is actual black
-// in Python side if pass an array [r, g, b], then allworks correctly
-// but in c++ it's not clear why it is not working
-// the fix: instead of color set one value, then it will be initialized by black-white value
-// this will create Color3 shader parameter, but in some cases it should be Color4
-float mx_color3_to_xsi_color(MaterialX::Color3 mx_color) {
-	// return XSI::MATH::CColor4f(mx_color[0], mx_color[1], mx_color[2], 0.0);
-	return (mx_color[0] + mx_color[1] + mx_color[2]) / 3.0f;
+XSI::MATH::CColor4f mx_color3_to_xsi_color(MaterialX::Color3 mx_color) {
+	return XSI::MATH::CColor4f(mx_color[0], mx_color[1], mx_color[2], 0.0);
 }
 
-float mx_color4_to_xsi_color(MaterialX::Color4 mx_color) {
-	// return XSI::MATH::CColor4f(mx_color[0], mx_color[1], mx_color[2], mx_color[3]);
-	return (mx_color[0] + mx_color[1] + mx_color[2]) / 3.0f;
+XSI::MATH::CColor4f mx_color4_to_xsi_color(MaterialX::Color4 mx_color) {
+	return XSI::MATH::CColor4f(mx_color[0], mx_color[1], mx_color[2], mx_color[3]);
 }
 
 XSI::MATH::CVector2f mx_vector2_to_xsi_vector2(MaterialX::Vector2 mx_vector) {
@@ -144,4 +137,74 @@ XSI::CValue build_value(const std::string& mx_type, MaterialX::ValuePtr mx_value
 	else if (mx_type == "geomname") { return XSI::CString(mx_value->asA<std::string>().c_str()); }
 
 	return XSI::CValue();
+}
+
+void set_struct_default_value(const std::string& mx_type, const XSI::CValue &xsi_value, XSI::ShaderParamDefContainer &xsi_container) {
+	if (mx_type == "color3") {
+		XSI::MATH::CColor4f xsi_color = xsi_value;
+		xsi_container.GetParamDefByName("red").SetDefaultValue(xsi_color.GetR());
+		xsi_container.GetParamDefByName("green").SetDefaultValue(xsi_color.GetG());
+		xsi_container.GetParamDefByName("blue").SetDefaultValue(xsi_color.GetB());
+	}
+	else if (mx_type == "color4") {
+		XSI::MATH::CColor4f xsi_color = xsi_value;
+		xsi_container.GetParamDefByName("red").SetDefaultValue(xsi_color.GetR());
+		xsi_container.GetParamDefByName("green").SetDefaultValue(xsi_color.GetG());
+		xsi_container.GetParamDefByName("blue").SetDefaultValue(xsi_color.GetB());
+		xsi_container.GetParamDefByName("alpha").SetDefaultValue(xsi_color.GetA());
+	}
+	else if (mx_type == "vector2") {
+		XSI::MATH::CVector2f xsi_vector = xsi_value;
+		xsi_container.GetParamDefByName("x").SetDefaultValue(xsi_vector.GetX());
+		xsi_container.GetParamDefByName("y").SetDefaultValue(xsi_vector.GetY());
+	}
+	else if (mx_type == "vector3") {
+		XSI::MATH::CVector3f xsi_vector = xsi_value;
+		xsi_container.GetParamDefByName("x").SetDefaultValue(xsi_vector.GetX());
+		xsi_container.GetParamDefByName("y").SetDefaultValue(xsi_vector.GetY());
+		xsi_container.GetParamDefByName("z").SetDefaultValue(xsi_vector.GetZ());
+	}
+	else if (mx_type == "vector4") {
+		XSI::MATH::CVector4f xsi_vector = xsi_value;
+		xsi_container.GetParamDefByName("x").SetDefaultValue(xsi_vector.GetX());
+		xsi_container.GetParamDefByName("y").SetDefaultValue(xsi_vector.GetY());
+		xsi_container.GetParamDefByName("z").SetDefaultValue(xsi_vector.GetZ());
+		xsi_container.GetParamDefByName("w").SetDefaultValue(xsi_vector.GetW());
+	}
+	else if (mx_type == "matrix33") {
+		XSI::MATH::CMatrix3f xsi_matrix = xsi_value;
+		xsi_container.GetParamDefByName("_00").SetDefaultValue(xsi_matrix.GetValue(0, 0));
+		xsi_container.GetParamDefByName("_01").SetDefaultValue(xsi_matrix.GetValue(0, 1));
+		xsi_container.GetParamDefByName("_02").SetDefaultValue(xsi_matrix.GetValue(0, 2));
+
+		xsi_container.GetParamDefByName("_10").SetDefaultValue(xsi_matrix.GetValue(1, 0));
+		xsi_container.GetParamDefByName("_11").SetDefaultValue(xsi_matrix.GetValue(1, 1));
+		xsi_container.GetParamDefByName("_12").SetDefaultValue(xsi_matrix.GetValue(1, 2));
+
+		xsi_container.GetParamDefByName("_20").SetDefaultValue(xsi_matrix.GetValue(2, 0));
+		xsi_container.GetParamDefByName("_21").SetDefaultValue(xsi_matrix.GetValue(2, 1));
+		xsi_container.GetParamDefByName("_22").SetDefaultValue(xsi_matrix.GetValue(2, 2));
+	}
+	else if (mx_type == "matrix44") {
+		XSI::MATH::CMatrix4f xsi_matrix = xsi_value;
+		xsi_container.GetParamDefByName("_00").SetDefaultValue(xsi_matrix.GetValue(0, 0));
+		xsi_container.GetParamDefByName("_01").SetDefaultValue(xsi_matrix.GetValue(0, 1));
+		xsi_container.GetParamDefByName("_02").SetDefaultValue(xsi_matrix.GetValue(0, 2));
+		xsi_container.GetParamDefByName("_03").SetDefaultValue(xsi_matrix.GetValue(0, 3));
+
+		xsi_container.GetParamDefByName("_10").SetDefaultValue(xsi_matrix.GetValue(1, 0));
+		xsi_container.GetParamDefByName("_11").SetDefaultValue(xsi_matrix.GetValue(1, 1));
+		xsi_container.GetParamDefByName("_12").SetDefaultValue(xsi_matrix.GetValue(1, 2));
+		xsi_container.GetParamDefByName("_13").SetDefaultValue(xsi_matrix.GetValue(1, 3));
+
+		xsi_container.GetParamDefByName("_20").SetDefaultValue(xsi_matrix.GetValue(2, 0));
+		xsi_container.GetParamDefByName("_21").SetDefaultValue(xsi_matrix.GetValue(2, 1));
+		xsi_container.GetParamDefByName("_22").SetDefaultValue(xsi_matrix.GetValue(2, 2));
+		xsi_container.GetParamDefByName("_23").SetDefaultValue(xsi_matrix.GetValue(2, 3));
+
+		xsi_container.GetParamDefByName("_30").SetDefaultValue(xsi_matrix.GetValue(3, 0));
+		xsi_container.GetParamDefByName("_31").SetDefaultValue(xsi_matrix.GetValue(3, 1));
+		xsi_container.GetParamDefByName("_32").SetDefaultValue(xsi_matrix.GetValue(3, 2));
+		xsi_container.GetParamDefByName("_33").SetDefaultValue(xsi_matrix.GetValue(3, 3));
+	}
 }

@@ -111,7 +111,7 @@ std::string colorspace_to_string(const XSI::CString& xsi_value) {
 		return "auto";
 	}
 	else if (xsi_value == "Linear") {
-		return "raw";
+		return "lin_rec709";
 	}
 	else if (xsi_value == "sRGB") {
 		return "srgb_texture";

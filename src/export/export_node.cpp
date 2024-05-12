@@ -107,8 +107,8 @@ bool add_input_value_to_node(MaterialX::NodePtr& node,
 		return true;
 	}
 	else if (xsi_type == XSI::siShaderDataTypeVector2) {
-		XSI::MATH::CVector2f value_vector(xsi_value);
-		MaterialX::Vector2 mx_vector = MaterialX::Vector2(value_vector.GetX(), value_vector.GetY());
+		MaterialX::Vector2 mx_vector = MaterialX::Vector2(xsi_parameter.GetParameterValue("x"),
+														  xsi_parameter.GetParameterValue("y"));
 		if (mode == SubjectMode::NODE) { node->setInputValue(name, mx_vector); }
 		else if (mode == SubjectMode::GRAPH) { graph->setInputValue(name, mx_vector); }
 		else if (mode == SubjectMode::DEFINITION) { def->setInputValue(name, mx_vector); }
@@ -117,8 +117,9 @@ bool add_input_value_to_node(MaterialX::NodePtr& node,
 		return true;
 	}
 	else if (xsi_type == XSI::siShaderDataTypeVector3) {
-		XSI::MATH::CVector3f value_vector(xsi_value);
-		MaterialX::Vector3 mx_vector = MaterialX::Vector3(value_vector.GetX(), value_vector.GetY(), value_vector.GetZ());
+		MaterialX::Vector3 mx_vector = MaterialX::Vector3(xsi_parameter.GetParameterValue("x"),
+														  xsi_parameter.GetParameterValue("y"),
+														  xsi_parameter.GetParameterValue("z"));
 		if (mode == SubjectMode::NODE) { node->setInputValue(name, mx_vector); }
 		else if (mode == SubjectMode::GRAPH) { graph->setInputValue(name, mx_vector); }
 		else if (mode == SubjectMode::DEFINITION) { def->setInputValue(name, mx_vector); }
@@ -127,8 +128,10 @@ bool add_input_value_to_node(MaterialX::NodePtr& node,
 		return true;
 	}
 	else if (xsi_type == XSI::siShaderDataTypeVector4) {
-		XSI::MATH::CVector4f value_vector(xsi_value);
-		MaterialX::Vector4 mx_vector = MaterialX::Vector4(value_vector.GetX(), value_vector.GetY(), value_vector.GetZ(), value_vector.GetW());
+		MaterialX::Vector4 mx_vector = MaterialX::Vector4(xsi_parameter.GetParameterValue("x"),
+														  xsi_parameter.GetParameterValue("y"),
+														  xsi_parameter.GetParameterValue("z"),
+														  xsi_parameter.GetParameterValue("w"));
 		if (mode == SubjectMode::NODE) { node->setInputValue(name, mx_vector); }
 		else if (mode == SubjectMode::GRAPH) { graph->setInputValue(name, mx_vector); }
 		else if (mode == SubjectMode::DEFINITION) { def->setInputValue(name, mx_vector); }
@@ -148,10 +151,9 @@ bool add_input_value_to_node(MaterialX::NodePtr& node,
 		return true;
 	}
 	else if (xsi_type == XSI::siShaderDataTypeMatrix33) {
-		XSI::MATH::CMatrix3f value_matrix(xsi_value);
-		MaterialX::Matrix33 mx_matrix = MaterialX::Matrix33(value_matrix.GetValue(0, 0), value_matrix.GetValue(0, 1), value_matrix.GetValue(0, 2),
-															value_matrix.GetValue(1, 0), value_matrix.GetValue(1, 1), value_matrix.GetValue(1, 2),
-															value_matrix.GetValue(2, 0), value_matrix.GetValue(2, 1), value_matrix.GetValue(2, 2));
+		MaterialX::Matrix33 mx_matrix = MaterialX::Matrix33(xsi_parameter.GetParameterValue("_00"), xsi_parameter.GetParameterValue("_01"), xsi_parameter.GetParameterValue("_02"),
+															xsi_parameter.GetParameterValue("_10"), xsi_parameter.GetParameterValue("_11"), xsi_parameter.GetParameterValue("_12"),
+															xsi_parameter.GetParameterValue("_20"), xsi_parameter.GetParameterValue("_21"), xsi_parameter.GetParameterValue("_22"));
 		if (mode == SubjectMode::NODE) { node->setInputValue(name, mx_matrix); }
 		else if (mode == SubjectMode::GRAPH) { graph->setInputValue(name, mx_matrix); }
 		else if (mode == SubjectMode::DEFINITION) { def->setInputValue(name, mx_matrix); }
@@ -160,11 +162,10 @@ bool add_input_value_to_node(MaterialX::NodePtr& node,
 		return true;
 	}
 	else if (xsi_type == XSI::siShaderDataTypeMatrix44) {
-		XSI::MATH::CMatrix4f value_matrix(xsi_value);
-		MaterialX::Matrix44 mx_matrix = MaterialX::Matrix44(value_matrix.GetValue(0, 0), value_matrix.GetValue(0, 1), value_matrix.GetValue(0, 2), value_matrix.GetValue(0, 3),
-															value_matrix.GetValue(1, 0), value_matrix.GetValue(1, 1), value_matrix.GetValue(1, 2), value_matrix.GetValue(1, 3),
-															value_matrix.GetValue(2, 0), value_matrix.GetValue(2, 1), value_matrix.GetValue(2, 2), value_matrix.GetValue(2, 3),
-															value_matrix.GetValue(3, 0), value_matrix.GetValue(3, 1), value_matrix.GetValue(3, 2), value_matrix.GetValue(3, 3));
+		MaterialX::Matrix44 mx_matrix = MaterialX::Matrix44(xsi_parameter.GetParameterValue("_00"), xsi_parameter.GetParameterValue("_01"), xsi_parameter.GetParameterValue("_02"), xsi_parameter.GetParameterValue("_03"),
+															xsi_parameter.GetParameterValue("_10"), xsi_parameter.GetParameterValue("_11"), xsi_parameter.GetParameterValue("_12"), xsi_parameter.GetParameterValue("_13"),
+															xsi_parameter.GetParameterValue("_20"), xsi_parameter.GetParameterValue("_21"), xsi_parameter.GetParameterValue("_22"), xsi_parameter.GetParameterValue("_23"),
+															xsi_parameter.GetParameterValue("_30"), xsi_parameter.GetParameterValue("_31"), xsi_parameter.GetParameterValue("_32"), xsi_parameter.GetParameterValue("_33"));
 		if (mode == SubjectMode::NODE) { node->setInputValue(name, mx_matrix); }
 		else if (mode == SubjectMode::GRAPH) { graph->setInputValue(name, mx_matrix); }
 		else if (mode == SubjectMode::DEFINITION) { def->setInputValue(name, mx_matrix); }
@@ -498,7 +499,8 @@ MaterialX::NodePtr shader_to_node(const XSI::Shader& xsi_shader,
 				bool is_add = add_input_value_to_node(node, temp_graph, temp_def, SubjectMode::NODE, parameter_name, param.GetValue(), param, xsi_type, export_options);
 				if (!is_add) {
 					std::string parameter_type = parameter_type_to_string(param);
-					if (parameter_type.size() > 0) {
+					// non-empty paramter connected to something, then add the input port
+					if (parameter_type.size() > 0 && param.GetSource().IsValid()) {
 						// add simple input by name and type, without setting value
 						node->addInput(parameter_name, parameter_type);
 						is_add = true;

@@ -15,6 +15,7 @@
 #include <xsi_vector4f.h>
 #include <xsi_ppglayout.h>
 #include <xsi_floatarray.h>
+#include <xsi_shaderstructparamdef.h>
 
 #include "MaterialXCore/Document.h"
 #include <MaterialXFormat/XmlIo.h>
@@ -312,20 +313,28 @@ XSI::CStatus on_parse(XSI::Context& context) {
 		options.SetLongName(xsi_ui_name);
 
 		// define input parameter
+		XSI::ShaderParamDef xsi_def;
 		if (xsi_type != XSI::siShaderParameterDataType::siShaderDataTypeUnknown) {
-			shader_inputs.AddParamDef(input_name.c_str(), xsi_type, options);
+			xsi_def = shader_inputs.AddParamDef(input_name.c_str(), xsi_type, options);
 		}
 		else {
 			// for non-recognizable type use castom string
 			// all of them are registered before
-			shader_inputs.AddParamDef(input_name.c_str(), input_type.c_str(), options);
+			xsi_def = shader_inputs.AddParamDef(input_name.c_str(), input_type.c_str(), options);
+		}
+
+		// set default value for structured paramter
+		if (xsi_def.IsStructure() && !xsi_value.IsEmpty()) {
+			XSI::ShaderStructParamDef xsi_struct_param(xsi_def);
+			XSI::ShaderParamDefContainer xsi_container = xsi_struct_param.GetSubParamDefs();
+			set_struct_default_value(input_type, xsi_value, xsi_container);
 		}
 
 		// next add this input to ppg
 		if (is_visible_in_ppg(input_type)) {
 			if (is_type_color(xsi_type)) {
 				// color
-				shader_ppg.AddColor(input_name.c_str(), xsi_ui_name);
+				shader_ppg.AddColor(input_name.c_str(), xsi_ui_name, xsi_type == XSI::siShaderParameterDataType::siShaderDataTypeColor4);
 			}
 			else if (input_enum.size() > 0) {
 				// enum
