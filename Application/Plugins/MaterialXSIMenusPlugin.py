@@ -27,7 +27,7 @@ def XSILoadPlugin(in_reg):
     in_reg.Minor = 0
 
     in_reg.RegisterMenu(constants.siMenuMaterialManagerTopLevelID, "MaterialX Export", false, false)
-    in_reg.RegisterMenu(constants.siMenuRTNodeContextID, "MaterialX Compounds", true, false)
+    in_reg.RegisterMenu(constants.siMenuRTNodeContextID, "MaterialX Nodes", true, false)
     # RegistrationInsertionPoint - do not remove this line
 
     return true
@@ -45,9 +45,9 @@ def MaterialXExport_Init(in_ctxt):
     return true
 
 
-def MaterialXCompounds_Init(in_ctxt):
+def MaterialXNodes_Init(in_ctxt):
     menu = in_ctxt.Source
-    menu.AddCallbackItem("Export Compounds", "export_compounds")
+    menu.AddCallbackItem("Export Nodes", "export_nodes")
     return true
 
 
@@ -163,7 +163,7 @@ def export_materials(in_ctxt):
     export_window(material_ids, "materials")
 
 
-def export_compounds(in_ctxt):
+def export_nodes(in_ctxt):
     nodes_collection = in_ctxt.GetAttribute("Target")
     node_ids = []
     for node in nodes_collection:
