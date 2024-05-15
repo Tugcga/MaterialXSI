@@ -9,11 +9,12 @@
 #include "../utilities/logging.h"
 
 bool is_compound(const XSI::Shader& xsi_shader) {
-	XSI::CString prog_id = xsi_shader.GetProgID();
+	return xsi_shader.GetShaderType() == XSI::siShaderCompound;
+	/*XSI::CString prog_id = xsi_shader.GetProgID();
 	if (prog_id.GetSubString(0, 13) == "XSIRTCOMPOUND") {
 		return true;
 	}
-	return false;
+	return false;*/
 }
 
 
@@ -25,8 +26,7 @@ XSI::ShaderParameter get_finall_parameter(const XSI::ShaderParameter& parameter)
 		if (source_class == XSI::siShaderParameterID) {
 			XSI::ShaderParameter source_param(source);
 			XSI::Shader source_node = source_param.GetParent();
-			XSI::CString source_prog_id = source_node.GetProgID();
-			if (source_prog_id.GetSubString(0, 13) == "XSIRTCOMPOUND") {
+			if (is_compound(source_node)) {
 				return get_finall_parameter(source_param);
 			}
 			else {
