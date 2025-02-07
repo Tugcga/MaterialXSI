@@ -72,5 +72,8 @@
     <ClInclude Include="parse\convert_types.h">
       <Filter>parse</Filter>
     </ClInclude>
+    <ClInclude Include="export\export_format.h">
+      <Filter>export</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

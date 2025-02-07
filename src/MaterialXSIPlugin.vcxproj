@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="export\export.h" />
+    <ClInclude Include="export\export_format.h" />
     <ClInclude Include="export\export_names.h" />
     <ClInclude Include="export\export_options.h" />
     <ClInclude Include="export\export_utilities.h" />

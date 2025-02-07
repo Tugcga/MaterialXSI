@@ -10,13 +10,7 @@
 
 bool is_compound(const XSI::Shader& xsi_shader) {
 	return xsi_shader.GetShaderType() == XSI::siShaderCompound;
-	/*XSI::CString prog_id = xsi_shader.GetProgID();
-	if (prog_id.GetSubString(0, 13) == "XSIRTCOMPOUND") {
-		return true;
-	}
-	return false;*/
 }
-
 
 XSI::ShaderParameter get_finall_parameter(const XSI::ShaderParameter& parameter) {
 	XSI::CRef source = parameter.GetSource();

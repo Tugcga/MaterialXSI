@@ -1,5 +1,6 @@
 #pragma once
 #include <xsi_string.h>
+#include "export_format.h"
 
 struct ExportTextureOptions {
 	bool use_relative_path;
@@ -17,4 +18,5 @@ struct ExportOptions {
 	bool insert_nodedefs;
 	ExportTextureOptions textures;
 	ExportMaterialOptions materials;
+	ExportFormat format;
 };

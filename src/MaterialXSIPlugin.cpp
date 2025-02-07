@@ -52,6 +52,7 @@ SICALLBACK MaterialXSIExport_Init(XSI::CRef& in_ctxt) {
 	args.Add("textures_folder", "textures");
 	args.Add("material_all_nodes", false);  // if true then export all shaders, not only connected to the root node
 	args.Add("material_priority", true);  // if true, then export only material connection (if it contains MaterialX node), if false - export all connections
+	args.Add("format", "mtlx");
 
 	return XSI::CStatus::OK;
 }
@@ -69,6 +70,7 @@ SICALLBACK MaterialXSIExport_Execute(XSI::CRef& in_ctxt) {
 	XSI::CString textures_folder = args[5];
 	bool material_all_nodes = args[6];
 	bool material_priority = args[7];
+	XSI::CString format = args[8];  // if format is differ from mtlx, then we should use shader generators
 
 	ExportOptions export_options;
 	export_options.output_path = file_path.GetAsciiString();
@@ -83,6 +85,11 @@ SICALLBACK MaterialXSIExport_Execute(XSI::CRef& in_ctxt) {
 
 	export_options.textures = export_textures;
 	export_options.materials = export_materials;
+
+	export_options.format = format == "osl" ? ExportFormat::OSL : 
+						   (format == "glsl" ? ExportFormat::GLSL : 
+						   (format == "mdl" ? ExportFormat::MDL : 
+						   (format == "msl" ? ExportFormat::MSL : ExportFormat::MTLX)));
 
 	if (in_objects.GetCount() > 0) {
 		if (file_path.Length() > 0) {
