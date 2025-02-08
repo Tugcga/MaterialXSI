@@ -9,7 +9,7 @@
 #include "export_options.h"
 
 // export.cpp
-void export_mtlx(const std::vector<int> &object_ids, const ExportOptions &export_options);
+void export_mtlx(const std::vector<int> &object_ids, ExportOptions &export_options);
 
 // export_material.cpp
 void export_material(const XSI::Material& xsi_material, MaterialX::DocumentPtr &mx_doc, const ExportOptions& export_options);

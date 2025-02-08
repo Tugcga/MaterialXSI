@@ -422,7 +422,7 @@ MaterialX::NodePtr shader_to_node(const XSI::Shader& xsi_shader,
 								  const ExportOptions& export_options) {
 	XSI::CString prog_id = xsi_shader.GetProgID();
 	ULONG xsi_id = xsi_shader.GetObjectID();
-	XSI::CString xsi_name = xsi_shader.GetName();
+	XSI::CString xsi_name = export_options.use_unique_names ? xsi_shader.GetUniqueName() : xsi_shader.GetName();
 	std::string render_name = prog_id_to_render(prog_id);
 
 	std::string node_type = get_normal_type(prog_id);
@@ -525,7 +525,7 @@ MaterialX::NodeGraphPtr compound_to_graph(const XSI::Shader& xsi_compound,
 										  const ExportOptions& export_options) {
 	XSI::CString xsi_prog_id = xsi_compound.GetProgID();
 	ULONG xsi_id = xsi_compound.GetObjectID();
-	XSI::CString xsi_name = xsi_compound.GetName();
+	XSI::CString xsi_name = export_options.use_unique_names ? xsi_compound.GetUniqueName() : xsi_compound.GetName();
 
 	bool is_new = false;
 	MaterialX::NodeGraphPtr graph = get_or_create_graph(id_to_graph, xsi_id, mx_doc, xsi_name.GetAsciiString(), is_new);

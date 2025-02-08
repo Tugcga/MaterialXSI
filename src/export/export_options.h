@@ -19,4 +19,5 @@ struct ExportOptions {
 	ExportTextureOptions textures;
 	ExportMaterialOptions materials;
 	ExportFormat format;
+	bool use_unique_names;
 };

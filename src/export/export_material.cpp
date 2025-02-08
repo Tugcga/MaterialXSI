@@ -47,8 +47,6 @@ void start_material_port(MaterialX::DocumentPtr& mx_doc,
 }
 
 void export_material(const XSI::Material &xsi_material, MaterialX::DocumentPtr &mx_doc, const ExportOptions& export_options) {
-	// TODO: when we export several materials and these materials contains nodes with the same name (Phong, for example), then export is broken
-	// when export each node we should check is this node already used, and in this case use another name (with ID, for example)
 	std::string material_name = xsi_material.GetName().GetAsciiString() + std::string(".Root");
 	ULONG xsi_material_id = xsi_material.GetObjectID();
 

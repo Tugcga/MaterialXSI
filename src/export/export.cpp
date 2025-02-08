@@ -9,7 +9,7 @@
 #include "export.h"
 #include "../utilities/logging.h"
 
-void export_mtlx(const std::vector<int>& object_ids, const ExportOptions& export_options) {
+void export_mtlx(const std::vector<int>& object_ids, ExportOptions& export_options) {
 	// create MaterialX document
 	MaterialX::DocumentPtr mx_doc = MaterialX::createDocument();
 
@@ -34,6 +34,16 @@ void export_mtlx(const std::vector<int>& object_ids, const ExportOptions& export
 			}
 			// all other types are not supported
 		}
+	}
+
+	// before start export, check is we export only one matrial or several ones
+	// if several ones, then use unique names of nodes
+	// for one material use simple node names, because it always unique in the scope of one material
+	if (materials.size() > 1) {
+		export_options.use_unique_names = true;
+	}
+	else {
+		export_options.use_unique_names = false;
 	}
 
 	// separatly export materails
