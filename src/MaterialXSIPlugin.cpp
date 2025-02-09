@@ -13,8 +13,10 @@
 #include <xsi_context.h>
 
 #include "utilities/logging.h"
+#include "utilities/string.h"
 #include "export/export.h"
 #include "parse/parse.h"
+#include "export/export_generate.h"
 
 SICALLBACK XSILoadPlugin(XSI::PluginRegistrar& in_reg) {
 	in_reg.PutAuthor("Shekn");
@@ -23,6 +25,8 @@ SICALLBACK XSILoadPlugin(XSI::PluginRegistrar& in_reg) {
 	//RegistrationInsertionPoint - do not remove this line
 	in_reg.RegisterCommand("MaterialXSIExport", "MaterialXSIExport");
 	in_reg.RegisterShaderLanguageParser("MaterialXSIParser");
+
+	prepare_generators(in_reg.GetFilename());
 
 	return XSI::CStatus::OK;
 }
@@ -74,6 +78,9 @@ SICALLBACK MaterialXSIExport_Execute(XSI::CRef& in_ctxt) {
 
 	ExportOptions export_options;
 	export_options.output_path = file_path.GetAsciiString();
+	// ensure that the directory is exist
+	check_output_path(export_options.output_path);
+
 	export_options.insert_nodedefs = insert_nodedefs;
 	ExportTextureOptions export_textures;
 	export_textures.use_relative_path = textures_use_relative_path;

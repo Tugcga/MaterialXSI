@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 
 #include <xsi_string.h>
 #include <xsi_application.h>

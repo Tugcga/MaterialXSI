@@ -71,6 +71,7 @@
   <ItemGroup>
     <ClCompile Include=".\MaterialXSIPlugin.cpp" />
     <ClCompile Include="export\export.cpp" />
+    <ClCompile Include="export\export_generate.cpp" />
     <ClCompile Include="export\export_material.cpp" />
     <ClCompile Include="export\export_names.cpp" />
     <ClCompile Include="export\export_node.cpp" />
@@ -84,6 +85,7 @@
   <ItemGroup>
     <ClInclude Include="export\export.h" />
     <ClInclude Include="export\export_format.h" />
+    <ClInclude Include="export\export_generate.h" />
     <ClInclude Include="export\export_names.h" />
     <ClInclude Include="export\export_options.h" />
     <ClInclude Include="export\export_utilities.h" />

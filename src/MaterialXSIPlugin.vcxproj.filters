@@ -32,6 +32,9 @@
     <ClCompile Include="parse\convert_types.cpp">
       <Filter>parse</Filter>
     </ClCompile>
+    <ClCompile Include="export\export_generate.cpp">
+      <Filter>export</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="utilities">
@@ -73,6 +76,9 @@
       <Filter>parse</Filter>
     </ClInclude>
     <ClInclude Include="export\export_format.h">
+      <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="export\export_generate.h">
       <Filter>export</Filter>
     </ClInclude>
   </ItemGroup>

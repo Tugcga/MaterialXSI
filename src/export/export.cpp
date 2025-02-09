@@ -8,6 +8,7 @@
 #include "export_options.h"
 #include "export.h"
 #include "../utilities/logging.h"
+#include "export_generate.h"
 
 void export_mtlx(const std::vector<int>& object_ids, ExportOptions& export_options) {
 	// create MaterialX document
@@ -55,5 +56,16 @@ void export_mtlx(const std::vector<int>& object_ids, ExportOptions& export_optio
 	export_shaders(shaders, mx_doc, export_options);
 
 	// output document
-	MaterialX::writeToXmlFile(mx_doc, export_options.output_path);
+	// for different modes we should output different files
+	ExportFormat export_format = export_options.format;
+	if (export_format == ExportFormat::OSL || 
+		export_format == ExportFormat::GLSL ||
+		export_format == ExportFormat::MDL ||
+		export_format == ExportFormat::MSL) {
+		generate_shader(mx_doc, export_options.output_path, export_options.format);
+	}
+	else {  // MTLX
+		// in this case simply save the full doc to the output file
+		MaterialX::writeToXmlFile(mx_doc, export_options.output_path);
+	}
 }
