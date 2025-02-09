@@ -151,9 +151,15 @@ To the sample MaterialX application ```MaterialXGraphEditor``` it imports as fol
 ![export options](./images/img_07.png)
 
 **File** The path to the output mtlx file
+
 **Insert Node Definitions** If *true* then all nodes not from default materialX library will be exported with node definitions. These definitions contains names, types and values for all input and output ports of the shader node.
+
 **Copy Sources** if *true* then textures will be copied to the separate directory.
+
 **Textures Path** Define how links to textures should be stored in the output mtlx-file.
+
 **Folder** The name of the folder with textures if the parameter *Copy Sources* is activated.
+
 **Export All Nodes** (only for materials) If *true* then all nodes from the material will be exported. If *false* then export only nodes which have connections with the root material node.
+
 **Priority** (only for materials) If choose *Material input port* then the exporter first check the material port of the root material node and try to export connected nodes as native MaterialX nodes. If material connected to MAterialX nodes, then it ignores all other ports. In other case it export connections to other (non-material) ports of the root material node. If choose *All connections* then simply export all connections.
