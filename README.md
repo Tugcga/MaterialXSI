@@ -5,7 +5,7 @@
 The repository contains sources of the addon for [Softimage](https://en.wikipedia.org/wiki/Autodesk_Softimage), which implements initial support of the [MaterialX](https://materialx.org/).
 
 ### Supported features
-* Export any nodes from Shader Tree into *.mtlx
+* Export any nodes from Shader Tree into either native *.mtlx, or to *.osl, *.glsl, *.mdl and *.msl shader formats
 * Nodes from default MaterialX library exports as native nodes
 * Export as whole material and selected sets of nodes
 
@@ -19,7 +19,7 @@ Addon package can be downloaded from the [release](https://github.com/Tugcga/Mat
 
 Addon implemented by using C++ API. It required some external libraries. Download the archive ```external.zip``` from the [release](https://github.com/Tugcga/MaterialXSI/releases/tag/externals.0x) and extract the content of the archive into the folder ```internal``` at the root of the repository. Then you can open Visual Studio solution from ```src``` directory and build it. The project required Visual Studio 2015.
 
-### How to export
+### How to use
 
 Install as usual addon for Softimage.
 
@@ -27,13 +27,13 @@ MaterialX nodes should be connected to the ```material``` port of the root mater
 
 ![root node](./images/img_01.png)
 
-To export the whole material call ```MaterialX Export``` - ```Selected Materials``` from menu in Material Manager.
+To export the whole material into native *.mtlx format call ```MaterialX Export``` - ```Materials to ...mtlx``` from menu in Material Manager.
 
-![export material](./images/img_04.png)
+![export material](./images/img_04_02.png)
 
-To export selected nodes call ```MaterialX Nodes``` - ```Export Nodes``` from context menu. 
+To export selected nodes call ```MaterialX Nodes``` - ```Export to ...mtlx``` from context menu. 
 
-![export nodes](./images/img_05.png)
+![export nodes](./images/img_05_02.png)
 
 Nodes from default library placed under ```MaterialX``` - ```Pbrlib```/```Stdlib```/```Cmlib```/```Lights```/```Bxdf```/```Nprlib``` categories.
 
@@ -146,20 +146,16 @@ To the sample MaterialX application ```MaterialXGraphEditor``` it imports as fol
 
 ![graph editor](./images/img_06.png)
 
+It's possible to export a shader tree with native MaterialX nodes to other shader formats: *.osl, *.glsl, *.mdl or *.msl. This process is implemented by using the MaterialX feature to convert native *.mtls format to another. So under the hood it first creates an *.mtlx material and then generates osl, glsl, mdl or msl codes.
+
 ### Export options
 
 ![export options](./images/img_07.png)
 
-**File** The path to the output mtlx file
-
-**Insert Node Definitions** If *true* then all nodes not from default materialX library will be exported with node definitions. These definitions contains names, types and values for all input and output ports of the shader node.
-
-**Copy Sources** if *true* then textures will be copied to the separate directory.
-
-**Textures Path** Define how links to textures should be stored in the output mtlx-file.
-
-**Folder** The name of the folder with textures if the parameter *Copy Sources* is activated.
-
-**Export All Nodes** (only for materials) If *true* then all nodes from the material will be exported. If *false* then export only nodes which have connections with the root material node.
-
-**Priority** (only for materials) If choose *Material input port* then the exporter first check the material port of the root material node and try to export connected nodes as native MaterialX nodes. If material connected to MAterialX nodes, then it ignores all other ports. In other case it export connections to other (non-material) ports of the root material node. If choose *All connections* then simply export all connections.
+* **File** The path to the output mtlx file
+* **Insert Node Definitions** If *true* then all nodes not from default materialX library will be exported with node definitions. These definitions contains names, types and values for all input and output ports of the shader node.
+* **Copy Sources** if *true* then textures will be copied to the separate directory.
+* **Textures Path** Define how links to textures should be stored in the output mtlx-file.
+* **Folder** The name of the folder with textures if the parameter *Copy Sources* is activated.
+* **Export All Nodes** (only for materials) If *true* then all nodes from the material will be exported. If *false* then export only nodes which have connections with the root material node.
+* **Priority** (only for materials) If choose *Material input port* then the exporter first check the material port of the root material node and try to export connected nodes as native MaterialX nodes. If material connected to MAterialX nodes, then it ignores all other ports. In other case it export connections to other (non-material) ports of the root material node. If choose *All connections* then simply export all connections.
