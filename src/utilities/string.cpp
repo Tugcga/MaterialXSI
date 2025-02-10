@@ -161,13 +161,13 @@ std::string add_suffix_to_path(const std::string& input_path, const std::string&
 		return std::string(input_path);
 	}
 	else {
-		return input_path.substr(0, dot_pos) + "_" + suffix + input_path.substr(dot_pos);
+		return input_path.substr(0, dot_pos) + suffix + input_path.substr(dot_pos);
 	}
 }
 
 std::string tranfsorm_output_path(const std::string& output_path, const std::string& element_name, size_t elements_count) {
 	if (elements_count > 1) {
-		return add_suffix_to_path(output_path, element_name);
+		return add_suffix_to_path(output_path, "_" + element_name);
 	}
 	else {
 		return std::string(output_path);

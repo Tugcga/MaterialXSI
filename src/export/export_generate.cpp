@@ -93,7 +93,7 @@ void try_init_generators(ExportFormat format) {
 
 void generate_shader_code(const MaterialX::DocumentPtr& mx_doc, MaterialX::GenContext& context, MaterialX::GlslMaterialPtr& material, ExportFormat format, const std::string& output_path) {
     MaterialX::TypedElementPtr element = material->getElement();
-    
+
     try {
         if (format == ExportFormat::OSL || format == ExportFormat::MDL || format == ExportFormat::MSL) {
             MaterialX::ShaderPtr shader = createShader(element->getNamePath(), context, element);
@@ -109,8 +109,8 @@ void generate_shader_code(const MaterialX::DocumentPtr& mx_doc, MaterialX::GenCo
 
             // for glsl we should store two files: with vert and frag shaders
             // so, add suffixes _frag and _vert before extension
-            write_text_file(pixel_shader, add_suffics_to_path(output_path, "frag"));
-            write_text_file(vertex_shader, add_suffics_to_path(output_path, "vert"));
+            write_text_file(pixel_shader, add_suffix_to_path(output_path, "_frag"));
+            write_text_file(vertex_shader, add_suffix_to_path(output_path, "_vert"));
         }
     }
     catch (MaterialX::ExceptionRenderError& e) {
