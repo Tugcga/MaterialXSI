@@ -124,18 +124,6 @@ void generate_shader_code(const MaterialX::DocumentPtr& mx_doc, MaterialX::GenCo
     MaterialX::TypedElementPtr element = material->getElement();
 
     try {
-        // set context features
-        context.getOptions().hwShadowMap = features.shadowmap;
-        context.getOptions().hwAmbientOcclusion = features.ao;
-
-        context.clearUserData();
-        if (features.lights) {
-            std::vector<MaterialX::NodePtr> lights;
-            light_handler->findLights(light_doc, lights);
-            light_handler->registerLights(light_doc, lights, context);
-        }
-        context.getShaderGenerator().registerTypeDefs(mx_doc);
-
         if (format == ExportFormat::OSL || format == ExportFormat::MDL || format == ExportFormat::MSL) {
             MaterialX::ShaderPtr shader = createShader(element->getNamePath(), context, element);
             const std::string& shader_code = shader->getSourceCode(MaterialX::Stage::PIXEL);
@@ -143,6 +131,18 @@ void generate_shader_code(const MaterialX::DocumentPtr& mx_doc, MaterialX::GenCo
             // write the file
             write_text_file(shader_code, output_path);
         } else if (format == ExportFormat::GLSL) {
+            // set context features only for GLSL shaders
+            context.getOptions().hwShadowMap = features.shadowmap;
+            context.getOptions().hwAmbientOcclusion = features.ao;
+
+            context.clearUserData();
+            if (features.lights) {
+                std::vector<MaterialX::NodePtr> lights;
+                light_handler->findLights(light_doc, lights);
+                light_handler->registerLights(light_doc, lights, context);
+            }
+            context.getShaderGenerator().registerTypeDefs(mx_doc);
+
             bool is_generate = material->generateShader(context);
             MaterialX::ShaderPtr shader = material->getShader();
             const std::string& pixel_shader = shader->getSourceCode(MaterialX::Stage::PIXEL);
