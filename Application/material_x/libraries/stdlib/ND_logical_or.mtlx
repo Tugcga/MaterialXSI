@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<materialx version="1.39">
+  <nodedef name="ND_logical_or" node="or" nodegroup="conditional">
+    <input name="in1" type="boolean" value="false" />
+    <input name="in2" type="boolean" value="false" />
+    <output name="out" type="boolean" />
+  </nodedef>
+</materialx>

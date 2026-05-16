@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_randomfloat_integer" node="randomfloat" nodegroup="procedural">
     <input name="in" type="integer" uiname="Input" value="0" />
     <input name="min" type="float" uiname="Minimum" value="0.0" />

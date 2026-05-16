@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_lama_add_edf" node="LamaAdd" nodegroup="pbr" version="1.0" isdefaultversion="true">
     <input name="material1" uiname="Material 1" type="EDF" doc="First material to add." />
     <input name="material2" uiname="Material 2" type="EDF" doc="Second material to add." />

@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_worleynoise2d_vector3" node="worleynoise2d" nodegroup="procedural2d">
     <input name="texcoord" type="vector2" defaultgeomprop="UV0" />
     <input name="jitter" type="float" value="1.0" />
+    <input name="style" uiname="Cell Style" type="integer" value="0" enum="Distance,Solid" enumvalues="0,1" />
     <output name="out" type="vector3" />
   </nodedef>
 </materialx>

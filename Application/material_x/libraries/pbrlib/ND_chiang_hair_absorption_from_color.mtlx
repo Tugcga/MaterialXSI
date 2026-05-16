@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<materialx version="1.39">
+  <nodedef name="ND_chiang_hair_absorption_from_color" node="chiang_hair_absorption_from_color" nodegroup="pbr" doc="Calculates hair absorption from a color.">
+    <input name="color" type="color3" value="1.0, 1.0, 1.0" />
+    <input name="azimuthal_roughness" type="float" value="0.2" />
+    <output name="absorption" type="vector3" />
+  </nodedef>
+</materialx>

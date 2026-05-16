@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_add_edf" node="add" nodegroup="pbr" defaultinput="bg" doc="A node for additive blending of EDF's.">
     <input name="in1" type="EDF" value="" doc="First EDF." />
     <input name="in2" type="EDF" value="" doc="Second EDF." />

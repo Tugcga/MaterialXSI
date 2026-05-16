@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_add_vdf" node="add" nodegroup="pbr" defaultinput="bg" doc="A node for additive blending of VDF's.">
     <input name="in1" type="VDF" value="" doc="First VDF." />
     <input name="in2" type="VDF" value="" doc="Second VDF." />

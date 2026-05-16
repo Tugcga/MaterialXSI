@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<materialx version="1.39">
+  <nodedef name="ND_ifequal_boolean" node="ifequal" nodegroup="conditional">
+    <input name="value1" type="float" value="1.0" />
+    <input name="value2" type="float" value="0.0" />
+    <output name="out" type="boolean" />
+  </nodedef>
+</materialx>

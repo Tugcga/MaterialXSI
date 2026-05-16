@@ -62,7 +62,7 @@ void export_mtlx(const std::vector<int>& object_ids, ExportOptions& export_optio
 		export_format == ExportFormat::GLSL ||
 		export_format == ExportFormat::MDL ||
 		export_format == ExportFormat::MSL) {
-		generate_shader(mx_doc, export_options.output_path, export_options.format);
+		generate_shader(mx_doc, export_options.output_path, export_options.format, export_options.features);
 	}
 	else {  // MTLX
 		// in this case simply save the full doc to the output file

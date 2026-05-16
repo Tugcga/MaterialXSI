@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<materialx version="1.39">
+  <nodedef name="ND_fractal2d_vector2FA" node="fractal2d" nodegroup="procedural2d">
+    <input name="amplitude" type="float" value="1.0" />
+    <input name="octaves" type="integer" value="3" />
+    <input name="lacunarity" type="float" value="2.0" />
+    <input name="diminish" type="float" value="0.5" />
+    <input name="texcoord" type="vector2" defaultgeomprop="UV0" />
+    <output name="out" type="vector2" />
+  </nodedef>
+</materialx>

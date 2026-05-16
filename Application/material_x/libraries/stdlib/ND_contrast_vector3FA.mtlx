@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_contrast_vector3FA" node="contrast" nodegroup="adjustment">
     <input name="in" type="vector3" value="0.0, 0.0, 0.0" />
     <input name="amount" type="float" value="1.0" />

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_facingratio_float" node="facingratio" nodegroup="npr">
     <input name="viewdirection" type="vector3" defaultgeomprop="Vworld" />
     <input name="normal" type="vector3" defaultgeomprop="Nworld" />

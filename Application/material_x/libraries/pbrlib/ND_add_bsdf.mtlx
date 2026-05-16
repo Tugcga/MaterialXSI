@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_add_bsdf" node="add" nodegroup="pbr" defaultinput="bg" doc="A node for additive blending of BSDF's.">
     <input name="in1" type="BSDF" value="" doc="First BSDF." />
     <input name="in2" type="BSDF" value="" doc="Second BSDF." />

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_uniform_edf" node="uniform_edf" nodegroup="pbr" doc="An EDF node for uniform emission.">
     <input name="color" type="color3" value="1.0, 1.0, 1.0" />
     <output name="out" type="EDF" />

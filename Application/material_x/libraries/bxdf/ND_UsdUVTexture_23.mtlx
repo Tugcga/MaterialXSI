@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_UsdUVTexture_23" node="UsdUVTexture" nodegroup="texture2d" version="2.3" isdefaultversion="true">
     <input name="file" type="filename" value="" uniform="true" />
     <input name="st" type="vector2" defaultgeomprop="UV0" />

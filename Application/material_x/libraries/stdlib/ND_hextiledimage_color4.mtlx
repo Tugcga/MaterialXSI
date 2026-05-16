@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<materialx version="1.39">
+  <nodedef name="ND_hextiledimage_color4" node="hextiledimage" nodegroup="texture2d">
+    <input name="file" type="filename" value="" uniform="true" />
+    <input name="default" type="color4" value="0.0, 0.0, 0.0, 0.0" />
+    <input name="texcoord" type="vector2" defaultgeomprop="UV0" />
+    <input name="tiling" type="vector2" value="1.0, 1.0" />
+    <input name="rotation" type="float" value="1.0" />
+    <input name="rotationrange" type="vector2" value="0.0, 360.0" />
+    <input name="scale" type="float" value="1.0" />
+    <input name="scalerange" type="vector2" value="0.5, 2.0" />
+    <input name="offset" type="float" value="1.0" />
+    <input name="offsetrange" type="vector2" value="0.0, 1.0" />
+    <input name="falloff" type="float" value="0.5" />
+    <input name="falloffcontrast" type="float" value="0.5" />
+    <input name="lumacoeffs" type="color3" value="0.2722287, 0.6740818, 0.0536895" enum="acescg, rec709, rec2020, rec2100" enumvalues="0.2722287,0.6740818,0.0536895, 0.2126,0.7152,0.0722, 0.2627,0.6780,0.0593, 0.2627,0.6780,0.0593" />
+    <output name="out" type="color4" />
+  </nodedef>
+</materialx>

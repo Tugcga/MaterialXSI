@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_convert_integer_surfaceshader" node="convert" version="1.0" isdefaultversion="true" nodegroup="shader" doc="Convert integer to shader">
     <input name="in" type="integer" value="0" />
     <output name="out" type="surfaceshader" />

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_reflect_vector3" node="reflect" nodegroup="math" doc="Compute the reflection vector">
     <input name="in" type="vector3" value="1.0, 0.0, 0.0" doc="Incident vector" />
     <input name="normal" type="vector3" defaultgeomprop="Nworld" doc="Surface normal" />

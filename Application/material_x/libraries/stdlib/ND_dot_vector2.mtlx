@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_dot_vector2" node="dot" nodegroup="organization">
     <input name="in" type="vector2" value="0.0, 0.0" />
     <input name="note" type="string" value="" uniform="true" />

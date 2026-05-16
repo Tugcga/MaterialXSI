@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<materialx version="1.39">
+  <nodedef name="ND_open_pbr_anisotropy" node="open_pbr_anisotropy" nodegroup="pbr" doc="Computes anisotropic surface roughness as defined in the OpenPBR specification.">
+    <input name="roughness" type="float" value="0.0" />
+    <input name="anisotropy" type="float" value="0.0" />
+    <output name="out" type="vector2" />
+  </nodedef>
+</materialx>

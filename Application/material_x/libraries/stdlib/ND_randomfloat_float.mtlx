@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_randomfloat_float" node="randomfloat" nodegroup="procedural">
     <input name="in" type="float" uiname="Input" value="0.0" doc="Initial randomization seed." />
     <input name="min" type="float" uiname="Minimum" value="0.0" doc="The minimum output value." />

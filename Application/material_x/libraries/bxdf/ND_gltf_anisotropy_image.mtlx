@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<materialx version="1.39">
+  <nodedef name="ND_gltf_anisotropy_image" node="gltf_anisotropy_image" version="1.0" isdefaultversion="true" nodegroup="texture2d">
+    <input name="file" type="filename" uniform="true" value="" uifolder="Image" />
+    <input name="default" type="vector3" value="1.0, 0.5, 1" uifolder="Image" />
+    <input name="texcoord" type="vector2" defaultgeomprop="UV0" uifolder="Image" />
+    <input name="pivot" type="vector2" value="0, 1" uifolder="Image" />
+    <input name="scale" type="vector2" value="1, 1" uifolder="Image" />
+    <input name="rotate" type="float" value="0" unit="degree" unittype="angle" uimin="0" uimax="360" uifolder="Image" />
+    <input name="offset" type="vector2" value="0, 0" uifolder="Image" />
+    <input name="operationorder" type="integer" value="0" uifolder="Image" />
+    <input name="uaddressmode" type="string" uniform="true" value="periodic" enum="constant,clamp,periodic,mirror" uifolder="Image" />
+    <input name="vaddressmode" type="string" uniform="true" value="periodic" enum="constant,clamp,periodic,mirror" uifolder="Image" />
+    <input name="filtertype" type="string" uniform="true" value="linear" enum="closest,linear,cubic" uifolder="Image" />
+    <input name="anisotropy_strength" type="float" value="1" uimin="0" uimax="1" uifolder="Anisotropy" uiname="Anisotropy Strength" />
+    <input name="anisotropy_rotation" type="float" value="0" uimin="0" uimax="6.283185" uifolder="Anisotropy" uiname="Anisotropy Rotation" />
+    <output name="anisotropy_strength_out" type="float" />
+    <output name="anisotropy_rotation_out" type="float" />
+  </nodedef>
+</materialx>

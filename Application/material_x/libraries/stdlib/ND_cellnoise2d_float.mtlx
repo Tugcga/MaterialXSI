@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_cellnoise2d_float" node="cellnoise2d" nodegroup="procedural2d">
     <input name="texcoord" type="vector2" defaultgeomprop="UV0" />
     <output name="out" type="float" />

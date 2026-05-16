@@ -5,9 +5,11 @@
 The repository contains sources of the addon for [Softimage](https://en.wikipedia.org/wiki/Autodesk_Softimage), which implements initial support of the [MaterialX](https://materialx.org/).
 
 ### Supported features
+
 * Export any nodes from Shader Tree into either native *.mtlx, or to *.osl, *.glsl, *.mdl and *.msl shader formats
 * Nodes from default MaterialX library exports as native nodes
 * Export as whole material and selected sets of nodes
+* Viewer (based on Custom Display Host) for preview surface materials
 
 ### Limitations
 
@@ -17,15 +19,21 @@ MaterialX format does not supports nested node graphs (compounds in the Softimag
 
 Addon package can be downloaded from the [release](https://github.com/Tugcga/MaterialXSI/releases) page.
 
-Addon implemented by using C++ API. It required some external libraries. Download the archive ```external.zip``` from the [release](https://github.com/Tugcga/MaterialXSI/releases/tag/externals.0x) and extract the content of the archive into the folder ```internal``` at the root of the repository. Then you can open Visual Studio solution from ```src``` directory and build it. The project required Visual Studio 2015.
+Addon implemented by using C++ API. It required some external libraries. Download the archive ```external.zip``` from the [release](https://github.com/Tugcga/MaterialXSI/releases/tag/externals.03) and extract the content of the archive into the folder ```internal``` at the root of the repository. Then you can open Visual Studio solution from ```src``` directory and build it. The project required Visual Studio 2019.
 
 ### How to use
 
 Install as usual addon for Softimage.
 
-MaterialX nodes should be connected to the ```material``` port of the root material node by using ```MX Surfacematerial``` or ```MX Volumematerial``` nodes.
+MaterialX nodes should be connected to the ```material``` port of the root material node by using one of three nodes:
 
-![root node](./images/img_01.png)
+* `MX Surfacematerial`
+
+* `MX Volumematerial`
+
+* `MX Lama Surface`
+
+![root node](D:\Graphic\For%20Softimage\_addons\AddonDevelopWorkgroup\Addons\MaterialXSI\images\img_01_02.png)
 
 To export the whole material into native *.mtlx format call ```MaterialX Export``` - ```Materials to ...mtlx``` from menu in Material Manager.
 
@@ -39,7 +47,7 @@ Nodes from default library placed under ```MaterialX``` - ```Pbrlib```/```Stdlib
 
 ![libraries](./images/img_02.png)
 
-There are totally 766 shader nodes. Most of them are duplicates for different input/output types.
+There are totally 807 shader nodes. Most of them are duplicates for different input/output types.
 
 The following Shader Tree
 
@@ -159,3 +167,63 @@ It's possible to export a shader tree with native MaterialX nodes to other shade
 * **Folder** The name of the folder with textures if the parameter *Copy Sources* is activated.
 * **Export All Nodes** (only for materials) If *true* then all nodes from the material will be exported. If *false* then export only nodes which have connections with the root material node.
 * **Priority** (only for materials) If choose *Material input port* then the exporter first check the material port of the root material node and try to export connected nodes as native MaterialX nodes. If material connected to MAterialX nodes, then it ignores all other ports. In other case it export connections to other (non-material) ports of the root material node. If choose *All connections* then simply export all connections.
+
+### Viewer
+
+The viewer allows previewing surface materials built using only native MaterialX nodes. Under the hood, it converts the shader network into a GLSL shader and uses OpenGL to render the scene.
+
+To open the viewer window, either choose `window title` - `Custom Displays` - `MaterialXView`.
+
+![img_08.png](D:\Graphic\For%20Softimage\_addons\AddonDevelopWorkgroup\Addons\MaterialXSI\images\img_08.png)
+
+or open a separate CDH window by clicking `View` - `General` - `Custom Display Host`.
+
+![img_09.png](D:\Graphic\For%20Softimage\_addons\AddonDevelopWorkgroup\Addons\MaterialXSI\images\img_09.png)
+
+and then select `MaterialXView` display
+
+![img_10.png](D:\Graphic\For%20Softimage\_addons\AddonDevelopWorkgroup\Addons\MaterialXSI\images\img_10.png)
+
+#### Examples
+
+![materialx_viewer_boombox.png](D:\Graphic\For%20Softimage\_addons\AddonDevelopWorkgroup\Addons\MaterialXSI\images\materialx_viewer_boombox.png)
+
+![materialx_viewer_chessset.png](D:\Graphic\For%20Softimage\_addons\AddonDevelopWorkgroup\Addons\MaterialXSI\images\materialx_viewer_chessset.png)
+
+![materialx_viewer_reaper.png](D:\Graphic\For%20Softimage\_addons\AddonDevelopWorkgroup\Addons\MaterialXSI\images\materialx_viewer_reaper.png)
+
+#### How to use the Viewer
+
+The viewer shows only selected polygon mesh objects. Rotate the camera by using `LMB` (Left Mouse Button), zoom by using `WMB` (Wheel Mouse Button, simply scroll it), pan by using `MMB` (Middle Mouse Button, same as scrolling, but hold it pressed), and rotate the scene light by using `RMB` (Right Mouse Button). The viewer uses separate IBL (Image-Based Lighting) that is independent of the Softimage scene. By default, three different HDR images are available for lighting. Switch between them using the keyboard arrows.
+
+To lock the selected objects - press `L`.
+
+To frame the camera on the selected objects - press `A`.
+
+To show render statistics - press `I`. This tracks the time for exporting scene meshes (in milliseconds), the time for transforming Render Tree nodes into GLSL shader code (in milliseconds), and the average frame rendering time (in microseconds).
+
+To activate shadow maps - press `S` (note that `S` is not used for camera manipulation inside the viewer, it activates shadows).
+
+To force a mesh rebuild when the frame is changed - press `R`.
+
+#### Viewer settings
+
+There is a file settings.ini in the addon's directory. It allows you to tweak several parameters used by the viewer.
+
+* `Viewer Control`. These parameters change the camera rotation speed, zoom speed, and pan speed.
+
+* `Viewer Camera`. Change the camera FOV.
+
+* `Viewer Light`. Define the size of the map for environment lighting. When the viewer is initialized, it splits the environment HDR into a direct lighting component and an ambient lighting component. If no HDR for ambient light already exists, it creates one using spherical harmonics and stores it in a separate HDR.
+
+* `Viewer Generator`. Define the size of the shadow maps.
+
+* `Viewer UI`: Define the font size and padding for text over the viewer canvas.
+
+* `Hotkeys`. Define the previously mentioned hotkeys.
+
+#### Remarks about the viewer
+
+* MaterialX supports volumetric materials and shaders for lights, but the viewer renders only surface shaders. Materials of other types can be stored in .mtlx files but cannot be compiled into other shader formats (such as GLSL, etc.).
+
+* The Viewer is based on the CDH plugin for Softimage. It updates the state with respect to supported callbacks. In some cases, when Softimage thinks that nothing should be changed, the callback is not fired. To force an update of the material, it is sufficient to change the network topology (add or remove any connection). Then it will be re-exported and recompiled. If the mesh should be forced to update, then it is possible to activate Rebuild Animated Mesh (default hotkey R) and change the frame.

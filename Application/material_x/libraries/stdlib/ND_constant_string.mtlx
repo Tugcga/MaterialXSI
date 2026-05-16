@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_constant_string" node="constant" nodegroup="procedural">
     <input name="value" type="string" value="" uniform="true" />
     <output name="out" type="string" />

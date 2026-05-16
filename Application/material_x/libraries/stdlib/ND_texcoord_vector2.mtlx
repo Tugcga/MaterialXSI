@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_texcoord_vector2" node="texcoord" nodegroup="geometric">
     <input name="index" type="integer" value="0" uniform="true" />
     <output name="out" type="vector2" />

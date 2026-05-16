@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<materialx version="1.39">
+  <nodedef name="ND_hextilednormalmap_vector3" node="hextilednormalmap" nodegroup="math">
+    <input name="file" type="filename" value="" uniform="true" />
+    <input name="default" type="vector3" value="0.5, 0.5, 1.0" />
+    <input name="texcoord" type="vector2" defaultgeomprop="UV0" />
+    <input name="tiling" type="vector2" value="1.0, 1.0" />
+    <input name="rotation" type="float" value="1.0" />
+    <input name="rotationrange" type="vector2" value="0.0, 360.0" />
+    <input name="scale" type="float" value="1.0" />
+    <input name="scalerange" type="vector2" value="0.5, 2.0" />
+    <input name="offset" type="float" value="1.0" />
+    <input name="offsetrange" type="vector2" value="0.0, 1.0" />
+    <input name="falloff" type="float" value="0.5" />
+    <input name="strength" type="float" value="1.0" />
+    <input name="flip_g" type="boolean" value="false" />
+    <input name="normal" type="vector3" defaultgeomprop="Nworld" />
+    <input name="tangent" type="vector3" defaultgeomprop="Tworld" />
+    <input name="bitangent" type="vector3" defaultgeomprop="Bworld" />
+    <output name="out" type="vector3" />
+  </nodedef>
+</materialx>

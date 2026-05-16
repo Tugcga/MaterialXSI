@@ -32,3 +32,5 @@ XSI::CString replace_letter(const XSI::CString& input, char from, char to);
 
 // create all output directories by using boost
 void check_output_path(std::string& output_path);
+
+std::string time_to_string(long long time);

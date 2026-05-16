@@ -85,6 +85,13 @@ def export_window(export_array, export_mode, format):
     param = prop.AddParameter3("materials_priority", constants.siString, "material", False, False)
     param.Animatable = False
 
+    param = prop.AddParameter3("feature_shadowmap", constants.siBool, True, False, False)
+    param.Animatable = False
+    param = prop.AddParameter3("feature_ao", constants.siBool, True, False, False)
+    param.Animatable = False
+    param = prop.AddParameter3("feature_lights", constants.siBool, True, False, False)
+    param.Animatable = False
+
     layout = prop.PPGLayout
     layout.Clear()
     layout.AddGroup("Output")
@@ -116,6 +123,15 @@ def export_window(export_array, export_mode, format):
         layout.AddEnumControl("materials_priority", export_materials_priority, "Priority")
         layout.EndGroup()
 
+    if export_mode == "shaders" and format == "glsl":
+        # it looks like these features can be used only for glgs-shader generator
+        # for other types od shaders - it does not used
+        layout.AddGroup("GLSL Features")
+        layout.AddItem("feature_shadowmap", "Shadow Map")
+        layout.AddItem("feature_ao", "Ambient Occlusion")
+        layout.AddItem("feature_lights", "Non-IBL")
+        layout.EndGroup()
+
     layout.Language = "Python"
     layout.Logic = '''
 def update(prop):
@@ -140,7 +156,10 @@ def textures_copy_OnChanged():
         "textures_copy",
         "textures_folder",
         "materials_all_nodes",
-        "materials_priority"]
+        "materials_priority",
+        "feature_shadowmap",
+        "feature_ao",
+        "feature_lights"]
 
     global prev_export_params
     if prev_export_params is not None:
@@ -159,6 +178,9 @@ def textures_copy_OnChanged():
                                   prop.Parameters("textures_folder").Value,
                                   prop.Parameters("materials_all_nodes").Value if export_mode == "materials" else False,
                                   prop.Parameters("materials_priority").Value == "material",
+                                  prop.Parameters("feature_shadowmap").Value,
+                                  prop.Parameters("feature_ao").Value,
+                                  prop.Parameters("feature_lights").Value,
                                   format)
         else:
             app.LogMessage("Define non-empty export path")

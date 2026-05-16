@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_gooch_shade" node="gooch_shade" nodegroup="npr" doc="Compute Gooch shading">
     <input name="warm_color" type="color3" value="0.8, 0.8, 0.7" uiname="Warm Color" doc="Warm color" />
     <input name="cool_color" type="color3" value="0.3, 0.3, 0.8" uiname="Cool Color" doc="Cool color" />

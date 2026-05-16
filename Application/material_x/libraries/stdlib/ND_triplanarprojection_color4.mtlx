@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_triplanarprojection_color4" node="triplanarprojection" nodegroup="texture3d">
     <input name="filex" type="filename" value="" uniform="true" />
     <input name="filey" type="filename" value="" uniform="true" />

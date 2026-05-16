@@ -66,10 +66,10 @@ XSI::CStatus on_query_parser_settings(XSI::Context& context) {
 	context.PutAttribute("Folders", "material_x");
 
 	XSI::CStringArray type_filter, family_filter;
-	XSI::Application().RegisterShaderCustomParameterType("surfaceshader", "surfaceshader", "surfaceshader", 237, 150, 92, type_filter, family_filter);
-	XSI::Application().RegisterShaderCustomParameterType("displacementshader", "displacementshader", "displacementshader", 126, 212, 146, type_filter, family_filter);
-	XSI::Application().RegisterShaderCustomParameterType("volumeshader", "volumeshader", "volumeshader", 155, 152, 225, type_filter, family_filter);
-	XSI::Application().RegisterShaderCustomParameterType("lightshader", "lightshader", "lightshader", 254, 226, 130, type_filter, family_filter);
+	XSI::Application().RegisterShaderCustomParameterType("surfaceshader", "surfaceshader", "surfaceshader", 64, 99, 43, type_filter, family_filter);
+	XSI::Application().RegisterShaderCustomParameterType("displacementshader", "displacementshader", "displacementshader", 153, 92, 81, type_filter, family_filter);
+	XSI::Application().RegisterShaderCustomParameterType("volumeshader", "volumeshader", "volumeshader", 90, 112, 166, type_filter, family_filter);
+	XSI::Application().RegisterShaderCustomParameterType("lightshader", "lightshader", "lightshader", 250, 151, 115, type_filter, family_filter);
 
 	XSI::Application().RegisterShaderCustomParameterType("integerarray", "integerarray", "integerarray", 32, 128, 32, type_filter, family_filter);  // integer color 0, 128, 0
 	XSI::Application().RegisterShaderCustomParameterType("floatarray", "floatarray", "floatarray", 32, 230, 96, type_filter, family_filter);  // 0, 230, 64
@@ -81,9 +81,9 @@ XSI::CStatus on_query_parser_settings(XSI::Context& context) {
 	XSI::Application().RegisterShaderCustomParameterType("stringarray", "stringarray", "stringarray", 76, 156, 223, type_filter, family_filter);
 
 	// from pbrlib
-	XSI::Application().RegisterShaderCustomParameterType("BSDF", "BSDF", "BSDF", 202, 128, 10, type_filter, family_filter);
-	XSI::Application().RegisterShaderCustomParameterType("EDF", "EDF", "EDF", 97, 170, 53, type_filter, family_filter);
-	XSI::Application().RegisterShaderCustomParameterType("VDF", "VDF", "VDF", 200, 133, 231, type_filter, family_filter);
+	XSI::Application().RegisterShaderCustomParameterType("BSDF", "BSDF", "BSDF", 123, 140, 84, type_filter, family_filter);
+	XSI::Application().RegisterShaderCustomParameterType("EDF", "EDF", "EDF", 201, 185, 131, type_filter, family_filter);
+	XSI::Application().RegisterShaderCustomParameterType("VDF", "VDF", "VDF", 86, 123, 140, type_filter, family_filter);
 
 	return XSI::CStatus::OK;
 }
@@ -253,9 +253,16 @@ XSI::CStatus on_parse(XSI::Context& context) {
 		// additional attributes
 		std::string input_ui_name = mx_input->getAttribute("uiname");
 		std::string input_ui_min = mx_input->getAttribute("uimin");
+		std::string input_ui_softmin = mx_input->getAttribute("uisoftmin");
 		std::string input_ui_max = mx_input->getAttribute("uimax");
+		std::string input_ui_softmax = mx_input->getAttribute("uisoftmax");
 		std::string input_enum = mx_input->getAttribute("enum");
 		std::string input_enum_values = mx_input->getAttribute("enumvalues");
+
+		// if the input contains correct soft-min, then use it, in other case use min value
+		std::string input_ui_min_str = input_ui_softmin.size() > 0 ? input_ui_softmin : input_ui_min;
+		// simillary for max
+		std::string input_ui_max_str = input_ui_softmax.size() > 0 ? input_ui_softmax : input_ui_max;
 
 		XSI::siShaderParameterDataType xsi_type = mx_type_to_xsi(input_type);
 		bool is_numeric = is_type_numeric(xsi_type);
@@ -278,12 +285,12 @@ XSI::CStatus on_parse(XSI::Context& context) {
 
 		// define min/max ui values
 		if (is_numeric) {
-			if (input_ui_min.size() > 0 && input_ui_max.size() > 0) {
+			if (input_ui_min_str.size() > 0 && input_ui_max_str.size() > 0) {
 				if (xsi_type == XSI::siShaderParameterDataType::siShaderDataTypeInteger) {
-					options.SetSoftLimit(std::stoi(input_ui_min), std::stoi(input_ui_max));
+					options.SetSoftLimit(std::stoi(input_ui_min_str), std::stoi(input_ui_max_str));
 				}
 				else if (xsi_type == XSI::siShaderParameterDataType::siShaderDataTypeScalar) {
-					options.SetSoftLimit(std::stof(input_ui_min), std::stof(input_ui_max));
+					options.SetSoftLimit(std::stof(input_ui_min_str), std::stof(input_ui_max_str));
 				}
 			}
 			else if (!xsi_value.IsEmpty()) {

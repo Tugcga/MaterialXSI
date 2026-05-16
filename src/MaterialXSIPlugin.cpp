@@ -11,12 +11,69 @@
 #include <xsi_command.h>
 #include <xsi_argument.h>
 #include <xsi_context.h>
+#include <xsi_viewcontext.h>
+#include <xsi_viewnotification.h>
+#include <xsi_x3dobject.h>
+#include <xsi_kinematics.h>
+#include <xsi_kinematicstate.h>
+#include <xsi_cluster.h>
+#include <xsi_clusterproperty.h>
+#include <xsi_primitive.h>
+#include <xsi_customproperty.h>
+#include <xsi_shader.h>
+#include <xsi_shaderparameter.h>
 
 #include "utilities/logging.h"
 #include "utilities/string.h"
 #include "export/export.h"
 #include "parse/parse.h"
 #include "export/export_generate.h"
+#include "materialxview/materialxview.h"
+#include "materialxview/xsitomx_converter.h"
+
+#define NOMINMAX
+#include <Windows.h>
+
+HINSTANCE __gInstance = NULL;
+char __gGameApplicationPath[MAX_PATH];
+
+BOOL APIENTRY DllMain(HANDLE hModule,
+					  DWORD  ul_reason_for_call,
+					  LPVOID lpReserved) {
+	switch (ul_reason_for_call)
+	{
+		case DLL_PROCESS_ATTACH:
+		case DLL_THREAD_ATTACH:
+		case DLL_THREAD_DETACH:
+		case DLL_PROCESS_DETACH:
+			break;
+	}
+
+	__gInstance = (HINSTANCE)hModule;
+
+	return TRUE;
+}
+
+bool SetGameApplicationPath(char* io_path)
+{
+	char l_szPath[MAX_PATH];
+	char drive[MAX_PATH];
+	char directory[MAX_PATH];
+
+	GetModuleFileName(__gInstance, l_szPath, MAX_PATH);
+	_splitpath(l_szPath, drive, directory, NULL, NULL);
+
+	// Remove the Application path if present
+	char* l_cResult = strstr(directory, "Application\\");
+	if (l_cResult != 0)
+	{
+		*l_cResult = '\0';
+	}
+
+	sprintf(io_path, "%s%s", drive, directory);
+
+	return true;
+}
 
 SICALLBACK XSILoadPlugin(XSI::PluginRegistrar& in_reg) {
 	in_reg.PutAuthor("Shekn");
@@ -25,6 +82,7 @@ SICALLBACK XSILoadPlugin(XSI::PluginRegistrar& in_reg) {
 	//RegistrationInsertionPoint - do not remove this line
 	in_reg.RegisterCommand("MaterialXSIExport", "MaterialXSIExport");
 	in_reg.RegisterShaderLanguageParser("MaterialXSIParser");
+	in_reg.RegisterCustomDisplay("MaterialXView");
 
 	prepare_generators(in_reg.GetFilename());
 
@@ -56,6 +114,9 @@ SICALLBACK MaterialXSIExport_Init(XSI::CRef& in_ctxt) {
 	args.Add("textures_folder", "textures");
 	args.Add("material_all_nodes", false);  // if true then export all shaders, not only connected to the root node
 	args.Add("material_priority", true);  // if true, then export only material connection (if it contains MaterialX node), if false - export all connections
+	args.Add("feature_shadowmap", true);  // features only for non-mtls shader exports
+	args.Add("feature_ao", true);  // by default all features are activated
+	args.Add("feature_lights", true);
 	args.Add("format", "mtlx");
 
 	return XSI::CStatus::OK;
@@ -74,7 +135,10 @@ SICALLBACK MaterialXSIExport_Execute(XSI::CRef& in_ctxt) {
 	XSI::CString textures_folder = args[5];
 	bool material_all_nodes = args[6];
 	bool material_priority = args[7];
-	XSI::CString format = args[8];  // if format is differ from mtlx, then we should use shader generators
+	bool feature_shadowmap = args[8];
+	bool feature_ao = args[9];
+	bool feature_lights = args[10];
+	XSI::CString format = args[11];  // if format is differ from mtlx, then we should use shader generators
 
 	ExportOptions export_options;
 	export_options.output_path = file_path.GetAsciiString();
@@ -93,6 +157,12 @@ SICALLBACK MaterialXSIExport_Execute(XSI::CRef& in_ctxt) {
 	export_options.textures = export_textures;
 	export_options.materials = export_materials;
 
+	ExportFeaturesOptions export_features;
+	export_features.shadowmap = feature_shadowmap;
+	export_features.ao = feature_ao;
+	export_features.lights = feature_lights;
+	export_options.features = export_features;
+
 	export_options.format = format == "osl" ? ExportFormat::OSL : 
 						   (format == "glsl" ? ExportFormat::GLSL : 
 						   (format == "mdl" ? ExportFormat::MDL : 
@@ -101,7 +171,7 @@ SICALLBACK MaterialXSIExport_Execute(XSI::CRef& in_ctxt) {
 	if (in_objects.GetCount() > 0) {
 		if (file_path.Length() > 0) {
 			std::vector<int> object_ids;
-			for (size_t i = 0; i < in_objects.GetCount(); i++) {
+			for (LONG i = 0; i < in_objects.GetCount(); i++) {
 				XSI::CValue value = in_objects[i];
 				XSI::CValue::DataType value_type = value.m_t;
 				if (value_type == XSI::CValue::DataType::siInt4) {
@@ -142,4 +212,163 @@ SICALLBACK MaterialXSIParser_Parse(XSI::CRef& in_ctxt) {
 	XSI::Context context(in_ctxt);
 
 	return on_parse(context);
+}
+
+SICALLBACK MaterialXView_Init(XSI::CRef in_ctxt) {
+	XSI::ViewContext xsi_view_context = in_ctxt;
+	xsi_view_context.SetFlags(XSI::siWindowNotifications);
+
+	HWND parent_hwnd = (HWND)xsi_view_context.GetParentWindowHandle();
+	SetGameApplicationPath(__gGameApplicationPath);
+
+	return init_materialxview(parent_hwnd);
+}
+
+SICALLBACK MaterialXView_Term(XSI::CRef in_ctxt) {
+	return term_materialxview();
+}
+
+SICALLBACK MaterialXView_Notify(XSI::CRef in_ctxt)
+{
+	XSI::ViewContext view_ctxt = in_ctxt;
+	XSI::siEventID event_id;
+	void* event_data;
+
+	view_ctxt.GetNotificationData(event_id, &event_data);
+	if (event_id == XSI::siOnSelectionChange) {
+		XSI::CSelectionChangeNotification* selection_data = (XSI::CSelectionChangeNotification*)event_data;
+
+		XSI::CRefArray selection_list = selection_data->GetSelectionList();
+		size_t selection_count = selection_list.GetCount();
+
+		notify_update_selection();
+	}
+	else if (event_id == XSI::siOnTimeChange) {
+		XSI::CTimeChangeNotification* time_data = (XSI::CTimeChangeNotification*)event_data;
+
+		size_t time_state = time_data->GetState();
+		double time = time_data->GetTime();
+		notify_change_frame(time, time_state);
+	}
+	else if (event_id == XSI::siOnObjectAdded) {
+		XSI::CObjectAddedNotification* add_data = (XSI::CObjectAddedNotification*)event_data;
+
+		XSI::CRef add_item = add_data->GetObjectAdded();
+		XSI::SIObject add_object(add_item);
+		XSI::CString object_name = add_object.GetFullName();
+
+		notify_update_selection();
+	}
+	else if (event_id == XSI::siOnWindowEvent) {
+		XSI::CWindowNotification* window_data = (XSI::CWindowNotification*)event_data;
+
+		XSI::siWindowChangeState window_state = window_data->GetWindowState();
+		if (window_state == XSI::siWindowPaint) {
+			notify_materialxview_window_paint();
+		}
+		else if (window_state == XSI::siWindowSetFocus) {
+			notify_materialxview_window_focus(true);
+		}
+		else if (window_state == XSI::siWindowLostFocus) {
+			notify_materialxview_window_focus(false);
+		}
+		else if (window_state == XSI::siWindowSize) {
+			int x, y, w, h;
+			window_data->GetPosition(x, y, w, h);
+			// we should not process this event, because win32 event for window resize is called automaticaly
+		}
+		else {
+			
+		}
+	}
+	else if (event_id == XSI::siOnObjectRemoved) {
+		XSI::CObjectRemovedNotification* remove_data = (XSI::CObjectRemovedNotification*)event_data;
+
+		const XSI::CString object_name = remove_data->GetObjectName();
+		const XSI::siBranchFlag object_flag = remove_data->GetBranchFlag();
+
+		// when we remove the object, nothing special to made. If this object was selected, then after update selection
+		// it does not selected, so, it will not be drawn
+		notify_object_remove(object_name);
+		notify_update_selection();
+	}
+	else if (event_id == XSI::siOnValueChange) {
+		XSI::CValueChangeNotification* value_data = (XSI::CValueChangeNotification*)event_data;
+
+		XSI::CRef object_ref = value_data->GetOwner();
+
+		LONG object_class_id = object_ref.GetClassID();
+		XSI::CString component_name = value_data->GetComponentName();
+		if (object_class_id == XSI::siCustomPropertyID) {
+			XSI::CustomProperty object_custom_property(object_ref);
+			XSI::X3DObject xsi_object = object_custom_property.GetParent3DObject();
+			notify_update_object(xsi_object);
+		}
+		else if (object_class_id == XSI::siPrimitiveID) {
+			XSI::Primitive object_primitive(object_ref);
+			XSI::X3DObject xsi_object = object_primitive.GetParent3DObject();
+			notify_update_object(xsi_object);
+		}
+		else if (object_class_id == XSI::siKinematicStateID) {
+			XSI::KinematicState object_kine(object_ref);
+			// check that component name contains .global at the end
+			// only in this case rebuild the mesh
+			// because this event called for both kines: local and global
+			if (component_name.GetSubString(component_name.Length() - 7, 7) == ".global") {
+				XSI::X3DObject xsi_object = object_kine.GetParent3DObject();
+				notify_update_object(xsi_object);
+			}
+		}
+		else if (object_class_id == XSI::siParameterID) {
+			XSI::Parameter object_parameter(object_ref);
+			XSI::X3DObject xsi_object = object_parameter.GetParent3DObject();
+			notify_update_object(xsi_object);
+		}
+		else if (object_class_id == XSI::siClusterID) {
+			XSI::Cluster object_cluster(object_ref);
+			XSI::X3DObject xsi_object = object_cluster.GetParent3DObject();
+			notify_update_object(xsi_object);
+		}
+		else if (object_class_id == XSI::siMaterialID) {
+			// ignore callback for the material, consider only shader parameters
+		}
+		else if (object_class_id == XSI::siShaderParameterID) {
+			// when update shader parameter, we call actual update only when material port of the root shader node is changed
+			// because when we tweak shader parameters (or connect/disconnect nodes) many callback are called
+			// for different root node ports and for the whole material
+			XSI::ShaderParameter object_parameter(object_ref);
+			XSI::CRef parameter_parent_ref = object_parameter.GetParent();
+			XSI::siClassID parent_class_id = parameter_parent_ref.GetClassID();
+			if (parent_class_id == XSI::siMaterialID) {
+				// get parameter name
+				XSI::CString parameter_name = object_parameter.GetName();
+				if (parameter_name == "material") {
+					// get the source of the material port of the root material node
+					XSI::ShaderParameter first_node_output = get_source_parameter(object_parameter, true);
+					// get the node
+					XSI::Shader first_node = first_node_output.GetParent();
+					if (first_node.IsValid()) {
+						XSI::CString first_node_id = first_node.GetProgID();
+						// currently only two nodes can be connected to the material root port
+						if (first_node_id == "MaterialXSIParser.ND_surfacematerial.1.0" ||
+							first_node_id == "MaterialXSIParser.ND_volumematerial.1.0" ||
+							first_node_id == "MaterialXSIParser.ND_lama_surface.1.0") {
+							XSI::Material material(parameter_parent_ref);
+							notify_update_material(first_node, material);
+						}
+					}
+				}
+			}
+		}
+		else if (object_class_id == XSI::siClusterPropertyID) {
+			XSI::ClusterProperty object_cluster_property(object_ref);
+			XSI::X3DObject xsi_object = object_cluster_property.GetParent3DObject();
+			notify_update_object(xsi_object);
+		}
+	}
+	else {
+		
+	}
+
+	return XSI::CStatus::OK;
 }

@@ -202,3 +202,21 @@ void check_output_path(std::string& output_path) {
 		}
 	}
 }
+
+std::string time_to_string(long long time) {
+	std::string to_return = "";
+	std::string raw_str = std::to_string(time);
+	int step = 0;
+	for (int i = raw_str.size() - 1; i >= 0; i--) {
+		to_return.push_back(raw_str[i]);
+		step += 1;
+		if (step == 3 && i > 0) {
+			to_return.push_back(' ');
+			step = 0;
+		}
+	}
+
+	std::reverse(to_return.begin(), to_return.end());
+
+	return to_return;
+}

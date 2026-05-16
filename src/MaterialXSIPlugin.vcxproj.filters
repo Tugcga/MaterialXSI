@@ -35,6 +35,24 @@
     <ClCompile Include="export\export_generate.cpp">
       <Filter>export</Filter>
     </ClCompile>
+    <ClCompile Include="materialxview\viewer.cpp">
+      <Filter>materialxview</Filter>
+    </ClCompile>
+    <ClCompile Include="materialxview\controll.cpp">
+      <Filter>materialxview</Filter>
+    </ClCompile>
+    <ClCompile Include="utilities\math.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="materialxview\materialxview.cpp">
+      <Filter>materialxview</Filter>
+    </ClCompile>
+    <ClCompile Include="materialxview\xsitomx_converter.cpp">
+      <Filter>materialxview</Filter>
+    </ClCompile>
+    <ClCompile Include="extern\mikktspace.c">
+      <Filter>extern</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="utilities">
@@ -45,6 +63,12 @@
     </Filter>
     <Filter Include="parse">
       <UniqueIdentifier>{1a806466-fc94-409c-b5c8-1df04e2fe654}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="materialxview">
+      <UniqueIdentifier>{11580e3c-a761-4428-ab0c-f5aa8d20a4bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extern">
+      <UniqueIdentifier>{219f2704-20ea-4f60-a7c2-a1c82cc58db5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +104,30 @@
     </ClInclude>
     <ClInclude Include="export\export_generate.h">
       <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="materialxview\materialxview.h">
+      <Filter>materialxview</Filter>
+    </ClInclude>
+    <ClInclude Include="materialxview\viewer.h">
+      <Filter>materialxview</Filter>
+    </ClInclude>
+    <ClInclude Include="materialxview\controll.h">
+      <Filter>materialxview</Filter>
+    </ClInclude>
+    <ClInclude Include="utilities\math.h">
+      <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="materialxview\xsitomx_converter.h">
+      <Filter>materialxview</Filter>
+    </ClInclude>
+    <ClInclude Include="extern\SimpleIni.h">
+      <Filter>extern</Filter>
+    </ClInclude>
+    <ClInclude Include="materialxview\text_strings.h">
+      <Filter>materialxview</Filter>
+    </ClInclude>
+    <ClInclude Include="extern\mikktspace.h">
+      <Filter>extern</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

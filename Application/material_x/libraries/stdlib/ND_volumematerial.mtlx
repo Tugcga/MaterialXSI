@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_volumematerial" node="volumematerial" nodegroup="material">
     <input name="volumeshader" type="volumeshader" value="" />
     <output name="out" type="material" />

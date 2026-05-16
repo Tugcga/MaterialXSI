@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_geompropvalue_float" node="geompropvalue" nodegroup="geometric">
     <input name="geomprop" type="string" value="" uniform="true" />
     <input name="default" type="float" value="0.0" />

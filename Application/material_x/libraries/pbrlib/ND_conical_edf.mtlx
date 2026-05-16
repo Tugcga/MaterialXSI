@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_conical_edf" node="conical_edf" nodegroup="pbr" doc="Constructs an EDF emitting light inside a cone around the normal direction.">
     <input name="color" type="color3" value="1.0, 1.0, 1.0" />
     <input name="normal" type="vector3" defaultgeomprop="Nworld" />

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_glossiness_anisotropy" node="glossiness_anisotropy" nodegroup="pbr" doc="Calculates anisotropic surface roughness from a scalar glossiness/anisotropy parameterization.">
     <input name="glossiness" type="float" value="1.0" uimin="0.0" uimax="1.0" />
     <input name="anisotropy" type="float" value="0.0" uimin="0.0" uimax="1.0" />

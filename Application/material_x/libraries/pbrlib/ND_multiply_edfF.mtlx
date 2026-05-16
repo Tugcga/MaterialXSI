@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_multiply_edfF" node="multiply" nodegroup="pbr" defaultinput="in1" doc="A node for adjusting the contribution of an EDF with a weight.">
     <input name="in1" type="EDF" value="" doc="The EDF to scale." />
     <input name="in2" type="float" value="1.0" doc="Scaling weight." />

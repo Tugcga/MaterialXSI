@@ -19,7 +19,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -57,12 +57,13 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <AdditionalIncludeDirectories>..\internal\MaterialX\include;..\internal\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <OutputFile>..\Application\Plugins\MaterialXSIPlugin.dll</OutputFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <ImportLibrary>..\internal\build\lib\$(TargetName).lib</ImportLibrary>
-      <AdditionalDependencies>"..\internal\MaterialX\lib\MaterialXGenMdl.lib";"..\internal\MaterialX\lib\MaterialXGenMsl.lib";"..\internal\MaterialX\lib\MaterialXGenOsl.lib";"..\internal\MaterialX\lib\MaterialXGenShader.lib";"..\internal\MaterialX\lib\MaterialXRender.lib";"..\internal\MaterialX\lib\MaterialXRenderGlsl.lib";"..\internal\MaterialX\lib\MaterialXRenderHw.lib";"..\internal\MaterialX\lib\MaterialXRenderOsl.lib";"..\internal\MaterialX\lib\MaterialXCore.lib";"..\internal\MaterialX\lib\MaterialXFormat.lib";"..\internal\MaterialX\lib\MaterialXGenGlsl.lib";"..\internal\boost\lib\libboost_filesystem-vc140-mt-x64-1_82.lib";%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>"..\internal\MaterialX\lib\MaterialX.lib";"..\internal\boost\lib\libboost_filesystem-vc142-mt-x64-1_82.lib";winmm.lib;version.lib;imm32.lib;setupapi.lib;ole32.lib;oleaut32.lib;uuid.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -76,10 +77,16 @@
     <ClCompile Include="export\export_names.cpp" />
     <ClCompile Include="export\export_node.cpp" />
     <ClCompile Include="export\export_utilities.cpp" />
+    <ClCompile Include="extern\mikktspace.c" />
+    <ClCompile Include="materialxview\controll.cpp" />
+    <ClCompile Include="materialxview\materialxview.cpp" />
+    <ClCompile Include="materialxview\viewer.cpp" />
+    <ClCompile Include="materialxview\xsitomx_converter.cpp" />
     <ClCompile Include="parse\convert_types.cpp" />
     <ClCompile Include="parse\parse.cpp" />
     <ClCompile Include="utilities\array.cpp" />
     <ClCompile Include="utilities\logging.cpp" />
+    <ClCompile Include="utilities\math.cpp" />
     <ClCompile Include="utilities\string.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -89,10 +96,18 @@
     <ClInclude Include="export\export_names.h" />
     <ClInclude Include="export\export_options.h" />
     <ClInclude Include="export\export_utilities.h" />
+    <ClInclude Include="extern\mikktspace.h" />
+    <ClInclude Include="extern\SimpleIni.h" />
+    <ClInclude Include="materialxview\controll.h" />
+    <ClInclude Include="materialxview\materialxview.h" />
+    <ClInclude Include="materialxview\text_strings.h" />
+    <ClInclude Include="materialxview\viewer.h" />
+    <ClInclude Include="materialxview\xsitomx_converter.h" />
     <ClInclude Include="parse\convert_types.h" />
     <ClInclude Include="parse\parse.h" />
     <ClInclude Include="utilities\array.h" />
     <ClInclude Include="utilities\logging.h" />
+    <ClInclude Include="utilities\math.h" />
     <ClInclude Include="utilities\string.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

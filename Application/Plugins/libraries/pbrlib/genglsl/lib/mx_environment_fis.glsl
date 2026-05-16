@@ -32,8 +32,8 @@ vec3 mx_environment_radiance(vec3 N, vec3 V, vec3 X, vec2 alpha, int distributio
         float VdotH = clamp(dot(V, H), M_FLOAT_EPS, 1.0);
 
         // Sample the environment light from the given direction.
-        vec3 Lw = tangentToWorld * L;
-        float pdf = mx_ggx_NDF(H, alpha) * G1V / (4.0 * NdotV);
+        vec3 Lw = mx_matrix_mul(tangentToWorld, L);
+        float pdf = mx_ggx_VNDF_reflection_PDF(H, alpha, G1V, NdotV);
         float lod = mx_latlong_compute_lod(Lw, pdf, float($envRadianceMips - 1), envRadianceSamples);
         vec3 sampleColor = mx_latlong_map_lookup(Lw, $envMatrix, lod, $envRadiance);
 
@@ -43,8 +43,8 @@ vec3 mx_environment_radiance(vec3 N, vec3 V, vec3 X, vec2 alpha, int distributio
         // Compute the geometric term.
         float G = mx_ggx_smith_G2(NdotL, NdotV, avgAlpha);
 
-        // Compute the combined FG term, which is inverted for refraction.
-        vec3 FG = fd.refraction ? vec3(1.0) - (F * G) : F * G;
+        // Compute the combined FG term, which simplifies to inverted Fresnel for refraction.
+        vec3 FG = fd.refraction ? vec3(1.0) - F : F * G;
 
         // Add the radiance contribution of this sample.
         // From https://cdn2.unrealengine.com/Resources/files/2013SiggraphPresentationsNotes-26915738.pdf
@@ -59,7 +59,7 @@ vec3 mx_environment_radiance(vec3 N, vec3 V, vec3 X, vec2 alpha, int distributio
     radiance /= G1V * float(envRadianceSamples);
 
     // Return the final radiance.
-    return radiance * $envLightIntensity;
+    return ($envRadianceSamples == 0 ? vec3(0.0) : radiance) * $envLightIntensity;
 }
 
 vec3 mx_environment_irradiance(vec3 N)

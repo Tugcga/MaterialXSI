@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_surfacematerial" node="surfacematerial" nodegroup="material">
     <input name="surfaceshader" type="surfaceshader" value="" />
+    <!-- MaterialX BUG: If front surface shader is empty and back surface shader is used, then the shader generation process is crashed. Disable it for now -->
+	<!--<input name="backsurfaceshader" type="surfaceshader" value="" />-->
     <input name="displacementshader" type="displacementshader" value="" />
     <output name="out" type="material" />
   </nodedef>

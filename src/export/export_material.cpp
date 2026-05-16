@@ -80,7 +80,7 @@ void export_material(const XSI::Material &xsi_material, MaterialX::DocumentPtr &
 	XSI::CRef xsi_material_port_source = xsi_material_port.GetSource();
 	bool export_materialx = false;
 	if (material_priority && xsi_material_port_source.IsValid()) {
-		XSI::ShaderParameter xsi_material_source_param = xsi_material_port_source;;
+		XSI::ShaderParameter xsi_material_source_param = xsi_material_port_source;
 		if (xsi_material_source_param.IsValid()) {
 			XSI::Shader xsi_material_root_shader = xsi_material_source_param.GetParent();
 			if (xsi_material_root_shader.IsValid()) {

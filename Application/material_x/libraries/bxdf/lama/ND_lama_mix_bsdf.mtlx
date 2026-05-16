@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_lama_mix_bsdf" node="LamaMix" nodegroup="pbr" version="1.0" isdefaultversion="true">
     <input name="material1" uiname="Material 1" type="BSDF" doc="First material to mix." />
     <input name="material2" uiname="Material 2" type="BSDF" doc="Second material to mix." />

@@ -316,6 +316,13 @@ bool add_input_value_to_node(MaterialX::NodePtr& node,
 					input->setColorSpace(colorspace_to_string(color_profile));
 				}
 			}
+			else {
+				input->setValueString("");
+			}
+		}
+		// also for invalid image parameter
+		if (!image_parameter.IsValid()) {
+			input->setValueString("");
 		}
 
 		return true;

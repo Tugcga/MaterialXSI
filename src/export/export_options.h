@@ -13,6 +13,12 @@ struct ExportMaterialOptions {
 	bool material_priority;
 };
 
+struct ExportFeaturesOptions {
+	bool shadowmap;
+	bool ao;
+	bool lights;
+};
+
 struct ExportOptions {
 	std::string output_path;
 	bool insert_nodedefs;
@@ -20,4 +26,5 @@ struct ExportOptions {
 	ExportMaterialOptions materials;
 	ExportFormat format;
 	bool use_unique_names;
+	ExportFeaturesOptions features;
 };

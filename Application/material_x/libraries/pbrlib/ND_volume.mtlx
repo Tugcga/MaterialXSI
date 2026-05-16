@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<materialx version="1.38">
+<materialx version="1.39">
   <nodedef name="ND_volume" node="volume" nodegroup="pbr" doc="A constructor node for the volumeshader type.">
     <input name="vdf" type="VDF" value="" doc="Volume distribution function for the medium." />
     <input name="edf" type="EDF" value="" doc="Emission distribution function for the medium." />
