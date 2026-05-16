@@ -33,7 +33,7 @@ MaterialX nodes should be connected to the ```material``` port of the root mater
 
 * `MX Lama Surface`
 
-![root node](D:\Graphic\For%20Softimage\_addons\AddonDevelopWorkgroup\Addons\MaterialXSI\images\img_01_02.png)
+![root node](./images/img_01_02.png)
 
 To export the whole material into native *.mtlx format call ```MaterialX Export``` - ```Materials to ...mtlx``` from menu in Material Manager.
 
@@ -174,23 +174,23 @@ The viewer allows previewing surface materials built using only native MaterialX
 
 To open the viewer window, either choose `window title` - `Custom Displays` - `MaterialXView`.
 
-![img_08.png](D:\Graphic\For%20Softimage\_addons\AddonDevelopWorkgroup\Addons\MaterialXSI\images\img_08.png)
+![img_08.png](./images/img_08.png)
 
 or open a separate CDH window by clicking `View` - `General` - `Custom Display Host`.
 
-![img_09.png](D:\Graphic\For%20Softimage\_addons\AddonDevelopWorkgroup\Addons\MaterialXSI\images\img_09.png)
+![img_09.png](./images/img_09.png)
 
 and then select `MaterialXView` display
 
-![img_10.png](D:\Graphic\For%20Softimage\_addons\AddonDevelopWorkgroup\Addons\MaterialXSI\images\img_10.png)
+![img_10.png](./images/img_10.png)
 
 #### Examples
 
-![materialx_viewer_boombox.png](D:\Graphic\For%20Softimage\_addons\AddonDevelopWorkgroup\Addons\MaterialXSI\images\materialx_viewer_boombox.png)
+![materialx_viewer_boombox.png](./images/materialx_viewer_boombox.png)
 
-![materialx_viewer_chessset.png](D:\Graphic\For%20Softimage\_addons\AddonDevelopWorkgroup\Addons\MaterialXSI\images\materialx_viewer_chessset.png)
+![materialx_viewer_chessset.png](./images/materialx_viewer_chessset.png)
 
-![materialx_viewer_reaper.png](D:\Graphic\For%20Softimage\_addons\AddonDevelopWorkgroup\Addons\MaterialXSI\images\materialx_viewer_reaper.png)
+![materialx_viewer_reaper.png](./images/materialx_viewer_reaper.png)
 
 #### How to use the Viewer
 
